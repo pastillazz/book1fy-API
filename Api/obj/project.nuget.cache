@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "b2y40j5lxQ8=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Api\\Api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\rober\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.9\\microsoft.aspnetcore.openapi.10.0.9.nupkg.sha512",
+    "C:\\Users\\rober\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

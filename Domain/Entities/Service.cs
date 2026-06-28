@@ -3,39 +3,29 @@ using Domain.Primitives;
 
 namespace Domain.Entities;
 
-public sealed class Service:AggregateRoot
-{   
-    private Service(Guid id, 
-        string name,
-        string description,
-        bool isActive):base(id)
+public sealed class Service : AggregateRoot
+{   private readonly List<DayOfWeek> _workDays=new();
+    private readonly List<Ticket> _tickets=new();
+    private Service(Guid id,
+        string name, string description, TimeSpan openingTime, TimeSpan closingTime,
+        List<DayOfWeek> workDays) : base(id)
     {
         Name = name;
         Description = description;
-        IsActive = isActive;
+        OpeningTime = openingTime;
+        ClosingTime = closingTime;
+        _workDays = workDays;
     }
-    
+
     protected Service()
     {
     }
-    public string Name { get; private set; } 
+
+    public string Name { get; private set; }
     public string Description { get; private set; }
-    public bool IsActive { get; private set; }
-    
-    public static Result<Service> Create(string name, 
-        string description, bool isActive)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            return Error.None;
-        }
-        
-        if (string.IsNullOrWhiteSpace(description))
-        {
-            return Error.None;
-        }
-        
-        var service = new Service(Guid.NewGuid(), name, description, isActive);
-        return service;
-    }
+    public TimeSpan OpeningTime { get; private set; }
+    public TimeSpan ClosingTime { get; private set; }
+    public IReadOnlyCollection<DayOfWeek> WorkDays => _workDays;
+    public IReadOnlyCollection<Ticket> Tickets => _tickets;
 }
+    

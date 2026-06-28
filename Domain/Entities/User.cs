@@ -7,13 +7,14 @@ namespace Domain.Entities;
 public sealed class User:AggregateRoot
 {   
     private User(Guid id, FullName fullName, string username,
-        Email email, Password password):base(id)
+        Email email, Password password, string phoneNumber):base(id)
     {
        
         FullName=fullName;
         Username = username;
         Email = email;
         Password = password;
+        PhoneNumber = phoneNumber;
     }
 
     protected User()
@@ -22,16 +23,18 @@ public sealed class User:AggregateRoot
         Username = null!;
         Password = null!;
         Email = null!;
+        PhoneNumber = null!;
     }
     
     public FullName FullName { get; private set; }
     public string Username { get; private set; }
     public Password Password { get; private set; }
+    public string PhoneNumber { get; private set; }
     public Email Email { get; private set; }
 
     public static Result<User> Create( string firstName,
         string lastName, string username, 
-        string email, string password,
+        string email, string password, string phoneNumber,
         IPasswordHasher passwordHasher)
     {   
         var fullNameResult = FullName.Create(firstName, lastName);  
@@ -46,7 +49,7 @@ public sealed class User:AggregateRoot
         var user = new User(Guid.NewGuid(),
             fullNameResult.Value,
             username, emailResult.Value,
-            passwordResult.Value);
+            passwordResult.Value, phoneNumber);
         return user;
     }
     

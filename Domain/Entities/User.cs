@@ -4,7 +4,7 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities;
 
-public sealed class User:Entity
+public sealed class User:AggregateRoot
 {   
     private User(Guid id, FullName fullName, string username,
         Email email, Password password):base(id)

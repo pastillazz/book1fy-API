@@ -31,7 +31,7 @@ public sealed class User:AggregateRoot
     public Password Password { get; private set; }
     public string PhoneNumber { get; private set; }
     public Email Email { get; private set; }
-
+    
     public static Result<User> Create( string firstName,
         string lastName, string username, 
         string email, string password, string phoneNumber,
@@ -50,7 +50,12 @@ public sealed class User:AggregateRoot
             fullNameResult.Value,
             username, emailResult.Value,
             passwordResult.Value, phoneNumber);
+        
+        var userEvent= new UserCreatedDomainEvent(Guid.NewGuid(),user.Id);
+        
         return user;
     }
     
 }
+
+

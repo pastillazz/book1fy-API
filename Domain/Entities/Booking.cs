@@ -20,5 +20,16 @@ public class Booking : AggregateRoot
     public BookingStatus Status { get; private set; }
     public decimal TotalAmount { get; private set; }
     public Guid TicketId { get; private set; }
- 
+    
+    public static Booking Create(Guid id, Guid userId, Guid ticketId, decimal totalAmount)
+    {   
+        return new Booking(id, userId, ticketId, totalAmount);
+    }
+
+    public static Booking Complete(Booking booking)
+    {
+        booking.Status = BookingStatus.Completed;
+        booking.UpdatedAtUtc = DateTime.UtcNow;
+        return booking;
+    }
 }

@@ -1,3 +1,5 @@
-﻿namespace Domain.Entities;
+﻿using Domain.Primitives;
 
-public record TicketCancelledDomainEvent();
+namespace Domain.Entities;
+
+public record TicketCancelledDomainEvent(Guid Id, Guid TicketId):DomainEvent(Id);

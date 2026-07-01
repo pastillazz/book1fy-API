@@ -1,4 +1,6 @@
-﻿namespace Domain.Abstractions;
+﻿using Domain.Entities;
+
+namespace Domain.Abstractions;
 
 public class Result<T>
 {

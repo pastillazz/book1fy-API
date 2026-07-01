@@ -1,3 +1,5 @@
-﻿namespace Domain.Entities;
+﻿using Domain.Primitives;
 
-public record TicketCreatedDomainEvent();
+namespace Domain.Entities;
+
+public record TicketCreatedDomainEvent(Guid Id, Guid TicketId):DomainEvent(Id);

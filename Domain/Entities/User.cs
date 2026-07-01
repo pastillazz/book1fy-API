@@ -52,7 +52,7 @@ public sealed class User:AggregateRoot
             passwordResult.Value, phoneNumber);
         
         var userEvent= new UserCreatedDomainEvent(Guid.NewGuid(),user.Id);
-        
+        user.RaiseDomainEvent(userEvent);
         return user;
     }
     

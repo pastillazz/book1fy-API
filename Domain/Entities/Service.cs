@@ -1,4 +1,6 @@
-﻿using Domain.Primitives;
+﻿using Domain.Abstractions;
+using Domain.Primitives;
+using Domain.ValueObjects.Errors;
 
 namespace Domain.Entities;
 
@@ -46,27 +48,29 @@ public sealed class Service : Entity
         return ticket;
     }
 
-    internal void CancelTicket(Guid ticketId)
+    internal Result CancelTicket(Guid ticketId)
     {
         var ticket = _tickets.FirstOrDefault(t => t.Id == ticketId);
         if (ticket == null)
         {
-            throw new InvalidOperationException("Ticket not found.");
+            return TicketErrors.NotFound;
         }
         ticket.CancelReservation();
         _tickets.Remove(ticket);
+        return Result.Success();
     }
 
-    internal void SellTicket(Guid ticketId)
+    internal Result SellTicket(Guid ticketId)
     {
         var ticket = _tickets.FirstOrDefault(t => t.Id == ticketId);
         if (ticket == null)
         {
-            throw new InvalidOperationException("Ticket not found.");
+           return TicketErrors.NotFound;
         }
 
         ticket.SellReservation();
         _tickets.Remove(ticket);
+        return Result.Success();
     }
 
 }

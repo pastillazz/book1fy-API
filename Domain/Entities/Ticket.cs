@@ -27,7 +27,7 @@ public class Ticket:Entity
     
     internal static Ticket Create(Guid serviceId, Guid userId, DateTime startTimeUtc,
         DateTime endTimeUtc, decimal price)
-    {
+    {   
         return new Ticket(Guid.NewGuid(), userId, serviceId, startTimeUtc, endTimeUtc, price);
     }
     internal void CancelReservation()

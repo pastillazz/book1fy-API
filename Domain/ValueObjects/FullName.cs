@@ -5,9 +5,9 @@ namespace Domain.ValueObjects;
 
 public sealed record FullName
 {
-    private string FirstName { get; init; }
-    private string LastName { get; init; }
-    
+    public string FirstName { get; init; }
+    public string LastName { get; init; }
+
     public string Full => $"{FirstName} {LastName}";
     private FullName(string firstName, string lastName)
     {

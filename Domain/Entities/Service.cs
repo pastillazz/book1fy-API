@@ -8,11 +8,11 @@ public sealed class Service : Entity
 {   private readonly List<DayOfWeek> _workDays=new();
     private readonly List<Ticket> _tickets=new();
     
-    internal Service(Guid id, Guid tenantId, string name, string description,
+    internal Service(Guid id, Guid companyId, string name, string description,
         TimeSpan openingTime, TimeSpan closingTime, List<DayOfWeek> workDays,
         decimal price) : base(id)
     {
-        TenantId = tenantId;
+        CompanyId = companyId;
         Name = name;
         Description = description;
         OpeningTime = openingTime;
@@ -24,7 +24,7 @@ public sealed class Service : Entity
     protected Service()
     {
     }
-    public Guid TenantId { get; private set; }
+    public Guid CompanyId { get; private set; }
     public string Name { get; private set; }
     public string Description { get; private set; }
     public Decimal Price { get; private set; }

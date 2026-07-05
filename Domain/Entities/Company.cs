@@ -28,13 +28,13 @@ public class Company:AggregateRoot
         return new Company(id, name, description);
     }
     
-    public Service AddService(Guid id, string name, 
+    public Result<Service> AddService(Guid id, string name, 
         string description, TimeSpan openingTime,
         TimeSpan closingTime, List<DayOfWeek> workDays,decimal price)
     {
         var service= Service.Create(id, this.Id, name, description, 
             openingTime, closingTime, workDays, price);
-        
+      
         _services.Add(service);
         return service;
     }

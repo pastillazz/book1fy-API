@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "bVUVoqorM60=",
+  "dgSpecHash": "uY3c1NFQxDA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Domain\\Domain.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/pastillazz/RiderProjects/book1fy-API/Domain/Domain.csproj",
+  "expectedPackageFiles": [
+    "/home/pastillazz/.nuget/packages/microsoft.aspnetcore.app.ref/10.0.9/microsoft.aspnetcore.app.ref.10.0.9.nupkg.sha512"
+  ],
   "logs": []
 }

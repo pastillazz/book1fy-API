@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Infrastructure\\Infrastructure.csproj": {}
+    "/home/pastillazz/RiderProjects/book1fy-API/Infrastructure/Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Application\\Application.csproj": {
+    "/home/pastillazz/RiderProjects/book1fy-API/Application/Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Application\\Application.csproj",
+        "projectUniqueName": "/home/pastillazz/RiderProjects/book1fy-API/Application/Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Application\\Application.csproj",
-        "packagesPath": "C:\\Users\\rober\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Application\\obj\\",
+        "projectPath": "/home/pastillazz/RiderProjects/book1fy-API/Application/Application.csproj",
+        "packagesPath": "/home/pastillazz/.nuget/packages/",
+        "outputPath": "/home/pastillazz/RiderProjects/book1fy-API/Application/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\rober\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/pastillazz/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -26,8 +26,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Domain\\Domain.csproj"
+              "/home/pastillazz/RiderProjects/book1fy-API/Domain/Domain.csproj": {
+                "projectPath": "/home/pastillazz/RiderProjects/book1fy-API/Domain/Domain.csproj"
               }
             }
           }
@@ -42,11 +42,29 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[12.1.1, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[12.1.1, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[14.2.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -58,12 +76,18 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[10.0.9, 10.0.9]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.109/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -341,17 +365,17 @@
         }
       }
     },
-    "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Domain\\Domain.csproj": {
+    "/home/pastillazz/RiderProjects/book1fy-API/Domain/Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Domain\\Domain.csproj",
+        "projectUniqueName": "/home/pastillazz/RiderProjects/book1fy-API/Domain/Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\rober\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Domain\\obj\\",
+        "projectPath": "/home/pastillazz/RiderProjects/book1fy-API/Domain/Domain.csproj",
+        "packagesPath": "/home/pastillazz/.nuget/packages/",
+        "outputPath": "/home/pastillazz/RiderProjects/book1fy-API/Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\rober\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/pastillazz/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -375,7 +399,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net10.0": {
@@ -391,12 +415,18 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[10.0.9, 10.0.9]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.109/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -674,17 +704,17 @@
         }
       }
     },
-    "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Infrastructure\\Infrastructure.csproj": {
+    "/home/pastillazz/RiderProjects/book1fy-API/Infrastructure/Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "/home/pastillazz/RiderProjects/book1fy-API/Infrastructure/Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\rober\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Infrastructure\\obj\\",
+        "projectPath": "/home/pastillazz/RiderProjects/book1fy-API/Infrastructure/Infrastructure.csproj",
+        "packagesPath": "/home/pastillazz/.nuget/packages/",
+        "outputPath": "/home/pastillazz/RiderProjects/book1fy-API/Infrastructure/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\rober\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/pastillazz/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -696,8 +726,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Application\\Application.csproj": {
-                "projectPath": "C:\\Users\\rober\\RiderProjects\\Book1fy-API\\Application\\Application.csproj"
+              "/home/pastillazz/RiderProjects/book1fy-API/Application/Application.csproj": {
+                "projectPath": "/home/pastillazz/RiderProjects/book1fy-API/Application/Application.csproj"
               }
             }
           }
@@ -712,7 +742,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net10.0": {
@@ -748,12 +778,18 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[10.0.9, 10.0.9]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.109/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

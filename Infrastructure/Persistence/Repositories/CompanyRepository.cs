@@ -33,4 +33,6 @@ public class CompanyRepository(AppDbContext context):ICompanyRepository
                 t.StartTimeUtc<endTimeUtc && t.EndTimeUtc>startTimeUtc,
                 cancellationToken);
     }
+    
+    
 }

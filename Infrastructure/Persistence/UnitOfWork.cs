@@ -1,6 +1,6 @@
 ﻿using Domain.Repositories;
 
-namespace Infrastructure;
+namespace Infrastructure.Persistence;
 
 internal sealed class UnitOfWork(AppDbContext dbContext) : IUnitOfWork
 {

@@ -1,4 +1,4 @@
-using Infrastructure;
+using Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();

@@ -19,8 +19,8 @@
 
     <ItemGroup>
       <Folder Include="Common\Behaviors\" />
+      <Folder Include="Common\Validators\" />
       <Folder Include="Companies\Queries\" />
-      <Folder Include="Users\Commands\" />
       <Folder Include="Users\Queries\" />
     </ItemGroup>
 

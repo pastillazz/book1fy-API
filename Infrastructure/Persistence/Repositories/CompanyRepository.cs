@@ -10,13 +10,12 @@ public class CompanyRepository(AppDbContext context):ICompanyRepository
     {
         return await context.Companies
             .Where(c => c.Id == id)
-            .Include(c=>c.Services)
             .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task AddAsync(Company company, CancellationToken cancellationToken = default)
+    public void Add(Company company)
     {
-        await context.Companies.AddAsync(company, cancellationToken);
+        context.Companies.Add(company);
     }
     
     public void Remove(Company company)
@@ -24,15 +23,13 @@ public class CompanyRepository(AppDbContext context):ICompanyRepository
         context.Companies.Remove(company);
     }
 
-    public async Task<bool> HasTicketExists(Guid serviceId, DateTime startTimeUtc,
-        DateTime endTimeUtc, CancellationToken cancellationToken = default)
+    public async Task<Company?> GetCompleteByIdAsync(Guid companyId, 
+        Guid serviceId, CancellationToken cancellationToken = default)
     {
-        return await context.Set<Ticket>()
-            .AnyAsync(t=>
-                t.ServiceId == serviceId &&
-                t.StartTimeUtc<endTimeUtc && t.EndTimeUtc>startTimeUtc,
-                cancellationToken);
+       return await context.Companies
+            .Include(c =>
+                c.Services.Where(s => s.Id == serviceId))
+            .ThenInclude(s => s.Tickets)
+            .FirstOrDefaultAsync(c => c.Id == companyId,cancellationToken);
     }
-    
-    
 }

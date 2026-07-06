@@ -39,20 +39,28 @@ public class Company:AggregateRoot
         return service;
     }
 
-    public Result<Ticket> AddTicketToService(Guid serviceId, Guid userId, DateTime startTimeUtc,
+    public Result AddTicketToService(Guid id,Guid serviceId, Guid userId, DateTime startTimeUtc,
         DateTime endTimeUtc)
     {   
         var service=_services.FirstOrDefault(s => s.Id == serviceId);
         
         if (service == null)
         {
-            return Result<Ticket>.Failure(ServiceErrors.NotFound);
+            return Result.Failure(ServiceErrors.NotFound);
         }
         
-        var ticket = service.AddTicketToService(serviceId,userId,startTimeUtc, endTimeUtc);
-        var TicketEvent= new TicketCreatedDomainEvent(Guid.NewGuid(), ticket.Id);
-        RaiseDomainEvent(TicketEvent);
-        return ticket;
+        var result = service.AddTicketToService(id,serviceId,userId,
+            startTimeUtc, endTimeUtc);
+        
+        if (result.IsFailure)
+        {
+            return result.Error!;
+        }
+        
+        var ticketEvent= new TicketCreatedDomainEvent(Guid.NewGuid(),
+            result.Value.Id);
+        RaiseDomainEvent(ticketEvent);
+        return Result.Success();
     }
 
     public Result CancelTicket(Guid serviceId, Guid ticketId)

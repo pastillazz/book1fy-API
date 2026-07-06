@@ -1,7 +1,7 @@
 
 using ICommand = Application.Abstractions.Interfaces.ICommand;
 
-namespace Application.Companies.Commands;
+namespace Application.Companies.Commands.CreateCompany;
 
 public sealed record CreateCompanyCommand(
     Guid Id,

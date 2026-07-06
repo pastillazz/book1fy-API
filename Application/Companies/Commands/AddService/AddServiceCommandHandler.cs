@@ -1,6 +1,7 @@
 using Application.Abstractions.Interfaces;
 using Domain.Abstractions;
 using Domain.Repositories;
+using Domain.ValueObjects.Errors;
 
 namespace Application.Companies.Commands.AddService;
 
@@ -10,21 +11,24 @@ public class AddServiceCommandHandler(
 {
     public async Task<Result> Handle(AddServiceCommand request, CancellationToken cancellationToken)
     {
-        var company = await companyRepository.GetByIdAsync(request.CompanyId, cancellationToken);
-        if (company is null)
+        var company = await companyRepository
+            .GetByIdAsync(request.CompanyId, cancellationToken);
+        
+        if (company == null)
         {
-            return Error.None;
+            return CompanyErrors.CompanyNotFound;
         }
         
         var result=company.AddService(request.Id, request.Name, 
             request.Description, request.OpeningTime,
             request.ClosingTime, request.WorkDays, request.Price);
         
-        if (result.IsSuccess)
+        if (result.IsFailure)
         {
-            await unitOfWork.SaveChangesAsync(cancellationToken);
-            return Result.Success();
+            return result.Error!;
         }
-        return Result.Failure(result.Error);
+        
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+        return Result.Success();
     }
 }

@@ -40,12 +40,38 @@ public sealed class Service : Entity
         return new Service(id, tenantId, name, description,
             openingTime, closingTime, workDays, price);
     }
-    internal Ticket AddTicketToService(Guid serviceId, Guid userId, 
+    
+    internal Result<Ticket> AddTicketToService(Guid id,Guid serviceId, Guid userId, 
         DateTime startTimeUtc, DateTime endTimeUtc)
     {
-        var ticket = Ticket.Create(this.Id,userId, startTimeUtc, endTimeUtc, this.Price);
+        var ticketValidation = IsTicketValid(startTimeUtc, endTimeUtc);
+        
+        if (!ticketValidation.IsSuccess)
+        {
+            return ticketValidation.Error;
+        }
+
+        var ticket = Ticket.Create(id,this.Id,userId, startTimeUtc, endTimeUtc, this.Price);
         _tickets.Add(ticket);
         return ticket;
+    }
+
+    private Result IsTicketValid(DateTime startTimeUtc, DateTime endTimeUtc)
+    {
+        if (startTimeUtc.TimeOfDay < OpeningTime || endTimeUtc.TimeOfDay > ClosingTime)
+        {
+            return TicketErrors.InvalidTimes;
+        }
+
+        if (_tickets.
+            Any(t => t.StartTimeUtc < endTimeUtc 
+                     && t.EndTimeUtc > startTimeUtc))
+        {
+            return TicketErrors.OverlappingTicket;
+            
+        }
+
+        return Result.Success();
     }
 
     internal Result CancelTicket(Guid ticketId)

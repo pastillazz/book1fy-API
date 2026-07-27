@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "foUp7YgE/l8=",
+  "dgSpecHash": "vch7/sFi0IU=",
   "success": true,
-  "projectFilePath": "/home/pastillazz/RiderProjects/book1fy-API/Api/Api.csproj",
+  "projectFilePath": "/home/pastillazz/book1fy-API/Api/Api.csproj",
   "expectedPackageFiles": [
     "/home/pastillazz/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/fluentvalidation.dependencyinjectionextensions/12.1.1/fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
@@ -29,16 +29,16 @@
     "/home/pastillazz/.nuget/packages/microsoft.openapi/2.0.0/microsoft.openapi.2.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/npgsql/10.0.0/npgsql.10.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/npgsql.entityframeworkcore.postgresql/10.0.0/npgsql.entityframeworkcore.postgresql.10.0.0.nupkg.sha512",
-    "/home/pastillazz/.nuget/packages/microsoft.aspnetcore.app.ref/10.0.9/microsoft.aspnetcore.app.ref.10.0.9.nupkg.sha512"
+    "/home/pastillazz/.nuget/packages/microsoft.aspnetcore.app.ref/10.0.10/microsoft.aspnetcore.app.ref.10.0.10.nupkg.sha512"
   ],
   "logs": [
     {
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'Microsoft.OpenApi' 2.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-v5pm-xwqc-g5wc",
-      "projectPath": "/home/pastillazz/RiderProjects/book1fy-API/Api/Api.csproj",
+      "projectPath": "/home/pastillazz/book1fy-API/Api/Api.csproj",
       "warningLevel": 1,
-      "filePath": "/home/pastillazz/RiderProjects/book1fy-API/Api/Api.csproj",
+      "filePath": "/home/pastillazz/book1fy-API/Api/Api.csproj",
       "libraryId": "Microsoft.OpenApi",
       "targetGraphs": [
         "net10.0"

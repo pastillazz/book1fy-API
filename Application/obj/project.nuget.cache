@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZeMMy+krIhI=",
+  "dgSpecHash": "BKY0dIi1nG0=",
   "success": true,
-  "projectFilePath": "/home/pastillazz/RiderProjects/book1fy-API/Application/Application.csproj",
+  "projectFilePath": "/home/pastillazz/book1fy-API/Application/Application.csproj",
   "expectedPackageFiles": [
     "/home/pastillazz/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/fluentvalidation.dependencyinjectionextensions/12.1.1/fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
@@ -14,7 +14,7 @@
     "/home/pastillazz/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.14.0/microsoft.identitymodel.jsonwebtokens.8.14.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/microsoft.identitymodel.logging/8.14.0/microsoft.identitymodel.logging.8.14.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/microsoft.identitymodel.tokens/8.14.0/microsoft.identitymodel.tokens.8.14.0.nupkg.sha512",
-    "/home/pastillazz/.nuget/packages/microsoft.aspnetcore.app.ref/10.0.9/microsoft.aspnetcore.app.ref.10.0.9.nupkg.sha512"
+    "/home/pastillazz/.nuget/packages/microsoft.aspnetcore.app.ref/10.0.10/microsoft.aspnetcore.app.ref.10.0.10.nupkg.sha512"
   ],
   "logs": []
 }

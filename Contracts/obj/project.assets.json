@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/pastillazz/RiderProjects/book1fy-API/Contracts/Contracts.csproj",
+      "projectUniqueName": "/home/pastillazz/book1fy-API/Contracts/Contracts.csproj",
       "projectName": "Contracts",
-      "projectPath": "/home/pastillazz/RiderProjects/book1fy-API/Contracts/Contracts.csproj",
+      "projectPath": "/home/pastillazz/book1fy-API/Contracts/Contracts.csproj",
       "packagesPath": "/home/pastillazz/.nuget/packages/",
-      "outputPath": "/home/pastillazz/RiderProjects/book1fy-API/Contracts/obj/",
+      "outputPath": "/home/pastillazz/book1fy-API/Contracts/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/pastillazz/.nuget/NuGet/NuGet.Config"
@@ -30,6 +30,7 @@
       },
       "frameworks": {
         "net10.0": {
+          "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {}
         }
@@ -48,6 +49,7 @@
     },
     "frameworks": {
       "net10.0": {
+        "framework": "net10.0",
         "targetAlias": "net10.0",
         "imports": [
           "net461",
@@ -63,7 +65,7 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[10.0.9, 10.0.9]"
+            "version": "[10.0.10, 10.0.10]"
           }
         ],
         "frameworkReferences": {
@@ -71,7 +73,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.109/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.110/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

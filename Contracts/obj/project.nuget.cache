@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "NQrZEqtB5fU=",
+  "dgSpecHash": "jmfaE6TkunI=",
   "success": true,
-  "projectFilePath": "/home/pastillazz/RiderProjects/book1fy-API/Contracts/Contracts.csproj",
+  "projectFilePath": "/home/pastillazz/book1fy-API/Contracts/Contracts.csproj",
   "expectedPackageFiles": [
-    "/home/pastillazz/.nuget/packages/microsoft.aspnetcore.app.ref/10.0.9/microsoft.aspnetcore.app.ref.10.0.9.nupkg.sha512"
+    "/home/pastillazz/.nuget/packages/microsoft.aspnetcore.app.ref/10.0.10/microsoft.aspnetcore.app.ref.10.0.10.nupkg.sha512"
   ],
   "logs": []
 }

@@ -20,7 +20,6 @@
     <ItemGroup>
       <Folder Include="Common\Behaviors\" />
       <Folder Include="Common\Validators\" />
-      <Folder Include="Users\Queries\" />
     </ItemGroup>
 
 </Project>

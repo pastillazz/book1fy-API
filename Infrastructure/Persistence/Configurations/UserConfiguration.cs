@@ -20,6 +20,7 @@ public class UserConfiguration:IEntityTypeConfiguration<User>
             .HasColumnName("phone_number")
             .IsRequired()
             .HasMaxLength(20);
+        
         builder.ComplexProperty(u => u.Email, emailBuilder =>
         {
             emailBuilder.Property(e => e.Value)
@@ -27,6 +28,7 @@ public class UserConfiguration:IEntityTypeConfiguration<User>
                 .IsRequired()
                 .HasMaxLength(255);
         });
+        
         builder.ComplexProperty(u => u.Password, passwordBuilder =>
         {
             passwordBuilder.Property(p=> p.Hash)

@@ -7,5 +7,6 @@ public record CompanyResponse(
     string Name,
     string Description,
     string Status,
-    DateTime CreatedAt
-    );
+    string Email,
+    DateTime CreatedAt,
+    IReadOnlyCollection<ServiceResponse> Services);

@@ -14,10 +14,7 @@ public class AddServiceCommandHandler(
         var company = await companyRepository
             .GetByIdAsync(request.CompanyId, cancellationToken);
         
-        if (company == null)
-        {
-            return CompanyErrors.CompanyNotFound;
-        }
+        if (company is  null) return CompanyErrors.CompanyNotFound;
         
         var result=company.AddService(request.Id, request.Name, 
             request.Description, request.OpeningTime,

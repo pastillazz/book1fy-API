@@ -30,6 +30,14 @@ public class CompanyConfiguration:IEntityTypeConfiguration<Company>
             .HasColumnName("created_at")
             .IsRequired();
         
+        builder.ComplexProperty(c => c.Email, emailBuilder =>
+        {
+            emailBuilder.Property(c => c.Value)
+                .HasColumnName("email")
+                .IsRequired()
+                .HasMaxLength(255);
+        });
+        
         builder.HasMany(c=>c.Services)
             .WithOne()
             .HasForeignKey(s=>s.CompanyId)

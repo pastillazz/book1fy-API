@@ -1,10 +1,13 @@
-﻿using Domain.Repositories;
+﻿using Domain.Abstractions;
+using Domain.Repositories;
+using Infrastructure.Authentication;
+using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.Persistence;
+namespace Infrastructure;
 
 public static class DependencyInjection
 {
@@ -16,7 +19,7 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICompanyRepository, CompanyRepository>();
-
+        services.AddScoped<IPasswordHasher,PasswordHasher>();
         return services;
     }
 }

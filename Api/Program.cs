@@ -1,5 +1,5 @@
 using Application;
-using Infrastructure.Persistence;
+using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();

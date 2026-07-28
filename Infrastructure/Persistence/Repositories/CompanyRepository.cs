@@ -6,22 +6,30 @@ namespace Infrastructure.Persistence.Repositories;
 
 public class CompanyRepository(AppDbContext context):ICompanyRepository
 {
+    public async Task<bool> ExistsByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await context.Companies
+            .AnyAsync(c => c.Id == id, cancellationToken);
+    }
+
+    public async Task<bool> ExistsByEmailAsync(string email, CancellationToken cancellationToken = default)
+    {
+        return await context.Companies
+            .AnyAsync(c => c.Email.Value == email, cancellationToken);
+    }
+
     public async Task<Company?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await context.Companies
-            .Where(c => c.Id == id)
-            .FirstOrDefaultAsync(cancellationToken);
+            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
     }
 
-    public void Add(Company company)
-    {
-        context.Companies.Add(company);
-    }
+
+    public void Add(Company company)=> context.Companies.Add(company);
     
-    public void Remove(Company company)
-    {
-        context.Companies.Remove(company);
-    }
+    
+    public void Remove(Company company)=> context.Companies.Remove(company);
+    
 
     public async Task<Company?> GetCompleteByIdAsync(Guid companyId, 
         Guid serviceId, CancellationToken cancellationToken = default)

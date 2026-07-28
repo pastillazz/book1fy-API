@@ -1,6 +1,7 @@
 ﻿using Domain.Abstractions;
 using Domain.Enums;
 using Domain.Primitives;
+using Domain.ValueObjects;
 using Domain.ValueObjects.Errors;
 
 namespace Domain.Entities;
@@ -8,10 +9,12 @@ namespace Domain.Entities;
 public class Company:AggregateRoot
 {   
     private readonly List<Service> _services=new();
-    private Company(Guid id, string name, string description ) : base(id)
+    private Company(Guid id, string name, string description,
+        Email email ) : base(id)
     {
         Name = name;
         Description = description;
+        Email = email;
         Status = CompanyStatus.Active;
         CreatedAt = DateTime.UtcNow;
     }
@@ -19,13 +22,18 @@ public class Company:AggregateRoot
     {}
     public string Name { get; private set; }
     public string Description { get; private set; }
+    public Email Email { get; private set; }
     public CompanyStatus Status { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public IReadOnlyCollection<Service> Services => _services;
     
-    public static Company Create(Guid id, string name, string description)
+    public static Result<Company> Create(Guid id, string name, 
+        string description, string email)
     {   
-        return new Company(id, name, description);
+        var emailResult = Email.Create(email);
+        if (emailResult.IsFailure) return emailResult.Error!;
+        
+        return new Company(id, name, description, emailResult.Value);
     }
     
     public Result<Service> AddService(Guid id, string name, 

@@ -6,5 +6,6 @@ namespace Application.Companies.Commands.CreateCompany;
 public sealed record CreateCompanyCommand(
     Guid Id,
     string Name,
-    string Description
+    string Description,
+    string Email
     ):ICommand;

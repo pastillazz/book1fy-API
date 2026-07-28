@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "FPwAoqcbgAQ=",
+  "dgSpecHash": "DoJwEU4LYYw=",
   "success": true,
   "projectFilePath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
   "expectedPackageFiles": [
+    "/home/pastillazz/.nuget/packages/bcrypt.net-next/4.2.0/bcrypt.net-next.4.2.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/fluentvalidation.dependencyinjectionextensions/12.1.1/fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",

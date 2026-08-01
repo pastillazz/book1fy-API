@@ -1,0 +1,24 @@
+using Application.Abstractions.Interfaces;
+using Domain.Abstractions;
+using Domain.Repositories;
+using Domain.ValueObjects.Errors;
+
+namespace Application.Companies.Commands.CancelTicket;
+
+public class CancelTicketCommandHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork):ICommandHandler<CancelTicketCommand>
+{
+    public async Task<Result> Handle(CancelTicketCommand request, CancellationToken cancellationToken)
+    {
+        var company = await companyRepository
+            .GetCompleteByIdAsync(request.CompanyId, request.ServiceId,
+                cancellationToken);
+
+        if (company == null) return CompanyErrors.CompanyNotFound;
+        
+        var result=company.CancelTicket(request.ServiceId, request.TicketId);
+        if (result.IsFailure) return result.Error!;
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+        return Result.Success();
+    }
+}

@@ -5,7 +5,10 @@ namespace Application.Users.Commands;
 public record CreateUserCommand(
     string FirstName,
     string LastName, 
-    string Username, 
+    string UserName, 
     string Email, 
     string Password,
-    string PhoneNumber):ICommand;
+    string PhoneNumber):ICommand<AuthResult>
+{
+   
+}

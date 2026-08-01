@@ -15,17 +15,12 @@ public class AddTicketCommandHandler
             .GetCompleteByIdAsync(request.CompanyId, request.ServiceId,
                 cancellationToken);
 
-        if (company == null)
-        {
-            return CompanyErrors.CompanyNotFound;
-        } 
+        if (company == null) return CompanyErrors.CompanyNotFound;
+        
         var result = company.AddTicketToService(request.Id,request.ServiceId, request.UserId,
            request.StartTimeUtc, request.EndTimeUtc);
        
-        if (result.IsFailure)
-        {
-           return result.Error!; 
-        }
+        if (result.IsFailure) return result.Error!; 
         
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return Result.Success();

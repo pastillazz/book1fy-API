@@ -1,4 +1,5 @@
 using Api.Extensions;
+using Api.Middleware;
 using Application;
 using Infrastructure;
 
@@ -9,8 +10,12 @@ builder.Services
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
 
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
 var app = builder.Build();
 
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 

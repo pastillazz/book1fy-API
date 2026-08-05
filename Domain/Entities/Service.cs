@@ -1,6 +1,6 @@
 ﻿using Domain.Abstractions;
+using Domain.Errors;
 using Domain.Primitives;
-using Domain.ValueObjects.Errors;
 
 namespace Domain.Entities;
 

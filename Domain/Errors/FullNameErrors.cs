@@ -1,6 +1,6 @@
 ﻿using Domain.Abstractions;
 
-namespace Domain.ValueObjects.Errors;
+namespace Domain.Errors;
 
 public static class FullNameErrors
 {

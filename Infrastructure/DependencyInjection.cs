@@ -1,4 +1,5 @@
-﻿using Application.Companies.Queries;
+﻿using Application.Abstractions.Authentication;
+using Application.Companies.Queries;
 using Application.Users.Queries;
 using Domain.Abstractions;
 using Domain.Repositories;
@@ -16,15 +17,26 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        //Db Configuration
         services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
-
+            options
+                .UseNpgsql(configuration
+                    .GetConnectionString("DefaultConnection")));
+        
+        //Jwt Configuration
+        services.Configure<JwtSettings>
+            (configuration.GetSection(JwtSettings.SectionName));
+        
+        services.AddSingleton<IJwtTokenGenerator, JwtTokenTokenGenerator>();
+        
+        //DI Configuration
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICompanyRepository, CompanyRepository>();
         services.AddScoped<IPasswordHasher,PasswordHasher>();
         services.AddScoped<IUserQueries, UserQueries>();
         services.AddScoped<ICompanyQueries, CompanyQueries>();
+
         return services;
     }
 }

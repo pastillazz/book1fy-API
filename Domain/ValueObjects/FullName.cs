@@ -1,5 +1,5 @@
 ﻿using Domain.Abstractions;
-using Domain.ValueObjects.Errors;
+using Domain.Errors;
 
 namespace Domain.ValueObjects;
 

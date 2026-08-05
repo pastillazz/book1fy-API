@@ -1,15 +1,18 @@
-﻿using Domain.Abstractions;
+﻿using System.Net;
+using Domain.Abstractions;
 
-namespace Domain.ValueObjects.Errors;
+namespace Domain.Errors;
 
 public class TicketErrors
 {
     public static readonly Error NotFound = new ("Ticket.NotFound", 
-        "Ticket was not found.");
+        "Ticket was not found.",HttpStatusCode.NotFound);
     
     public static readonly Error InvalidTimes=new("Ticket.InvalidTimes",
-        "Ticket times are outside of service hours.");
+        "Ticket times are outside of service hours.",
+        HttpStatusCode.Conflict);
     
     public static readonly Error OverlappingTicket=new("Ticket.OverlappingTicket",
-        "Ticket times overlap with an existing ticket.");
+        "Ticket times overlap with an existing ticket.",
+        HttpStatusCode.Conflict);
 }

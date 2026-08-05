@@ -1,6 +1,6 @@
 using Application.Abstractions.Interfaces;
 using Domain.Abstractions;
-using Domain.ValueObjects.Errors;
+using Domain.Errors;
 
 namespace Application.Companies.Queries.GetCompanyByEmail;
 

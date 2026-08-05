@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "nGCR5ASXa+4=",
+  "dgSpecHash": "kg0MVObpcM0=",
   "success": true,
   "projectFilePath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -28,13 +28,16 @@
     "/home/pastillazz/.nuget/packages/microsoft.entityframeworkcore.relational/10.0.0/microsoft.entityframeworkcore.relational.10.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/microsoft.extensions.caching.abstractions/10.0.0/microsoft.extensions.caching.abstractions.10.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/microsoft.extensions.caching.memory/10.0.0/microsoft.extensions.caching.memory.10.0.0.nupkg.sha512",
+    "/home/pastillazz/.nuget/packages/microsoft.extensions.configuration/10.0.0/microsoft.extensions.configuration.10.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/microsoft.extensions.configuration.abstractions/10.0.0/microsoft.extensions.configuration.abstractions.10.0.0.nupkg.sha512",
+    "/home/pastillazz/.nuget/packages/microsoft.extensions.configuration.binder/10.0.0/microsoft.extensions.configuration.binder.10.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/microsoft.extensions.dependencyinjection/10.0.0/microsoft.extensions.dependencyinjection.10.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/10.0.0/microsoft.extensions.dependencyinjection.abstractions.10.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/microsoft.extensions.dependencymodel/10.0.0/microsoft.extensions.dependencymodel.10.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/microsoft.extensions.logging/10.0.0/microsoft.extensions.logging.10.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/microsoft.extensions.logging.abstractions/10.0.0/microsoft.extensions.logging.abstractions.10.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/microsoft.extensions.options/10.0.0/microsoft.extensions.options.10.0.0.nupkg.sha512",
+    "/home/pastillazz/.nuget/packages/microsoft.extensions.options.configurationextensions/10.0.0/microsoft.extensions.options.configurationextensions.10.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/microsoft.extensions.primitives/10.0.0/microsoft.extensions.primitives.10.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/microsoft.identitymodel.abstractions/8.22.0/microsoft.identitymodel.abstractions.8.22.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.22.0/microsoft.identitymodel.jsonwebtokens.8.22.0.nupkg.sha512",
@@ -55,112 +58,13 @@
     "/home/pastillazz/.nuget/packages/system.configuration.configurationmanager/9.0.0/system.configuration.configurationmanager.9.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/system.diagnostics.eventlog/9.0.0/system.diagnostics.eventlog.9.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/system.formats.nrbf/9.0.0/system.formats.nrbf.9.0.0.nupkg.sha512",
-    "/home/pastillazz/.nuget/packages/system.identitymodel.tokens.jwt/8.22.0/system.identitymodel.tokens.jwt.8.22.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/system.reflection.metadataloadcontext/7.0.0/system.reflection.metadataloadcontext.7.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/system.resources.extensions/9.0.0/system.resources.extensions.9.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/system.security.cryptography.pkcs/9.0.0/system.security.cryptography.pkcs.9.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/system.security.cryptography.protecteddata/9.0.0/system.security.cryptography.protecteddata.9.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/system.security.cryptography.xml/9.0.0/system.security.cryptography.xml.9.0.0.nupkg.sha512",
     "/home/pastillazz/.nuget/packages/system.security.permissions/9.0.0/system.security.permissions.9.0.0.nupkg.sha512",
-    "/home/pastillazz/.nuget/packages/system.windows.extensions/9.0.0/system.windows.extensions.9.0.0.nupkg.sha512",
-    "/home/pastillazz/.nuget/packages/microsoft.aspnetcore.app.ref/10.0.10/microsoft.aspnetcore.app.ref.10.0.10.nupkg.sha512"
+    "/home/pastillazz/.nuget/packages/system.windows.extensions/9.0.0/system.windows.extensions.9.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'System.Security.Cryptography.Xml' 9.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-23rf-6693-g89p",
-      "projectPath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "warningLevel": 1,
-      "filePath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "libraryId": "System.Security.Cryptography.Xml",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    },
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'System.Security.Cryptography.Xml' 9.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-37gx-xxp4-5rgx",
-      "projectPath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "warningLevel": 1,
-      "filePath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "libraryId": "System.Security.Cryptography.Xml",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    },
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'System.Security.Cryptography.Xml' 9.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-6588-8gv4-xfgh",
-      "projectPath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "warningLevel": 1,
-      "filePath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "libraryId": "System.Security.Cryptography.Xml",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    },
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'System.Security.Cryptography.Xml' 9.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-8q5v-6pqq-x66h",
-      "projectPath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "warningLevel": 1,
-      "filePath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "libraryId": "System.Security.Cryptography.Xml",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    },
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'System.Security.Cryptography.Xml' 9.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-cvvh-rhrc-wg4q",
-      "projectPath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "warningLevel": 1,
-      "filePath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "libraryId": "System.Security.Cryptography.Xml",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    },
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'System.Security.Cryptography.Xml' 9.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-g8r8-53c2-pm3f",
-      "projectPath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "warningLevel": 1,
-      "filePath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "libraryId": "System.Security.Cryptography.Xml",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    },
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'System.Security.Cryptography.Xml' 9.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-mmjf-rqrv-855v",
-      "projectPath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "warningLevel": 1,
-      "filePath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "libraryId": "System.Security.Cryptography.Xml",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    },
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'System.Security.Cryptography.Xml' 9.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-w3x6-4m5h-cxqf",
-      "projectPath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "warningLevel": 1,
-      "filePath": "/home/pastillazz/book1fy-API/Infrastructure/Infrastructure.csproj",
-      "libraryId": "System.Security.Cryptography.Xml",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    }
-  ]
+  "logs": []
 }

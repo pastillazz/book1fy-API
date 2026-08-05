@@ -1,0 +1,12 @@
+/home/pastillazz/book1fy-API/Domain/bin/Debug/net10.0/Domain.deps.json
+/home/pastillazz/book1fy-API/Domain/bin/Debug/net10.0/Domain.dll
+/home/pastillazz/book1fy-API/Domain/bin/Debug/net10.0/Domain.pdb
+/home/pastillazz/book1fy-API/Domain/obj/Debug/net10.0/Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/pastillazz/book1fy-API/Domain/obj/Debug/net10.0/Domain.AssemblyInfoInputs.cache
+/home/pastillazz/book1fy-API/Domain/obj/Debug/net10.0/Domain.AssemblyInfo.cs
+/home/pastillazz/book1fy-API/Domain/obj/Debug/net10.0/Domain.csproj.CoreCompileInputs.cache
+/home/pastillazz/book1fy-API/Domain/obj/Debug/net10.0/Domain.sourcelink.json
+/home/pastillazz/book1fy-API/Domain/obj/Debug/net10.0/Domain.dll
+/home/pastillazz/book1fy-API/Domain/obj/Debug/net10.0/refint/Domain.dll
+/home/pastillazz/book1fy-API/Domain/obj/Debug/net10.0/Domain.pdb
+/home/pastillazz/book1fy-API/Domain/obj/Debug/net10.0/ref/Domain.dll

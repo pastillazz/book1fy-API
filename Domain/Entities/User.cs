@@ -56,6 +56,10 @@ public sealed class User:AggregateRoot
         return user;
     }
     
+    public bool HasPassword(string plainPassword, 
+        IPasswordHasher passwordHasher) =>
+        Password.Verify(plainPassword, passwordHasher);
+    
 }
 
 

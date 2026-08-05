@@ -1,5 +1,5 @@
 ﻿using Domain.Abstractions;
-using Domain.ValueObjects.Errors;
+using Domain.Errors;
 
 namespace Domain.ValueObjects;
 
@@ -19,17 +19,11 @@ public sealed record Password
         var hash = passwordHasher.Hash(password);
         return new Password(hash);
     }
-
-    public static Result<Password> FromDatabase(string hash)
-    {
-        if (string.IsNullOrWhiteSpace(hash))
-        {
-            return Result<Password>.Failure(PasswordErrors.Empty);
-        }
-        
-        return new Password(hash);
-    }
     
+    public bool Verify(string plainPassword,
+        IPasswordHasher passwordHasher) =>
+        passwordHasher.Verify(plainPassword, Hash);
+ 
     private static Result ValidateStrength(string password)
     {
         if (string.IsNullOrWhiteSpace(password))

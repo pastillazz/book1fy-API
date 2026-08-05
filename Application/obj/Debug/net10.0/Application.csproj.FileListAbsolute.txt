@@ -1,0 +1,16 @@
+/home/pastillazz/book1fy-API/Application/bin/Debug/net10.0/Application.deps.json
+/home/pastillazz/book1fy-API/Application/bin/Debug/net10.0/Application.dll
+/home/pastillazz/book1fy-API/Application/bin/Debug/net10.0/Application.pdb
+/home/pastillazz/book1fy-API/Application/bin/Debug/net10.0/Domain.dll
+/home/pastillazz/book1fy-API/Application/bin/Debug/net10.0/Domain.pdb
+/home/pastillazz/book1fy-API/Application/obj/Debug/net10.0/Application.csproj.AssemblyReference.cache
+/home/pastillazz/book1fy-API/Application/obj/Debug/net10.0/Application.GeneratedMSBuildEditorConfig.editorconfig
+/home/pastillazz/book1fy-API/Application/obj/Debug/net10.0/Application.AssemblyInfoInputs.cache
+/home/pastillazz/book1fy-API/Application/obj/Debug/net10.0/Application.AssemblyInfo.cs
+/home/pastillazz/book1fy-API/Application/obj/Debug/net10.0/Application.csproj.CoreCompileInputs.cache
+/home/pastillazz/book1fy-API/Application/obj/Debug/net10.0/Application.sourcelink.json
+/home/pastillazz/book1fy-API/Application/obj/Debug/net10.0/Applicat.44B5EDA2.Up2Date
+/home/pastillazz/book1fy-API/Application/obj/Debug/net10.0/Application.dll
+/home/pastillazz/book1fy-API/Application/obj/Debug/net10.0/refint/Application.dll
+/home/pastillazz/book1fy-API/Application/obj/Debug/net10.0/Application.pdb
+/home/pastillazz/book1fy-API/Application/obj/Debug/net10.0/ref/Application.dll

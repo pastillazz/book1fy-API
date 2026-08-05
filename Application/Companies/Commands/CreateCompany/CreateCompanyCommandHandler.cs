@@ -1,8 +1,8 @@
 using Application.Abstractions.Interfaces;
 using Domain.Abstractions;
 using Domain.Entities;
+using Domain.Errors;
 using Domain.Repositories;
-using Domain.ValueObjects.Errors;
 
 namespace Application.Companies.Commands.CreateCompany;
 

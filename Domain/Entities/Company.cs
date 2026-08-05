@@ -1,8 +1,8 @@
 ﻿using Domain.Abstractions;
 using Domain.Enums;
+using Domain.Errors;
 using Domain.Primitives;
 using Domain.ValueObjects;
-using Domain.ValueObjects.Errors;
 
 namespace Domain.Entities;
 

@@ -4,8 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{9DC9D104-21B0-4BAA-B484-F4B20DAA88B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{E9A30DD5-8A8E-43CA-8FCA-8229F2502C85}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{A8C1A9AF-AEA3-4D1B-9325-7A020F0F5769}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{1C8E1070-3ADD-47FC-9A24-FD0AC8BF6531}"
@@ -29,10 +27,6 @@ Global
 		{9DC9D104-21B0-4BAA-B484-F4B20DAA88B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DC9D104-21B0-4BAA-B484-F4B20DAA88B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DC9D104-21B0-4BAA-B484-F4B20DAA88B3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E9A30DD5-8A8E-43CA-8FCA-8229F2502C85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E9A30DD5-8A8E-43CA-8FCA-8229F2502C85}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E9A30DD5-8A8E-43CA-8FCA-8229F2502C85}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E9A30DD5-8A8E-43CA-8FCA-8229F2502C85}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A8C1A9AF-AEA3-4D1B-9325-7A020F0F5769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A8C1A9AF-AEA3-4D1B-9325-7A020F0F5769}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8C1A9AF-AEA3-4D1B-9325-7A020F0F5769}.Release|Any CPU.ActiveCfg = Release|Any CPU

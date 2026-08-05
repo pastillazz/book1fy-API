@@ -1,9 +1,10 @@
-﻿using Domain.Abstractions;
+﻿using System.Net;
+using Domain.Abstractions;
 
-namespace Domain.ValueObjects.Errors;
+namespace Domain.Errors;
 
 public class ServiceErrors
 {
     public static readonly Error NotFound= new ("Service.NotFound",
-        "Service was not found.");
+        "Service was not found.",HttpStatusCode.NotFound);
 }

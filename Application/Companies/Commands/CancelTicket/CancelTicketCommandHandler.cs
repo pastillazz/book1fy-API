@@ -13,7 +13,7 @@ public class CancelTicketCommandHandler(ICompanyRepository companyRepository, IU
             .GetCompleteByIdAsync(request.CompanyId, request.ServiceId,
                 cancellationToken);
 
-        if (company == null) return CompanyErrors.CompanyNotFound;
+        if (company is null) return CompanyErrors.CompanyNotFound;
         
         var result=company.CancelTicket(request.ServiceId, request.TicketId);
         if (result.IsFailure) return result.Error!;

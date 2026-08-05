@@ -33,32 +33,37 @@ public sealed class Service : Entity
     public IReadOnlyCollection<DayOfWeek> WorkDays => _workDays;
     public IReadOnlyCollection<Ticket> Tickets => _tickets;
     
-    internal static Service Create(Guid id, Guid tenantId, string name, string description,
+    internal static Service Create(Guid companyId, string name, string description,
         TimeSpan openingTime, TimeSpan closingTime, List<DayOfWeek> workDays,
         decimal price)
     {
-        return new Service(id, tenantId, name, description,
+        return new Service(Guid.NewGuid(), companyId, name, description,
             openingTime, closingTime, workDays, price);
     }
     
-    internal Result<Ticket> AddTicketToService(Guid id,Guid serviceId, Guid userId, 
+    internal Result<Ticket> AddTicketToService(
+        Guid serviceId, Guid userId, 
         DateTime startTimeUtc, DateTime endTimeUtc)
     {
-        var ticketValidation = IsTicketValid(startTimeUtc, endTimeUtc);
+        var ticketValidation = IsTicketValid(
+            startTimeUtc, endTimeUtc);
         
         if (!ticketValidation.IsSuccess)
         {
-            return ticketValidation.Error;
+            return ticketValidation.Error!;
         }
 
-        var ticket = Ticket.Create(id,this.Id,userId, startTimeUtc, endTimeUtc, this.Price);
+        var ticket = Ticket.Create(serviceId,userId, 
+            startTimeUtc, endTimeUtc, this.Price);
         _tickets.Add(ticket);
         return ticket;
     }
 
-    private Result IsTicketValid(DateTime startTimeUtc, DateTime endTimeUtc)
+    private Result IsTicketValid(
+        DateTime startTimeUtc, DateTime endTimeUtc)
     {
-        if (startTimeUtc.TimeOfDay < OpeningTime || endTimeUtc.TimeOfDay > ClosingTime)
+        if (startTimeUtc.TimeOfDay < OpeningTime ||
+            endTimeUtc.TimeOfDay > ClosingTime)
         {
             return TicketErrors.InvalidTimes;
         }
@@ -76,7 +81,8 @@ public sealed class Service : Entity
 
     internal Result CancelTicket(Guid ticketId)
     {
-        var ticket = _tickets.FirstOrDefault(t => t.Id == ticketId);
+        var ticket = _tickets
+            .FirstOrDefault(t => t.Id == ticketId);
         if (ticket == null)
         {
             return TicketErrors.NotFound;
@@ -88,7 +94,8 @@ public sealed class Service : Entity
 
     internal Result SellTicket(Guid ticketId)
     {
-        var ticket = _tickets.FirstOrDefault(t => t.Id == ticketId);
+        var ticket = _tickets
+            .FirstOrDefault(t => t.Id == ticketId);
         if (ticket == null)
         {
            return TicketErrors.NotFound;

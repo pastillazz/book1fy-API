@@ -9,6 +9,8 @@ using Application.Companies.Commands.CreateCompany;
 using Application.Companies.Queries;
 using Application.Companies.Queries.GetCompanyByEmail;
 using Application.Companies.Queries.GetCompanyById;
+using Application.Companies.Queries.GetServiceById;
+using Application.Companies.Queries.GetTicketById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -73,9 +75,22 @@ public class CompanyController(ISender sender) : ApiController(sender)
         if (result.IsFailure) return ToProblemDetails(result.Error!);
 
         return CreatedAtAction(
-            actionName: nameof(GetCompanyById),
-            routeValues: new { id = companyId },
+            actionName: nameof(GetServiceById),
+            routeValues: new { companyId, serviceId = result.Value },
             value: new { Id = result.Value });
+    }
+
+    [HttpGet("{companyId:guid}/services/{serviceId:guid}")]
+    [ProducesResponseType(typeof(ServiceResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetServiceById(
+        Guid companyId, Guid serviceId, CancellationToken cancellationToken)
+    {
+        var query = new GetServiceByIdQuery(companyId, serviceId);
+        var result = await Sender.Send(query, cancellationToken);
+        if (result.IsFailure) return ToProblemDetails(result.Error!);
+
+        return Ok(result.Value);
     }
 
     [HttpPost("{companyId:guid}/services/{serviceId:guid}/tickets")]
@@ -85,7 +100,7 @@ public class CompanyController(ISender sender) : ApiController(sender)
     public async Task<IActionResult> AddTicket(Guid companyId, Guid serviceId,
         CreateTicketRequest request, CancellationToken cancellationToken)
     {
-        
+
         var command = new AddTicketCommand( request.UserId,
             companyId, serviceId,
             request.StartTimeUtc, request.EndTimeUtc);
@@ -94,9 +109,23 @@ public class CompanyController(ISender sender) : ApiController(sender)
         if (result.IsFailure) return ToProblemDetails(result.Error!);
 
         return CreatedAtAction(
-            actionName: nameof(GetCompanyById),
-            routeValues: new { id = companyId },
+            actionName: nameof(GetTicketById),
+            routeValues: new { companyId, serviceId, ticketId = result.Value },
             value: new { Id = result.Value });
+    }
+
+    [HttpGet("{companyId:guid}/services/{serviceId:guid}/tickets/{ticketId:guid}")]
+    [ProducesResponseType(typeof(TicketResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetTicketById(
+        Guid companyId, Guid serviceId, Guid ticketId,
+        CancellationToken cancellationToken)
+    {
+        var query = new GetTicketByIdQuery(companyId, serviceId, ticketId);
+        var result = await Sender.Send(query, cancellationToken);
+        if (result.IsFailure) return ToProblemDetails(result.Error!);
+
+        return Ok(result.Value);
     }
 
     [HttpDelete("{companyId:guid}/services/{serviceId:guid}/tickets/{ticketId:guid}")]

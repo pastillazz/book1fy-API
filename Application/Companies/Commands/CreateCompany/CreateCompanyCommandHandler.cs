@@ -1,3 +1,4 @@
+using Application.Abstractions.Authentication;
 using Application.Abstractions.Interfaces;
 using Domain.Abstractions;
 using Domain.Entities;
@@ -8,22 +9,18 @@ namespace Application.Companies.Commands.CreateCompany;
 
 public class CreateCompanyCommandHandler(
     ICompanyRepository companyRepository,
-    IUnitOfWork unitOfWork) : ICommandHandler<CreateCompanyCommand>
-{    
-    public async Task<Result> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
+    IUserContext userContext,
+    IUnitOfWork unitOfWork) : ICommandHandler<CreateCompanyCommand,  Guid>
+{
+    public async Task<Result<Guid>> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
     {
-        if (await companyRepository.ExistsByIdAsync(request.Id, cancellationToken)) 
-            return CompanyErrors.CompanyAlreadyExists;
-
-        if (await companyRepository.ExistsByEmailAsync(request.Email, cancellationToken))
-            return CompanyErrors.CompanyAlreadyExists;
+        var companyCreated=Company.Create(request.Name,
+            request.Description,request.Email, userContext.UserId);
         
-        var companyCreated=Company.Create(request.Id,request.Name,
-            request.Description,request.Email);
         if(companyCreated.IsFailure)return companyCreated.Error!;
         companyRepository.Add(companyCreated.Value);
         
         await unitOfWork.SaveChangesAsync(cancellationToken);
-        return Result.Success();
+        return companyCreated.Value.Id;
     }
 }

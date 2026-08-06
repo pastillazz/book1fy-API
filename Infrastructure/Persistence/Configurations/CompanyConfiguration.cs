@@ -29,6 +29,12 @@ public class CompanyConfiguration:IEntityTypeConfiguration<Company>
         builder.Property(c => c.CreatedAt)
             .HasColumnName("created_at")
             .IsRequired();
+
+        builder.Property(c => c.OwnerId)
+            .HasColumnName("owner_id")
+            .IsRequired();
+
+        builder.HasIndex(c => c.OwnerId);
         
         builder.ComplexProperty(c => c.Email, emailBuilder =>
         {

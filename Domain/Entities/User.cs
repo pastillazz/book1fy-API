@@ -17,7 +17,7 @@ public sealed class User:AggregateRoot
         PhoneNumber = phoneNumber;
     }
 
-    protected User()
+    private User()
     {
         FullName=null!;
         Username = null!;

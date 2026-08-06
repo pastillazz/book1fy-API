@@ -2,8 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-
-namespace Infrastructure.Configurations;
+namespace Infrastructure.Persistence.Configurations;
 
 public class ServiceConfiguration:IEntityTypeConfiguration<Service>
 {

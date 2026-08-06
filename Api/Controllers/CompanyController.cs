@@ -1,6 +1,131 @@
 using Api.Abstractions;
+using Api.Companies.Company;
+using Api.Companies.Service;
+using Api.Companies.Ticket;
+using Application.Companies.Commands.AddService;
+using Application.Companies.Commands.AddTicket;
+using Application.Companies.Commands.CancelTicket;
+using Application.Companies.Commands.CreateCompany;
+using Application.Companies.Queries.GetCompanyById;
+using Application.Companies.Queries.GetServiceById;
+using Application.Companies.Queries.GetTicketById;
+using Application.Companies.Queries.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 
-public class CompanyController(ISender sender) : ApiController(sender);
+public class CompanyController(ISender sender) : ApiController(sender)
+{
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> CreateCompany(CompanyRequest request, CancellationToken cancellationToken)
+    {
+        var command = new CreateCompanyCommand(
+                request.Name, request.Description,
+                request.Email);
+
+        var result = await Sender.Send(command, cancellationToken);
+        if (result.IsFailure) return ToProblemDetails(result.Error!);
+
+        return CreatedAtAction(
+            actionName:nameof(GetCompanyById),
+            routeValues:new {id=result.Value},
+            value: new {Id = result.Value}
+            );
+    }
+
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(CompanyResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetCompanyById(Guid id, CancellationToken cancellationToken)
+    {
+        var query = new GetCompanyByIdQuery(id);
+        var result = await Sender.Send(query, cancellationToken);
+        if (result.IsFailure) return ToProblemDetails(result.Error!);
+        return Ok(result.Value);
+    }
+    
+    [HttpPost("{companyId:guid}/services")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> AddService(Guid companyId,
+        CreateServiceRequest request, CancellationToken cancellationToken)
+    {
+        var command = new AddServiceCommand(
+             companyId, request.Name, request.Description,
+            request.OpeningTime, request.ClosingTime,
+            request.WorkDays, request.Price);
+
+        var result = await Sender.Send(command, cancellationToken);
+        if (result.IsFailure) return ToProblemDetails(result.Error!);
+
+        return CreatedAtAction(
+            actionName: nameof(GetServiceById),
+            routeValues: new { companyId, serviceId = result.Value },
+            value: new { Id = result.Value });
+    }
+
+    [HttpGet("{companyId:guid}/services/{serviceId:guid}")]
+    [ProducesResponseType(typeof(ServiceResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetServiceById(
+        Guid companyId, Guid serviceId, CancellationToken cancellationToken)
+    {
+        var query = new GetServiceByIdQuery(companyId, serviceId);
+        var result = await Sender.Send(query, cancellationToken);
+        if (result.IsFailure) return ToProblemDetails(result.Error!);
+
+        return Ok(result.Value);
+    }
+
+    [HttpPost("{companyId:guid}/services/{serviceId:guid}/tickets")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<IActionResult> AddTicket(Guid companyId, Guid serviceId,
+        CreateTicketRequest request, CancellationToken cancellationToken)
+    {
+
+        var command = new AddTicketCommand(
+            companyId, serviceId,
+            request.StartTimeUtc, request.EndTimeUtc);
+
+        var result = await Sender.Send(command, cancellationToken);
+        if (result.IsFailure) return ToProblemDetails(result.Error!);
+
+        return CreatedAtAction(
+            actionName: nameof(GetTicketById),
+            routeValues: new { companyId, serviceId, ticketId = result.Value },
+            value: new { Id = result.Value });
+    }
+
+    [HttpGet("{companyId:guid}/services/{serviceId:guid}/tickets/{ticketId:guid}")]
+    [ProducesResponseType(typeof(TicketResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetTicketById(
+        Guid companyId, Guid serviceId, Guid ticketId,
+        CancellationToken cancellationToken)
+    {
+        var query = new GetTicketByIdQuery(companyId, serviceId, ticketId);
+        var result = await Sender.Send(query, cancellationToken);
+        if (result.IsFailure) return ToProblemDetails(result.Error!);
+
+        return Ok(result.Value);
+    }
+
+    [HttpDelete("{companyId:guid}/services/{serviceId:guid}/tickets/{ticketId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CancelTicket(Guid companyId, Guid serviceId,
+        Guid ticketId, CancellationToken cancellationToken)
+    {
+        var command = new CancelTicketCommand(companyId, serviceId, ticketId);
+
+        var result = await Sender.Send(command, cancellationToken);
+        if (result.IsFailure) return ToProblemDetails(result.Error!);
+
+        return NoContent();
+    }
+}

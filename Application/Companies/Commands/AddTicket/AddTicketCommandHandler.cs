@@ -1,3 +1,4 @@
+using Application.Abstractions.Authentication;
 using Application.Abstractions.Interfaces;
 using Domain.Abstractions;
 using Domain.Errors;
@@ -6,23 +7,23 @@ using Domain.Repositories;
 namespace Application.Companies.Commands.AddTicket;
 
 public class AddTicketCommandHandler
-(ICompanyRepository companyRepository, IUnitOfWork unitOfWork)
-    : ICommandHandler<AddTicketCommand>
+(ICompanyRepository companyRepository, IUserContext userContext, IUnitOfWork unitOfWork)
+    : ICommandHandler<AddTicketCommand,Guid>
 {
-    public async Task<Result> Handle(AddTicketCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(AddTicketCommand request, CancellationToken cancellationToken)
     {
         var company = await companyRepository
             .GetCompleteByIdAsync(request.CompanyId, request.ServiceId,
                 cancellationToken);
 
-        if (company == null) return CompanyErrors.CompanyNotFound;
-        
-        var result = company.AddTicketToService(request.Id,request.ServiceId, request.UserId,
+        if (company is null) return CompanyErrors.CompanyNotFound;
+
+        var result = company.AddTicketToService(request.ServiceId, userContext.UserId,
            request.StartTimeUtc, request.EndTimeUtc);
        
         if (result.IsFailure) return result.Error!; 
         
         await unitOfWork.SaveChangesAsync(cancellationToken);
-        return Result.Success();
+        return result.Value.Id;
     }
 }

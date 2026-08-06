@@ -1,4 +1,6 @@
+using Domain.Abstractions;
 using Domain.Enums;
+using Domain.Errors;
 using Domain.Primitives;
 
 namespace Domain.Entities;
@@ -15,7 +17,7 @@ public class Ticket:Entity
         Price = price;
     }
     
-    protected Ticket()
+    private Ticket()
     { }
     public Guid ServiceId { get; private set; }
     public Guid UserId { get; private set; }
@@ -25,18 +27,28 @@ public class Ticket:Entity
     
     public decimal Price { get; private set; }
     
-    internal static Ticket Create(Guid id,Guid serviceId, Guid userId, 
+    internal static Ticket Create(Guid serviceId, Guid userId, 
         DateTime startTimeUtc, DateTime endTimeUtc, decimal price)
     {   
-        return new Ticket(id, userId, serviceId, startTimeUtc, endTimeUtc, price);
+        return new Ticket(Guid.NewGuid(), userId, serviceId,
+            startTimeUtc, endTimeUtc, price);
     }
-    internal void CancelReservation()
+    internal Result CancelReservation()
     {
+        if (Status is not TicketStatus.Reserved) 
+            return TicketErrors.InvalidStatus;
+        
         Status = TicketStatus.Cancelled;
+        return Result.Success();
     }
-    internal void SellReservation()
+
+    internal Result SellReservation()
     {
+        if (Status is not TicketStatus.Reserved)
+            return TicketErrors.InvalidStatus;
+        
         Status = TicketStatus.Sold;
+        return Result.Success();
     }
-    
+
 }

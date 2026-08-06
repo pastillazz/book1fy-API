@@ -1,4 +1,5 @@
 using System.Text;
+using Api.Middleware;
 using Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -7,6 +8,7 @@ namespace Api.Extensions;
 
 public static class DependencyInjection
 {
+    
     public static IServiceCollection AddJwtAuthentication
         (this IServiceCollection services, IConfiguration configuration)
     {
@@ -17,6 +19,10 @@ public static class DependencyInjection
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
+                // Keep the raw JWT claim names ("sub") instead of letting the
+                // handler remap them to the legacy ClaimTypes.* URIs.
+                options.MapInboundClaims = false;
+
                 options.TokenValidationParameters = new()
                 {
                     ValidateIssuer = true,

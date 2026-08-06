@@ -4,7 +4,7 @@ public abstract class Entity:IEquatable<Entity>
 {
     protected Entity(Guid id)
     {
-        id = Guid.NewGuid();
+        Id = id;
     }
     protected Entity()
     {}

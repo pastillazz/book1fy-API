@@ -11,4 +11,8 @@ public class CompanyErrors
     public static readonly Error CompanyAlreadyExists = new("Company.AlreadyExists",
         "Company with the same id already exists.",
         HttpStatusCode.Conflict);
+
+    public static readonly Error NotOwner = new("Company.NotOwner",
+        "You do not have permission to operate on this company.",
+        HttpStatusCode.Forbidden);
 }

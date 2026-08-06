@@ -18,8 +18,12 @@ public class Company:AggregateRoot
         Status = CompanyStatus.Active;
         CreatedAt = DateTime.UtcNow;
     }
-    protected Company()
-    {}
+    private Company()
+    {
+        Name = null!;
+        Description = null!;
+        Email = null!;
+    }
     public string Name { get; private set; }
     public string Description { get; private set; }
     public Email Email { get; private set; }
@@ -58,10 +62,10 @@ public class Company:AggregateRoot
         
         
         var result = service.AddTicketToService(
-            serviceId,userId, startTimeUtc, endTimeUtc);
-        
+            userId, startTimeUtc, endTimeUtc);
+
         if (result.IsFailure) return result.Error!;
-        
+
         var ticketEvent= new TicketCreatedDomainEvent(Guid.NewGuid(),
             result.Value.Id);
         RaiseDomainEvent(ticketEvent);
@@ -76,11 +80,13 @@ public class Company:AggregateRoot
             return Result.Failure(ServiceErrors.NotFound);
         }
         var result = service.CancelTicket(ticketId);
+        
         if (result.IsFailure)
         {
             return result.Error!;
         }
-        var TicketEvent= new TicketCancelledDomainEvent(Guid.NewGuid(), ticketId);
+        var TicketEvent= new TicketCancelledDomainEvent(
+            Guid.NewGuid(), ticketId);
         RaiseDomainEvent(TicketEvent);
         return Result.Success();
     }
@@ -92,12 +98,16 @@ public class Company:AggregateRoot
             return Result.Failure(ServiceErrors.NotFound);
         }
         var result = service.SellTicket(ticketId);
-        
+
         if (result.IsFailure)
         {
             return result.Error!;
         }
+
+        var ticketEvent = new TicketSoldDomainEvent(
+            Guid.NewGuid(), ticketId);
         
+        RaiseDomainEvent(ticketEvent);
         return Result.Success();
     }
 }

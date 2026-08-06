@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Authentication;
 using Application.Companies.Queries;
+using Application.Companies.Queries.Interfaces;
 using Application.Users.Queries;
 using Domain.Abstractions;
 using Domain.Repositories;

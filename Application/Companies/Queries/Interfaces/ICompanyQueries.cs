@@ -1,6 +1,6 @@
-using Domain.Abstractions;
+using Application.Companies.Queries.Responses;
 
-namespace Application.Companies.Queries;
+namespace Application.Companies.Queries.Interfaces;
 
 public interface ICompanyQueries
 {

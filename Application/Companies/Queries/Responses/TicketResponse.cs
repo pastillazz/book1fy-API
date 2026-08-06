@@ -1,6 +1,4 @@
-using Domain.Enums;
-
-namespace Application.Companies.Queries;
+namespace Application.Companies.Queries.Responses;
 
 public record TicketResponse(
     Guid Id,

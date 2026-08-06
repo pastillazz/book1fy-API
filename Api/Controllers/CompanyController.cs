@@ -6,11 +6,11 @@ using Application.Companies.Commands.AddService;
 using Application.Companies.Commands.AddTicket;
 using Application.Companies.Commands.CancelTicket;
 using Application.Companies.Commands.CreateCompany;
-using Application.Companies.Queries;
 using Application.Companies.Queries.GetCompanyByEmail;
 using Application.Companies.Queries.GetCompanyById;
 using Application.Companies.Queries.GetServiceById;
 using Application.Companies.Queries.GetTicketById;
+using Application.Companies.Queries.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

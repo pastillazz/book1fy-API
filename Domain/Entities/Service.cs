@@ -1,4 +1,5 @@
 ﻿using Domain.Abstractions;
+using Domain.Enums;
 using Domain.Errors;
 using Domain.Primitives;
 
@@ -17,12 +18,14 @@ public sealed class Service : Entity
         Description = description;
         OpeningTime = openingTime;
         ClosingTime = closingTime;
-        _workDays = workDays;
+        _workDays = workDays.ToList();
         Price = price;
     }
 
-    protected Service()
+    private Service()
     {
+        Name = null!;
+        Description = null!;
     }
     public Guid CompanyId { get; private set; }
     public string Name { get; private set; }
@@ -33,8 +36,10 @@ public sealed class Service : Entity
     public IReadOnlyCollection<DayOfWeek> WorkDays => _workDays;
     public IReadOnlyCollection<Ticket> Tickets => _tickets;
     
-    internal static Service Create(Guid companyId, string name, string description,
-        TimeSpan openingTime, TimeSpan closingTime, List<DayOfWeek> workDays,
+    internal static Service Create(
+        Guid companyId, string name, string description,
+        TimeSpan openingTime, TimeSpan closingTime, 
+        List<DayOfWeek> workDays,
         decimal price)
     {
         return new Service(Guid.NewGuid(), companyId, name, description,
@@ -42,19 +47,17 @@ public sealed class Service : Entity
     }
     
     internal Result<Ticket> AddTicketToService(
-        Guid serviceId, Guid userId, 
+        Guid userId,
         DateTime startTimeUtc, DateTime endTimeUtc)
     {
         var ticketValidation = IsTicketValid(
             startTimeUtc, endTimeUtc);
-        
-        if (!ticketValidation.IsSuccess)
-        {
-            return ticketValidation.Error!;
-        }
 
-        var ticket = Ticket.Create(serviceId,userId, 
-            startTimeUtc, endTimeUtc, this.Price);
+        if (!ticketValidation.IsSuccess) 
+            return ticketValidation.Error!;
+        
+        var ticket = Ticket.Create(Id, userId,
+            startTimeUtc, endTimeUtc, Price);
         _tickets.Add(ticket);
         return ticket;
     }
@@ -62,20 +65,24 @@ public sealed class Service : Entity
     private Result IsTicketValid(
         DateTime startTimeUtc, DateTime endTimeUtc)
     {
-        if (startTimeUtc.TimeOfDay < OpeningTime ||
-            endTimeUtc.TimeOfDay > ClosingTime)
-        {
+        if (endTimeUtc <= startTimeUtc) 
             return TicketErrors.InvalidTimes;
-        }
+        
+        if (!WorkDays.Contains(startTimeUtc.DayOfWeek)) 
+            return TicketErrors.InvalidDay;
+        
+        if (startTimeUtc.TimeOfDay < OpeningTime ||
+            endTimeUtc.TimeOfDay > ClosingTime) 
+            return TicketErrors.InvalidTimes;
+        
 
         if (_tickets.
-            Any(t => t.StartTimeUtc < endTimeUtc 
-                     && t.EndTimeUtc > startTimeUtc))
-        {
+            Where(t => t.Status == TicketStatus.Reserved).
+            Any(t => t.StartTimeUtc < endTimeUtc
+                     && t.EndTimeUtc > startTimeUtc)) 
             return TicketErrors.OverlappingTicket;
-            
-        }
 
+        
         return Result.Success();
     }
 
@@ -83,12 +90,14 @@ public sealed class Service : Entity
     {
         var ticket = _tickets
             .FirstOrDefault(t => t.Id == ticketId);
-        if (ticket == null)
-        {
+        
+        if (ticket is null) 
             return TicketErrors.NotFound;
-        }
-        ticket.CancelReservation();
-        _tickets.Remove(ticket);
+        
+        var result = ticket.CancelReservation();
+        if (result.IsFailure) 
+            return result.Error!;
+        
         return Result.Success();
     }
 
@@ -96,13 +105,14 @@ public sealed class Service : Entity
     {
         var ticket = _tickets
             .FirstOrDefault(t => t.Id == ticketId);
-        if (ticket == null)
-        {
-           return TicketErrors.NotFound;
-        }
+        if (ticket is null)
+            return TicketErrors.NotFound;
+        
 
-        ticket.SellReservation();
-        _tickets.Remove(ticket);
+        var result = ticket.SellReservation();
+        if (result.IsFailure) 
+            return result.Error!;
+        
         return Result.Success();
     }
 

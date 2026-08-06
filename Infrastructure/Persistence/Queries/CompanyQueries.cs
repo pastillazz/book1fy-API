@@ -1,4 +1,6 @@
 using Application.Companies.Queries;
+using Application.Companies.Queries.Interfaces;
+using Application.Companies.Queries.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Queries;

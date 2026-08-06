@@ -6,7 +6,6 @@ using Application.Companies.Commands.AddService;
 using Application.Companies.Commands.AddTicket;
 using Application.Companies.Commands.CancelTicket;
 using Application.Companies.Commands.CreateCompany;
-using Application.Companies.Queries.GetCompanyByEmail;
 using Application.Companies.Queries.GetCompanyById;
 using Application.Companies.Queries.GetServiceById;
 using Application.Companies.Queries.GetTicketById;
@@ -15,7 +14,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
-
 
 public class CompanyController(ISender sender) : ApiController(sender)
 {
@@ -48,18 +46,7 @@ public class CompanyController(ISender sender) : ApiController(sender)
         if (result.IsFailure) return ToProblemDetails(result.Error!);
         return Ok(result.Value);
     }
-
-    [HttpGet("email/{email}")]
-    [ProducesResponseType(typeof(CompanyResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetCompanyByEmail(string email, CancellationToken cancellationToken)
-    {
-        var query = new GetCompanyByEmailQuery(email);
-        var result = await Sender.Send(query, cancellationToken);
-        if (result.IsFailure) return ToProblemDetails(result.Error!);
-        return Ok(result.Value);
-    }
-
+    
     [HttpPost("{companyId:guid}/services")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -101,7 +88,7 @@ public class CompanyController(ISender sender) : ApiController(sender)
         CreateTicketRequest request, CancellationToken cancellationToken)
     {
 
-        var command = new AddTicketCommand( request.UserId,
+        var command = new AddTicketCommand(
             companyId, serviceId,
             request.StartTimeUtc, request.EndTimeUtc);
 

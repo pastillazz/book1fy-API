@@ -1,6 +1,8 @@
+using Api.Authentication;
 using Api.Extensions;
 using Api.Middleware;
 using Application;
+using Application.Abstractions.Authentication;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,9 @@ builder.Services
     .AddJwtAuthentication(builder.Configuration)
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IUserContext, UserContext>();
 
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();

@@ -19,6 +19,10 @@ public static class DependencyInjection
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
+                // Keep the raw JWT claim names ("sub") instead of letting the
+                // handler remap them to the legacy ClaimTypes.* URIs.
+                options.MapInboundClaims = false;
+
                 options.TokenValidationParameters = new()
                 {
                     ValidateIssuer = true,

@@ -10,11 +10,12 @@ public class Company:AggregateRoot
 {   
     private readonly List<Service> _services=new();
     private Company(Guid id, string name, string description,
-        Email email ) : base(id)
+        Email email, Guid ownerId ) : base(id)
     {
         Name = name;
         Description = description;
         Email = email;
+        OwnerId = ownerId;
         Status = CompanyStatus.Active;
         CreatedAt = DateTime.UtcNow;
     }
@@ -27,18 +28,19 @@ public class Company:AggregateRoot
     public string Name { get; private set; }
     public string Description { get; private set; }
     public Email Email { get; private set; }
+    public Guid OwnerId { get; private set; }
     public CompanyStatus Status { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public IReadOnlyCollection<Service> Services => _services;
-    
-    public static Result<Company> Create( string name, 
-        string description, string email)
-    {   
+
+    public static Result<Company> Create( string name,
+        string description, string email, Guid ownerId)
+    {
         var emailResult = Email.Create(email);
         if (emailResult.IsFailure) return emailResult.Error!;
-        
+
         return new Company(Guid.NewGuid(), name,
-            description, emailResult.Value);
+            description, emailResult.Value, ownerId);
     }
     
     public Result<Service> AddService( string name, 

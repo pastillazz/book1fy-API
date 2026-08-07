@@ -4,6 +4,7 @@ using Domain.Abstractions;
 using Domain.Entities;
 using Domain.Errors;
 using Domain.Repositories;
+using Domain.Shared;
 
 namespace Application.Companies.Commands.CreateCompany;
 

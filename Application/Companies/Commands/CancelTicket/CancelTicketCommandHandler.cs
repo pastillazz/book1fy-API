@@ -3,6 +3,7 @@ using Application.Abstractions.Interfaces;
 using Domain.Abstractions;
 using Domain.Errors;
 using Domain.Repositories;
+using Domain.Shared;
 
 namespace Application.Companies.Commands.CancelTicket;
 

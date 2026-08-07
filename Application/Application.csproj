@@ -18,7 +18,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Common\Behaviors\" />
       <Folder Include="Common\Validators\" />
     </ItemGroup>
 

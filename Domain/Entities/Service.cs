@@ -2,6 +2,7 @@
 using Domain.Enums;
 using Domain.Errors;
 using Domain.Primitives;
+using Domain.Shared;
 
 namespace Domain.Entities;
 

@@ -1,5 +1,6 @@
 ﻿using Domain.Abstractions;
 using Domain.Primitives;
+using Domain.Shared;
 using Domain.ValueObjects;
 
 namespace Domain.Entities;

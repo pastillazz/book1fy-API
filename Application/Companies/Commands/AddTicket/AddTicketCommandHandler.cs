@@ -1,6 +1,5 @@
 using Application.Abstractions.Authentication;
 using Application.Abstractions.Interfaces;
-using Domain.Abstractions;
 using Domain.Errors;
 using Domain.Repositories;
 using Domain.Shared;
@@ -22,7 +21,7 @@ public class AddTicketCommandHandler
         var result = company.AddTicketToService(request.ServiceId, userContext.UserId,
            request.StartTimeUtc, request.EndTimeUtc);
        
-        if (result.IsFailure) return result.Error!; 
+        if (result.IsFailure) return result.Error; 
         
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return result.Value.Id;

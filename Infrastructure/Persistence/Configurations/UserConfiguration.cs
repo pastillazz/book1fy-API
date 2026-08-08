@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Configurations;
+namespace Infrastructure.Persistence.Configurations;
 
 public class UserConfiguration:IEntityTypeConfiguration<User>
 {
@@ -10,7 +10,10 @@ public class UserConfiguration:IEntityTypeConfiguration<User>
     {
         builder.ToTable("Users");
         builder.HasKey(u => u.Id);
-        
+
+        builder.Property(u => u.Id)
+            .ValueGeneratedNever();
+
         builder.Property(u => u.Username)
             .HasColumnName("username")
             .IsRequired()

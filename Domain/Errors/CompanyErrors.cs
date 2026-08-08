@@ -1,5 +1,5 @@
 using System.Net;
-using Domain.Abstractions;
+using Domain.Shared;
 
 namespace Domain.Errors;
 
@@ -15,4 +15,7 @@ public class CompanyErrors
     public static readonly Error NotOwner = new("Company.NotOwner",
         "You do not have permission to operate on this company.",
         HttpStatusCode.Forbidden);
+
+    public static readonly Error NameEmpty = new("Company.NameEmpty",
+        "Company name cannot be empty.");
 }

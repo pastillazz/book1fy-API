@@ -1,5 +1,4 @@
 using Application.Abstractions.Interfaces;
-using Domain.Abstractions;
 
 namespace Application.Companies.Commands.CancelTicket;
 

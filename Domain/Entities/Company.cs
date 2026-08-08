@@ -1,4 +1,4 @@
-﻿using Domain.Abstractions;
+using Domain.DomainEvents;
 using Domain.Enums;
 using Domain.Errors;
 using Domain.Primitives;
@@ -37,22 +37,27 @@ public class Company:AggregateRoot
     public static Result<Company> Create( string name,
         string description, string email, Guid ownerId)
     {
-        var emailResult = Email.Create(email);
-        if (emailResult.IsFailure) return emailResult.Error!;
+        if (string.IsNullOrWhiteSpace(name))
+            return CompanyErrors.NameEmpty;
 
-        return new Company(Guid.NewGuid(), name,
-            description, emailResult.Value, ownerId);
+        var emailResult = Email.Create(email);
+        if (emailResult.IsFailure) return emailResult.Error;
+
+        return new Company(Guid.NewGuid(), name.Trim(),
+            description?.Trim() ?? string.Empty, emailResult.Value, ownerId);
     }
     
-    public Result<Service> AddService( string name, 
+    public Result<Service> AddService( string name,
         string description, TimeSpan openingTime,
         TimeSpan closingTime, List<DayOfWeek> workDays,decimal price)
     {
-        var service= Service.Create( this.Id, name, description, 
+        var result= Service.Create( this.Id, name, description,
             openingTime, closingTime, workDays, price);
-      
-        _services.Add(service);
-        return service;
+
+        if (result.IsFailure) return result.Error;
+
+        _services.Add(result.Value);
+        return result.Value;
     }
 
     public Result<Ticket> AddTicketToService(Guid serviceId, 
@@ -67,7 +72,7 @@ public class Company:AggregateRoot
         var result = service.AddTicketToService(
             userId, startTimeUtc, endTimeUtc);
 
-        if (result.IsFailure) return result.Error!;
+        if (result.IsFailure) return result.Error;
 
         var ticketEvent= new TicketCreatedDomainEvent(Guid.NewGuid(),
             result.Value.Id);
@@ -86,7 +91,7 @@ public class Company:AggregateRoot
         
         if (result.IsFailure)
         {
-            return result.Error!;
+            return result.Error;
         }
         var TicketEvent= new TicketCancelledDomainEvent(
             Guid.NewGuid(), ticketId);
@@ -104,7 +109,7 @@ public class Company:AggregateRoot
 
         if (result.IsFailure)
         {
-            return result.Error!;
+            return result.Error;
         }
 
         var ticketEvent = new TicketSoldDomainEvent(

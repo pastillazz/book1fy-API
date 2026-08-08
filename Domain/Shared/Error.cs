@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Domain.Abstractions;
+namespace Domain.Shared;
 
 public sealed record Error (
     string Code, 

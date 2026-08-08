@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Configurations;
+namespace Infrastructure.Persistence.Configurations;
 
 public class TicketConfiguration:IEntityTypeConfiguration<Ticket>
 {
@@ -10,7 +10,10 @@ public class TicketConfiguration:IEntityTypeConfiguration<Ticket>
     {
         builder.ToTable("tickets");
         builder.HasKey(s => s.Id);
-        
+
+        builder.Property(s => s.Id)
+            .ValueGeneratedNever();
+
         builder.Property(s => s.ServiceId)
             .HasColumnName("service_id")
             .IsRequired();

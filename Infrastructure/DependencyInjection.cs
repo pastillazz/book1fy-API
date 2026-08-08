@@ -2,7 +2,6 @@
 using Application.Companies.Queries;
 using Application.Companies.Queries.Interfaces;
 using Application.Users.Queries;
-using Domain.Abstractions;
 using Domain.Repositories;
 using Infrastructure.Authentication;
 using Infrastructure.Persistence;

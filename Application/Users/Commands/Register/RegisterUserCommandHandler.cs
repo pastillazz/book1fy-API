@@ -1,6 +1,5 @@
 using Application.Abstractions.Authentication;
 using Application.Abstractions.Interfaces;
-using Domain.Abstractions;
 using Domain.Entities;
 using Domain.Errors;
 using Domain.Repositories;
@@ -24,7 +23,7 @@ public class RegisterUserCommandHandler(
             request.UserName,request.Email, 
             request.Password, request.PhoneNumber, passwordHasher);
         
-        if (userCreated.IsFailure) return userCreated.Error!;
+        if (userCreated.IsFailure) return userCreated.Error;
         
         var user = userCreated.Value;
         

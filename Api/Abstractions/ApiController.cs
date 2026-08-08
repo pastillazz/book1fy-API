@@ -1,4 +1,3 @@
-using Domain.Abstractions;
 using Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -24,15 +23,15 @@ public abstract class ApiController:ControllerBase
                BadRequest(CreateProblemDetails(
                    "Validation Error",
                    StatusCodes.Status400BadRequest,
-                   result.Error!,
+                   result.Error,
                    validationResult.Errors)),
             
             _ => StatusCode(
-                (int)result.Error!.StatusCode,
+                (int)result.Error.StatusCode,
                 CreateProblemDetails(
                     GetTitleForStatusCode((int)result.Error.StatusCode),
                     (int)result.Error.StatusCode,
-                    result.Error!))
+                    result.Error))
         };
     
         private static ProblemDetails CreateProblemDetails(

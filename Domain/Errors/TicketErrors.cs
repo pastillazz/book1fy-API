@@ -1,5 +1,5 @@
-﻿using System.Net;
-using Domain.Abstractions;
+using System.Net;
+using Domain.Shared;
 
 namespace Domain.Errors;
 

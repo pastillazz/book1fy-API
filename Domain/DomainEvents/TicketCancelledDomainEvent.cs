@@ -1,5 +1,5 @@
 ﻿using Domain.Primitives;
 
-namespace Domain.Entities;
+namespace Domain.DomainEvents;
 
 public record TicketCancelledDomainEvent(Guid Id, Guid TicketId):DomainEvent(Id);

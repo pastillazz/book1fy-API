@@ -10,7 +10,10 @@ public class ServiceConfiguration:IEntityTypeConfiguration<Service>
     {
         builder.ToTable("Services");
         builder.HasKey(s => s.Id);
-        
+
+        builder.Property(s => s.Id)
+            .ValueGeneratedNever();
+
         builder.Property(s => s.CompanyId)
             .HasColumnName("company_id")
             .IsRequired();

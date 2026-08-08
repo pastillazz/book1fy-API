@@ -10,7 +10,10 @@ public class CompanyConfiguration:IEntityTypeConfiguration<Company>
     {
         builder.ToTable("Companies");
         builder.HasKey(c => c.Id);
-        
+
+        builder.Property(c => c.Id)
+            .ValueGeneratedNever();
+
         builder.Property(c => c.Name)
             .HasColumnName("name")
             .IsRequired()

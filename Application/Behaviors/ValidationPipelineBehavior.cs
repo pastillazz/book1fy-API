@@ -1,10 +1,9 @@
 using System.Reflection;
-using Domain.Abstractions;
 using Domain.Shared;
 using FluentValidation;
 using MediatR;
 
-namespace Application.Common.Behaviors;
+namespace Application.Behaviors;
 
 public class ValidationPipelineBehavior<TRequest, TResponse>
     (IEnumerable<IValidator<TRequest>> validators) :
@@ -19,8 +18,13 @@ public class ValidationPipelineBehavior<TRequest, TResponse>
             return await next(cancellationToken);
         }
 
-        Error[] errors = validators
-            .Select(validator => validator.Validate(request))
+        var context = new ValidationContext<TRequest>(request);
+
+        var results = await Task.WhenAll(
+            validators.Select(validator =>
+                validator.ValidateAsync(context, cancellationToken)));
+
+        Error[] errors = results
             .SelectMany(result => result.Errors)
             .Where(error => error is not null)
             .Select(error =>

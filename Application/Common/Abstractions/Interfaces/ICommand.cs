@@ -1,7 +1,7 @@
 using Domain.Shared;
 using MediatR;
 
-namespace Application.Abstractions.Interfaces;
+namespace Application.Common.Abstractions.Interfaces;
 
 public interface ICommand:IRequest<Result>
 { }

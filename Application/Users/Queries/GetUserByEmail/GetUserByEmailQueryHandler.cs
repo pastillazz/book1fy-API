@@ -1,5 +1,4 @@
-
-using Application.Abstractions.Interfaces;
+using Application.Common.Abstractions.Interfaces;
 using Domain.Errors;
 using Domain.Shared;
 

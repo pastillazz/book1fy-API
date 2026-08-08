@@ -1,3 +1,4 @@
+using Domain.Abstractions;
 using Domain.Repositories;
 using Domain.DomainEvents;
 using Domain.Primitives;
@@ -53,7 +54,12 @@ public sealed class User:AggregateRoot
             username, emailResult.Value,
             passwordResult.Value, phoneNumber);
         
-        var userEvent= new UserCreatedDomainEvent(Guid.NewGuid(),user.Id);
+        var userEvent= new UserCreatedDomainEvent(
+            Guid.NewGuid(),
+            user.Id,
+            user.Email.Value,
+            user.Username);
+        
         user.RaiseDomainEvent(userEvent);
         return user;
     }

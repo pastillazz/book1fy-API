@@ -1,3 +1,8 @@
-﻿namespace Domain.Primitives;
+﻿using Domain.Abstractions;
 
-public record DomainEvent(Guid Id);
+namespace Domain.Primitives;
+
+public record DomainEvent(Guid Id):IDomainEvent
+{
+    public DateTime OccurredOn { get; }=DateTime.UtcNow;
+}

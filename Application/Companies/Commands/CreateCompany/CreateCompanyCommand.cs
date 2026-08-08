@@ -1,6 +1,5 @@
+using Application.Common.Abstractions.Interfaces;
 
-using Application.Abstractions.Interfaces;
-using ICommand = Application.Abstractions.Interfaces.ICommand;
 
 namespace Application.Companies.Commands.CreateCompany;
 

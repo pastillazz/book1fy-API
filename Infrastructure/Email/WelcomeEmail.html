@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
+    <style>
+        :root {
+            color-scheme: light dark;
+            supported-color-schemes: light dark;
+        }
+
+        /* Adaptación automática para Modo Oscuro */
+        @media (prefers-color-scheme: dark) {
+            .email-bg { background-color: #0f172a !important; }
+            .email-card { background-color: #1e293b !important; border-color: #334155 !important; }
+            .email-title { color: #f8fafc !important; }
+            .email-text { color: #cbd5e1 !important; }
+            .email-subtext { color: #94a3b8 !important; }
+            .email-footer-bg { background-color: #0f172a !important; border-top-color: #334155 !important; }
+            .email-divider { border-top-color: #334155 !important; }
+        }
+    </style>
+</head>
+<body class="email-bg" style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" class="email-bg" style="background-color: #f8fafc; padding: 40px 16px;">
+    <tr>
+        <td align="center">
+            <table role="presentation" width="100%" class="email-card" style="max-width: 560px; background-color: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);">
+
+                <!-- Header -->
+                <tr>
+                    <td style="background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); padding: 36px 32px; text-align: center;">
+                        <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px;">
+                            Book1fy 📅
+                        </h1>
+                    </td>
+                </tr>
+
+                <!-- Body -->
+                <tr>
+                    <td style="padding: 40px 32px; color: #334155;">
+                        <h2 class="email-title" style="margin-top: 0; color: #0f172a; font-size: 22px; font-weight: 700; letter-spacing: -0.3px;">
+                            Welcome aboard, {{Name}}! ✨
+                        </h2>
+
+                        <p class="email-text" style="font-size: 16px; line-height: 1.6; color: #475569; margin-bottom: 20px;">
+                            We're thrilled to have you here! Your <strong>Book1fy</strong> account is officially active, and you're all set to manage your bookings and schedule appointments effortlessly. ⏰
+                        </p>
+
+                        <p class="email-subtext" style="font-size: 14px; line-height: 1.6; color: #64748b; margin-top: 24px;">
+                            If you have any questions or need help setting up your schedule, simply reply directly to this email — our support team is always ready to help.
+                        </p>
+
+                        <hr class="email-divider" style="border: none; border-top: 1px solid #f1f5f9; margin: 32px 0 24px 0;" />
+
+                        <p class="email-title" style="font-size: 15px; font-weight: 600; color: #0f172a; margin: 0;">
+                            Best regards,<br>
+                            <span style="color: #6366f1;">The Book1fy Team</span>
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td class="email-footer-bg" style="background-color: #f8fafc; padding: 24px 32px; text-align: center; border-top: 1px solid #f1f5f9;">
+                        <p class="email-subtext" style="margin: 0; font-size: 12px; color: #94a3b8; line-height: 1.5;">
+                            You received this email because you signed up for Book1fy using <strong>{{Email}}</strong>.
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

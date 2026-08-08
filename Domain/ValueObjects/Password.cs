@@ -1,3 +1,4 @@
+using Domain.Abstractions;
 using Domain.Repositories;
 using Domain.Errors;
 using Domain.Shared;

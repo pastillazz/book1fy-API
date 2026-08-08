@@ -2,7 +2,7 @@ using Api.Authentication;
 using Api.Extensions;
 using Api.Middleware;
 using Application;
-using Application.Abstractions.Authentication;
+using Application.Common.Abstractions.Authentication;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,5 +1,5 @@
-using Application.Abstractions.Authentication;
-using Application.Abstractions.Interfaces;
+using Application.Common.Abstractions.Authentication;
+using Application.Common.Abstractions.Interfaces;
 using Domain.Errors;
 using Domain.Repositories;
 using Domain.Shared;

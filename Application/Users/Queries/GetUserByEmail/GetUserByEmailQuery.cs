@@ -1,4 +1,4 @@
-using Application.Abstractions.Interfaces;
+using Application.Common.Abstractions.Interfaces;
 using Application.Users.Queries;
 
 namespace Application.Users.Queries.GetUserByEmail;

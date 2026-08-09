@@ -18,8 +18,8 @@ public class AddTicketCommandHandler
 
         if (company is null) return CompanyErrors.CompanyNotFound;
 
-        var result = company.AddTicketToService(request.ServiceId, userContext.UserId,
-           request.StartTimeUtc, request.EndTimeUtc);
+        var result = company.AddTicketToService(request.ServiceId, 
+            userContext.UserId, request.StartTimeUtc, request.EndTimeUtc);
        
         if (result.IsFailure) return result.Error; 
         

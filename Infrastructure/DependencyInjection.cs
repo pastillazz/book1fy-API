@@ -6,25 +6,54 @@ using Application.Users.Queries;
 using Domain.Abstractions;
 using Domain.Repositories;
 using Infrastructure.Authentication;
+using Infrastructure.BackgroundJobs;
 using Infrastructure.Messaging;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Interceptors;
 using Infrastructure.Persistence.Queries;
 using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 
 namespace Infrastructure;
 
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
-    {
+    {   
+        //Outbox Configuration
+        services
+            .AddSingleton<ConvertDomainEventsToOutboxMessagesInterceptor>();
+        services.AddQuartz(configure =>
+            {
+                var jobKey=new JobKey(nameof(ProcessOutboxMessagesJob));
+                
+                configure
+                    .AddJob<ProcessOutboxMessagesJob>(jobKey)
+                    .AddTrigger(
+                        trigger => trigger.ForJob(jobKey)
+                                .WithSimpleSchedule(
+                                    schedule => 
+                                        schedule.WithIntervalInSeconds(10)
+                                            .RepeatForever())); });
+        
+        services.AddQuartzHostedService(options =>
+        {
+            options.WaitForJobsToComplete = true;
+        });
         //Db Configuration
-        services.AddDbContext<AppDbContext>(options =>
+        services.AddDbContext<AppDbContext>((serviceProvider, options) =>
+        {   
+            var interceptor = serviceProvider
+                .GetRequiredService
+                    <ConvertDomainEventsToOutboxMessagesInterceptor>();
             options
                 .UseNpgsql(configuration
-                    .GetConnectionString("DefaultConnection")));
+                    .GetConnectionString("DefaultConnection"))
+                .AddInterceptors(interceptor);
+        });
         
         //Jwt Configuration
         services.Configure<JwtSettings>
@@ -45,6 +74,7 @@ public static class DependencyInjection
             configuration.GetSection(SmtpSettings.SectionName));
         
         services.AddTransient<IEmailService, SmtpEmailService>();
+        
         return services;
     }
 }

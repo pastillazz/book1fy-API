@@ -2,4 +2,5 @@
 
 namespace Domain.DomainEvents;
 
-public record TicketCancelledDomainEvent(Guid Id, Guid TicketId):DomainEvent(Id);
+public record TicketCancelledDomainEvent(
+    Guid Id, Guid TicketId):IDomainEvent;

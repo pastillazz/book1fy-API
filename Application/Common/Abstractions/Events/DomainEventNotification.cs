@@ -1,4 +1,5 @@
 using Domain.Abstractions;
+using Domain.Primitives;
 using MediatR;
 
 namespace Application.Common.Abstractions.Events;

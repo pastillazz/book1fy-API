@@ -6,4 +6,4 @@ public record UserCreatedDomainEvent(
     Guid Id,
     Guid UserId,
     string Email, 
-    string Name):DomainEvent(Id);
+    string Name):IDomainEvent;

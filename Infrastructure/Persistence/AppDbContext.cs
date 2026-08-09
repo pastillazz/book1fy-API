@@ -14,48 +14,9 @@ public class AppDbContext(DbContextOptions options,
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Ignore<DomainEvent>();
+        modelBuilder.Ignore<IDomainEvent>();
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
-
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-     
-        var result= await base.SaveChangesAsync(cancellationToken);
-        
-        await DispatchDomainEventsAsync(cancellationToken);
-        
-        return result;
-    }
-
-    private async Task DispatchDomainEventsAsync(CancellationToken cancellationToken = default)
-    {
-        var domainEntities = ChangeTracker
-            .Entries<AggregateRoot>() 
-            .Where(x => x.Entity.DomainEvents.Any())
-            .Select(x => x.Entity)
-            .ToList();
-        
-        var domainEvents = domainEntities
-            .SelectMany(x => x.DomainEvents)
-            .ToList();
-        
-        domainEntities.ForEach(x => x.ClearDomainEvents());
-
-        foreach (var domainEvent in domainEvents)
-        {
-            var notificationType = typeof(DomainEventNotification<>)
-                .MakeGenericType(domainEvent.GetType());
-            
-            var notification = Activator
-                .CreateInstance(notificationType, domainEvent);
-            
-            if (notification is INotification mediatrNotification)
-            {
-                await publisher.Publish(mediatrNotification, 
-                    cancellationToken);
-            }
-        }
-    }
+    
 }
 

@@ -1,4 +1,4 @@
-using Application.Abstractions.Interfaces;
+using Application.Common.Abstractions.Interfaces;
 
 namespace Application.Users.Queries.GetUserById;
 

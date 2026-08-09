@@ -1,7 +1,7 @@
-﻿using Domain.Abstractions;
 using Domain.Enums;
 using Domain.Errors;
 using Domain.Primitives;
+using Domain.Shared;
 
 namespace Domain.Entities;
 
@@ -9,7 +9,7 @@ public sealed class Service : Entity
 {   private readonly List<DayOfWeek> _workDays=new();
     private readonly List<Ticket> _tickets=new();
     
-    internal Service(Guid id, Guid companyId, string name, string description,
+    private Service(Guid id, Guid companyId, string name, string description,
         TimeSpan openingTime, TimeSpan closingTime, List<DayOfWeek> workDays,
         decimal price) : base(id)
     {
@@ -36,16 +36,46 @@ public sealed class Service : Entity
     public IReadOnlyCollection<DayOfWeek> WorkDays => _workDays;
     public IReadOnlyCollection<Ticket> Tickets => _tickets;
     
-    internal static Service Create(
+    internal static Result<Service> Create(
         Guid companyId, string name, string description,
-        TimeSpan openingTime, TimeSpan closingTime, 
+        TimeSpan openingTime, TimeSpan closingTime,
         List<DayOfWeek> workDays,
         decimal price)
     {
-        return new Service(Guid.NewGuid(), companyId, name, description,
+        var scheduleValidation = IsScheduleValid(
             openingTime, closingTime, workDays, price);
+
+        if (scheduleValidation.IsFailure)
+            return scheduleValidation.Error;
+
+        if (string.IsNullOrWhiteSpace(name))
+            return ServiceErrors.NameEmpty;
+
+        return new Service(Guid.NewGuid(), companyId, name.Trim(),
+            description?.Trim() ?? string.Empty,
+            openingTime, closingTime,
+            workDays.Distinct().ToList(), price);
     }
-    
+
+    private static Result IsScheduleValid(
+        TimeSpan openingTime, TimeSpan closingTime,
+        List<DayOfWeek> workDays, decimal price)
+    {
+        if (openingTime < TimeSpan.Zero || closingTime > TimeSpan.FromDays(1))
+            return ServiceErrors.ScheduleOutOfRange;
+
+        if (openingTime >= closingTime)
+            return ServiceErrors.InvalidSchedule;
+
+        if (workDays is null || workDays.Count == 0)
+            return ServiceErrors.WorkDaysEmpty;
+
+        if (price < 0)
+            return ServiceErrors.NegativePrice;
+
+        return Result.Success();
+    }
+
     internal Result<Ticket> AddTicketToService(
         Guid userId,
         DateTime startTimeUtc, DateTime endTimeUtc)
@@ -54,7 +84,7 @@ public sealed class Service : Entity
             startTimeUtc, endTimeUtc);
 
         if (!ticketValidation.IsSuccess) 
-            return ticketValidation.Error!;
+            return ticketValidation.Error;
         
         var ticket = Ticket.Create(Id, userId,
             startTimeUtc, endTimeUtc, Price);
@@ -96,7 +126,7 @@ public sealed class Service : Entity
         
         var result = ticket.CancelReservation();
         if (result.IsFailure) 
-            return result.Error!;
+            return result.Error;
         
         return Result.Success();
     }
@@ -111,7 +141,7 @@ public sealed class Service : Entity
 
         var result = ticket.SellReservation();
         if (result.IsFailure) 
-            return result.Error!;
+            return result.Error;
         
         return Result.Success();
     }

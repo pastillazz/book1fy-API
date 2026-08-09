@@ -1,8 +1,8 @@
-using Application.Abstractions.Authentication;
-using Application.Abstractions.Interfaces;
-using Domain.Abstractions;
+using Application.Common.Abstractions.Authentication;
+using Application.Common.Abstractions.Interfaces;
 using Domain.Errors;
 using Domain.Repositories;
+using Domain.Shared;
 
 namespace Application.Companies.Commands.AddService;
 
@@ -27,7 +27,7 @@ public class AddServiceCommandHandler(
         
         if (result.IsFailure)
         {
-            return result.Error!;
+            return result.Error;
         }
         
         await unitOfWork.SaveChangesAsync(cancellationToken);

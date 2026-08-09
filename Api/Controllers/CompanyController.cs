@@ -27,7 +27,7 @@ public class CompanyController(ISender sender) : ApiController(sender)
                 request.Email);
 
         var result = await Sender.Send(command, cancellationToken);
-        if (result.IsFailure) return ToProblemDetails(result.Error!);
+        if (result.IsFailure) return HandleFailure(result);
 
         return CreatedAtAction(
             actionName:nameof(GetCompanyById),
@@ -43,7 +43,7 @@ public class CompanyController(ISender sender) : ApiController(sender)
     {
         var query = new GetCompanyByIdQuery(id);
         var result = await Sender.Send(query, cancellationToken);
-        if (result.IsFailure) return ToProblemDetails(result.Error!);
+        if (result.IsFailure) return HandleFailure(result);
         return Ok(result.Value);
     }
     
@@ -59,7 +59,7 @@ public class CompanyController(ISender sender) : ApiController(sender)
             request.WorkDays, request.Price);
 
         var result = await Sender.Send(command, cancellationToken);
-        if (result.IsFailure) return ToProblemDetails(result.Error!);
+        if (result.IsFailure) return HandleFailure(result);
 
         return CreatedAtAction(
             actionName: nameof(GetServiceById),
@@ -75,7 +75,7 @@ public class CompanyController(ISender sender) : ApiController(sender)
     {
         var query = new GetServiceByIdQuery(companyId, serviceId);
         var result = await Sender.Send(query, cancellationToken);
-        if (result.IsFailure) return ToProblemDetails(result.Error!);
+        if (result.IsFailure) return HandleFailure(result);
 
         return Ok(result.Value);
     }
@@ -93,7 +93,7 @@ public class CompanyController(ISender sender) : ApiController(sender)
             request.StartTimeUtc, request.EndTimeUtc);
 
         var result = await Sender.Send(command, cancellationToken);
-        if (result.IsFailure) return ToProblemDetails(result.Error!);
+        if (result.IsFailure) return HandleFailure(result);
 
         return CreatedAtAction(
             actionName: nameof(GetTicketById),
@@ -110,7 +110,7 @@ public class CompanyController(ISender sender) : ApiController(sender)
     {
         var query = new GetTicketByIdQuery(companyId, serviceId, ticketId);
         var result = await Sender.Send(query, cancellationToken);
-        if (result.IsFailure) return ToProblemDetails(result.Error!);
+        if (result.IsFailure) return HandleFailure(result);
 
         return Ok(result.Value);
     }
@@ -124,7 +124,7 @@ public class CompanyController(ISender sender) : ApiController(sender)
         var command = new CancelTicketCommand(companyId, serviceId, ticketId);
 
         var result = await Sender.Send(command, cancellationToken);
-        if (result.IsFailure) return ToProblemDetails(result.Error!);
+        if (result.IsFailure) return HandleFailure(result);
 
         return NoContent();
     }

@@ -1,8 +1,10 @@
-﻿namespace Domain.Primitives;
+﻿using Domain.Abstractions;
+
+namespace Domain.Primitives;
 
 public abstract class AggregateRoot :Entity
 {  
-    private readonly List<DomainEvent> _domainEvents=new();
+    private readonly List<IDomainEvent> _domainEvents=new();
     protected AggregateRoot(Guid id) : base(id)
     {
     }
@@ -10,13 +12,13 @@ public abstract class AggregateRoot :Entity
     {
     }
     
-    public IReadOnlyCollection<DomainEvent> DomainEvents => 
+    public IReadOnlyCollection<IDomainEvent> DomainEvents => 
         _domainEvents.ToList();
     
     public void ClearDomainEvents() => 
         _domainEvents.Clear();
     
-    protected void RaiseDomainEvent(DomainEvent domainEvent)=> 
+    protected void RaiseDomainEvent(IDomainEvent domainEvent)=> 
         _domainEvents.Add(domainEvent);
     
 }

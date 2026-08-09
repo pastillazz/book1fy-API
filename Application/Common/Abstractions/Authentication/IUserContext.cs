@@ -1,4 +1,4 @@
-namespace Application.Abstractions.Authentication;
+namespace Application.Common.Abstractions.Authentication;
 
 public interface IUserContext
 {

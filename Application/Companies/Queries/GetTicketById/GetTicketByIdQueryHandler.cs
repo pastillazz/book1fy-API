@@ -1,8 +1,8 @@
-using Application.Abstractions.Interfaces;
+using Application.Common.Abstractions.Interfaces;
 using Application.Companies.Queries.Interfaces;
 using Application.Companies.Queries.Responses;
-using Domain.Abstractions;
 using Domain.Errors;
+using Domain.Shared;
 
 namespace Application.Companies.Queries.GetTicketById;
 

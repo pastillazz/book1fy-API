@@ -1,8 +1,8 @@
-using Application.Abstractions.Authentication;
-using Application.Abstractions.Interfaces;
-using Domain.Abstractions;
+using Application.Common.Abstractions.Authentication;
+using Application.Common.Abstractions.Interfaces;
 using Domain.Errors;
 using Domain.Repositories;
+using Domain.Shared;
 
 namespace Application.Companies.Commands.CancelTicket;
 
@@ -26,7 +26,7 @@ public class CancelTicketCommandHandler(ICompanyRepository companyRepository, IU
         if (!isCompanyOwner && !isTicketHolder) return CompanyErrors.NotOwner;
 
         var result=company.CancelTicket(request.ServiceId, request.TicketId);
-        if (result.IsFailure) return result.Error!;
+        if (result.IsFailure) return result.Error;
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return Result.Success();

@@ -1,5 +1,8 @@
-﻿using Domain.Abstractions;
+using Domain.Abstractions;
+using Domain.Repositories;
+using Domain.DomainEvents;
 using Domain.Primitives;
+using Domain.Shared;
 using Domain.ValueObjects;
 
 namespace Domain.Entities;
@@ -38,20 +41,25 @@ public sealed class User:AggregateRoot
         IPasswordHasher passwordHasher)
     {   
         var fullNameResult = FullName.Create(firstName, lastName);  
-        if (fullNameResult.IsFailure) return fullNameResult.Error!;
+        if (fullNameResult.IsFailure) return fullNameResult.Error;
         
         var emailResult = Email.Create(email);
-        if (emailResult.IsFailure) return emailResult.Error!;
+        if (emailResult.IsFailure) return emailResult.Error;
         
         var passwordResult = Password.Create(password, passwordHasher);
-        if (passwordResult.IsFailure) return passwordResult.Error!;
+        if (passwordResult.IsFailure) return passwordResult.Error;
 
         var user = new User(Guid.NewGuid(),
             fullNameResult.Value,
             username, emailResult.Value,
             passwordResult.Value, phoneNumber);
         
-        var userEvent= new UserCreatedDomainEvent(Guid.NewGuid(),user.Id);
+        var userEvent= new UserCreatedDomainEvent(
+            Guid.NewGuid(),
+            user.Id,
+            user.Email.Value,
+            user.Username);
+        
         user.RaiseDomainEvent(userEvent);
         return user;
     }

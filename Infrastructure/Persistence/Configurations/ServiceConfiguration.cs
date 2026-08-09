@@ -4,13 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations;
 
-public class ServiceConfiguration:IEntityTypeConfiguration<Service>
+internal sealed class ServiceConfiguration:IEntityTypeConfiguration<Service>
 {
     public void Configure(EntityTypeBuilder<Service> builder)
     {
         builder.ToTable("Services");
         builder.HasKey(s => s.Id);
-        
+
+        builder.Property(s => s.Id)
+            .ValueGeneratedNever();
+
         builder.Property(s => s.CompanyId)
             .HasColumnName("company_id")
             .IsRequired();

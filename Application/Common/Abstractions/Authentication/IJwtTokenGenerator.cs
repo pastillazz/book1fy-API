@@ -1,6 +1,6 @@
 using Domain.Entities;
 
-namespace Application.Abstractions.Authentication;
+namespace Application.Common.Abstractions.Authentication;
 
 public interface IJwtTokenGenerator
 {

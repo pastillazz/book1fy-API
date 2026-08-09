@@ -1,5 +1,5 @@
 using System.Text;
-using Application.Abstractions.Authentication;
+using Application.Common.Abstractions.Authentication;
 using Domain.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Authentication;
 
-public class JwtTokenTokenGenerator
+public class JwtTokenGenerator
     (IOptions<JwtSettings> options, TimeProvider time) :IJwtTokenGenerator
 {   
     private readonly JwtSettings _jwtSettings = options.Value;

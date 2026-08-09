@@ -26,7 +26,7 @@ public class UsersController(ISender sender) : ApiController(sender)
             request.PhoneNumber);
 
         var result = await Sender.Send(command, cancellationToken);
-        if (result.IsFailure) return ToProblemDetails(result.Error!);
+        if (result.IsFailure) return HandleFailure(result);
 
         return Ok(result.Value);
     }
@@ -42,7 +42,7 @@ public class UsersController(ISender sender) : ApiController(sender)
             request.Password);
 
         var result = await Sender.Send(command, cancellationToken);
-        if (result.IsFailure) return ToProblemDetails(result.Error!);
+        if (result.IsFailure) return HandleFailure(result);
 
         return Ok(result.Value);
     }
@@ -54,7 +54,7 @@ public class UsersController(ISender sender) : ApiController(sender)
     {
         var query = new GetUserByIdQuery(id);
         var result = await Sender.Send(query, cancellationToken);
-        if (result.IsFailure) return ToProblemDetails(result.Error!);
+        if (result.IsFailure) return HandleFailure(result);
 
         return Ok(result.Value);
     }
@@ -66,7 +66,7 @@ public class UsersController(ISender sender) : ApiController(sender)
     {
         var query=new GetUserByEmailQuery(email);
         var result = await Sender.Send(query, cancellationToken);
-        if (result.IsFailure) return ToProblemDetails(result.Error!);
+        if (result.IsFailure) return HandleFailure(result);
         return Ok(result.Value);
     }
 

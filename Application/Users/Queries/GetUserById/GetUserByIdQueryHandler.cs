@@ -1,6 +1,6 @@
-using Application.Abstractions.Interfaces;
-using Domain.Abstractions;
+using Application.Common.Abstractions.Interfaces;
 using Domain.Errors;
+using Domain.Shared;
 
 namespace Application.Users.Queries.GetUserById;
 

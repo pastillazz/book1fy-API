@@ -1,9 +1,9 @@
-using Application.Abstractions.Authentication;
-using Application.Abstractions.Interfaces;
-using Domain.Abstractions;
+using Application.Common.Abstractions.Authentication;
+using Application.Common.Abstractions.Interfaces;
 using Domain.Entities;
 using Domain.Errors;
 using Domain.Repositories;
+using Domain.Shared;
 
 namespace Application.Companies.Commands.CreateCompany;
 
@@ -17,7 +17,7 @@ public class CreateCompanyCommandHandler(
         var companyCreated=Company.Create(request.Name,
             request.Description,request.Email, userContext.UserId);
         
-        if(companyCreated.IsFailure)return companyCreated.Error!;
+        if(companyCreated.IsFailure)return companyCreated.Error;
         companyRepository.Add(companyCreated.Value);
         
         await unitOfWork.SaveChangesAsync(cancellationToken);

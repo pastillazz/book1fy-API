@@ -1,4 +1,5 @@
 using Domain.Abstractions;
+using Domain.Repositories;
 
 namespace Infrastructure.Authentication;
 

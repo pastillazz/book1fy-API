@@ -1,4 +1,4 @@
-using Application.Abstractions.Authentication;
+using Application.Common.Abstractions.Authentication;
 using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Api.Authentication;

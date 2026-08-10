@@ -28,7 +28,7 @@
     </ItemGroup>
     
     <ItemGroup>
-        <None Update="Email\WelcomeEmail.html">
+        <None Update="Email\*.html">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

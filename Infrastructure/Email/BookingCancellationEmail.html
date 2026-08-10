@@ -6,7 +6,7 @@
     <meta name="x-apple-disable-message-reformatting">
     <meta name="color-scheme" content="light dark">
     <meta name="supported-color-schemes" content="light dark">
-    <title>Welcome to Book1fy</title>
+    <title>Booking cancelled</title>
     <!--[if mso]>
     <style>body,table,td,p,h1,h2,h3{font-family:Segoe UI,Arial,sans-serif !important;}</style>
     <![endif]-->
@@ -24,6 +24,8 @@
             .panel     { background-color: #16223c !important; border-color: #243044 !important; }
             .footer    { background-color: #0b1120 !important; border-top-color: #243044 !important; }
             .divider   { border-top-color: #243044 !important; }
+            .rowline   { border-top-color: #243044 !important; }
+            .struck    { color: #94a3b8 !important; }
         }
 
         @media only screen and (max-width: 600px) {
@@ -34,9 +36,8 @@
 </head>
 <body class="bg" style="margin:0; padding:0; width:100%; background-color:#f1f5f9; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
 
-<!-- Texto de vista previa en la bandeja de entrada -->
 <div style="display:none; max-height:0; overflow:hidden; mso-hide:all; font-size:1px; line-height:1px; color:#f1f5f9; opacity:0;">
-    Your Book1fy account is ready — start scheduling in a couple of clicks.
+    Your {{ServiceName}} booking on {{Date}} at {{CompanyName}} has been cancelled.
 </div>
 
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" class="bg" style="background-color:#f1f5f9;">
@@ -45,72 +46,80 @@
 
             <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" class="card" style="max-width:560px; background-color:#ffffff; border-radius:14px; border:1px solid #e2e8f0; overflow:hidden;">
 
-                <!-- Franja de acento -->
-                <tr><td bgcolor="#4f46e5" style="height:4px; line-height:4px; font-size:0;">&nbsp;</td></tr>
+                <tr><td bgcolor="#dc2626" style="height:4px; line-height:4px; font-size:0;">&nbsp;</td></tr>
 
-                <!-- Cabecera -->
                 <tr>
                     <td bgcolor="#1e1b4b" class="pad" style="background-color:#1e1b4b; padding:28px 32px;">
                         <span style="color:#ffffff; font-size:19px; font-weight:700; letter-spacing:-0.4px;">book1fy</span><span style="color:#818cf8; font-size:19px; font-weight:700;">.</span>
                     </td>
                 </tr>
 
-                <!-- Cuerpo -->
                 <tr>
-                    <td class="pad" style="padding:40px 32px 32px 32px;">
+                    <td class="pad" style="padding:36px 32px 32px 32px;">
 
-                        <h1 class="title h1" style="margin:0 0 14px 0; color:#0f172a; font-size:26px; line-height:1.25; font-weight:700; letter-spacing:-0.6px;">
-                            Welcome aboard, {{Name}}
-                        </h1>
-
-                        <p class="text" style="margin:0 0 28px 0; font-size:16px; line-height:1.65; color:#475569;">
-                            Your account is active. From here on you can book appointments, keep track of what's coming up, and manage your schedule without the back-and-forth.
-                        </p>
-
-                        <!-- Qué puedes hacer -->
-                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" class="panel" style="background-color:#f8fafc; border:1px solid #e2e8f0; border-radius:10px;">
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 18px 0;">
                             <tr>
-                                <td style="padding:22px 24px;">
-                                    <p class="title" style="margin:0 0 14px 0; font-size:12px; font-weight:700; color:#0f172a; text-transform:uppercase; letter-spacing:0.7px;">
-                                        What you can do now
-                                    </p>
-
-                                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
-                                        <tr>
-                                            <td width="24" valign="top" style="padding:5px 0; color:#4f46e5; font-size:15px; font-weight:700;">&#10003;</td>
-                                            <td class="text" style="padding:5px 0; font-size:15px; line-height:1.5; color:#475569;">Browse services and book an open slot</td>
-                                        </tr>
-                                        <tr>
-                                            <td width="24" valign="top" style="padding:5px 0; color:#4f46e5; font-size:15px; font-weight:700;">&#10003;</td>
-                                            <td class="text" style="padding:5px 0; font-size:15px; line-height:1.5; color:#475569;">Get a confirmation the moment a booking goes through</td>
-                                        </tr>
-                                        <tr>
-                                            <td width="24" valign="top" style="padding:5px 0; color:#4f46e5; font-size:15px; font-weight:700;">&#10003;</td>
-                                            <td class="text" style="padding:5px 0; font-size:15px; line-height:1.5; color:#475569;">Cancel or reschedule whenever plans change</td>
-                                        </tr>
-                                    </table>
+                                <td bgcolor="#fef2f2" style="background-color:#fef2f2; border:1px solid #fecaca; border-radius:100px; padding:6px 14px; font-size:12px; font-weight:700; color:#b91c1c; letter-spacing:0.5px; text-transform:uppercase;">
+                                    &#10005;&nbsp; Cancelled
                                 </td>
                             </tr>
                         </table>
 
-                        <p class="muted" style="margin:26px 0 0 0; font-size:14px; line-height:1.65; color:#64748b;">
-                            Questions? Just reply to this email — it reaches a real person.
+                        <h1 class="title h1" style="margin:0 0 14px 0; color:#0f172a; font-size:26px; line-height:1.25; font-weight:700; letter-spacing:-0.6px;">
+                            Your booking is cancelled
+                        </h1>
+
+                        <p class="text" style="margin:0 0 28px 0; font-size:16px; line-height:1.65; color:#475569;">
+                            Hi {{Name}}, your reservation with <strong style="color:#0f172a; font-weight:600;">{{CompanyName}}</strong> has been cancelled and the slot has been released. Nothing further is needed from you.
                         </p>
 
-                        <hr class="divider" style="border:none; border-top:1px solid #f1f5f9; margin:30px 0 22px 0;" />
+                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" class="panel" style="background-color:#f8fafc; border:1px solid #e2e8f0; border-radius:10px;">
+                            <tr>
+                                <td style="padding:8px 24px 18px 24px;">
+
+                                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                        <tr>
+                                            <td class="muted" style="padding:14px 0 4px 0; font-size:12px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.7px;">Service</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="struck" style="padding:0 0 6px 0; font-size:17px; font-weight:600; color:#64748b; line-height:1.4; text-decoration:line-through;">{{ServiceName}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="rowline muted" style="padding:16px 0 4px 0; border-top:1px solid #e2e8f0; font-size:12px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.7px;">Was scheduled for</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="struck" style="padding:0 0 2px 0; font-size:17px; font-weight:600; color:#64748b; line-height:1.4; text-decoration:line-through;">{{Date}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="struck" style="padding:0 0 6px 0; font-size:15px; color:#94a3b8; line-height:1.5; text-decoration:line-through;">
+                                                {{StartTime}} &ndash; {{EndTime}} UTC &middot; {{Duration}}
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p class="muted" style="margin:24px 0 0 0; font-size:14px; line-height:1.65; color:#64748b;">
+                            Changed your mind? The slot is open again — you're welcome to rebook whenever it suits you.
+                        </p>
+
+                        <hr class="divider" style="border:none; border-top:1px solid #f1f5f9; margin:28px 0 22px 0;" />
 
                         <p class="title" style="margin:0; font-size:15px; font-weight:600; color:#0f172a; line-height:1.6;">
-                            The Book1fy team
+                            Hope to see you soon,<br>
+                            <span style="color:#6366f1;">{{CompanyName}}</span>
                         </p>
 
                     </td>
                 </tr>
 
-                <!-- Pie -->
                 <tr>
                     <td class="footer pad" bgcolor="#f8fafc" style="background-color:#f8fafc; padding:22px 32px; text-align:center; border-top:1px solid #f1f5f9;">
                         <p class="muted" style="margin:0; font-size:12px; line-height:1.6; color:#94a3b8;">
-                            Sent to <strong style="font-weight:600;">{{Email}}</strong> because an account was created with this address.
+                            Sent to <strong style="font-weight:600;">{{Email}}</strong> regarding a Book1fy booking.
                         </p>
                     </td>
                 </tr>

@@ -31,5 +31,11 @@ internal sealed class OutboxMessageConfiguration :
 
         builder.Property(x => x.Error)
             .IsRequired(false);
+
+        builder.Property(x => x.RetryCount)
+            .HasDefaultValue(0)
+            .IsRequired();
+        
+        builder.HasIndex(x => new { x.ProcessedOnUtc, x.OccurredOnUtc });
     }
 }

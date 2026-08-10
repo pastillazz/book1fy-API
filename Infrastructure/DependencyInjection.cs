@@ -7,6 +7,7 @@ using Domain.Abstractions;
 using Domain.Repositories;
 using Infrastructure.Authentication;
 using Infrastructure.BackgroundJobs;
+using Infrastructure.Email;
 using Infrastructure.Messaging;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Interceptors;

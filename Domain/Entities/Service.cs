@@ -9,8 +9,9 @@ public sealed class Service : Entity
 {   private readonly List<DayOfWeek> _workDays=new();
     private readonly List<Ticket> _tickets=new();
     
-    private Service(Guid id, Guid companyId, string name, string description,
-        TimeSpan openingTime, TimeSpan closingTime, List<DayOfWeek> workDays,
+    private Service(Guid id, Guid companyId, string name, 
+        string description, TimeSpan openingTime, 
+        TimeSpan closingTime, List<DayOfWeek> workDays,
         decimal price) : base(id)
     {
         CompanyId = companyId;
@@ -116,35 +117,21 @@ public sealed class Service : Entity
         return Result.Success();
     }
 
-    internal Result CancelTicket(Guid ticketId)
+    internal Result<Ticket> CancelTicket(Guid ticketId)
     {
         var ticket = _tickets
             .FirstOrDefault(t => t.Id == ticketId);
-        
-        if (ticket is null) 
-            return TicketErrors.NotFound;
-        
-        var result = ticket.CancelReservation();
-        if (result.IsFailure) 
-            return result.Error;
-        
-        return Result.Success();
-    }
 
-    internal Result SellTicket(Guid ticketId)
-    {
-        var ticket = _tickets
-            .FirstOrDefault(t => t.Id == ticketId);
         if (ticket is null)
             return TicketErrors.NotFound;
-        
 
-        var result = ticket.SellReservation();
-        if (result.IsFailure) 
+        var result = ticket.CancelReservation();
+        if (result.IsFailure)
             return result.Error;
-        
-        return Result.Success();
+
+        return ticket;
     }
+    
 
 }
     

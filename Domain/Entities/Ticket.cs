@@ -41,14 +41,5 @@ public class Ticket:Entity
         Status = TicketStatus.Cancelled;
         return Result.Success();
     }
-
-    internal Result SellReservation()
-    {
-        if (Status is not TicketStatus.Reserved)
-            return TicketErrors.InvalidStatus;
-        
-        Status = TicketStatus.Sold;
-        return Result.Success();
-    }
-
+    
 }

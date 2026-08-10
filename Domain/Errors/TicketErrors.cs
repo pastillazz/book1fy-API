@@ -23,4 +23,8 @@ public class TicketErrors
     public static readonly Error OverlappingTicket=new("Ticket.OverlappingTicket",
         "Ticket times overlap with an existing ticket.",
         HttpStatusCode.Conflict);
+
+    public static readonly Error StartTimeInThePast=new("Ticket.StartTimeInThePast",
+        "Ticket cannot start in the past.",
+        HttpStatusCode.Conflict);
 }

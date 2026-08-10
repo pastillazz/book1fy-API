@@ -10,10 +10,12 @@ public class SendWelcomeEmailHandler(IEmailService emailService):
     public async Task Handle
         (DomainEventNotification<UserCreatedDomainEvent> notification,
             CancellationToken cancellationToken)
-    {
+    {   
+        var domainEvent = notification.DomainEvent;
+        
         await emailService.SendWelcomeEmailAsync(
-            notification.DomainEvent.Email, 
-            notification.DomainEvent.Name, 
+            domainEvent.Email, 
+            domainEvent.Name, 
             cancellationToken);
     }
 }

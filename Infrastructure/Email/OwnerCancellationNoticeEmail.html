@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta name="color-scheme" content="light dark">
+    <meta name="supported-color-schemes" content="light dark">
+    <title>A booking was cancelled</title>
+    <!--[if mso]>
+    <style>body,table,td,p,h1,h2,h3{font-family:Segoe UI,Arial,sans-serif !important;}</style>
+    <![endif]-->
+    <style>
+        :root { color-scheme: light dark; supported-color-schemes: light dark; }
+
+        a { text-decoration: none; }
+
+        @media (prefers-color-scheme: dark) {
+            .bg        { background-color: #0b1120 !important; }
+            .card      { background-color: #111c33 !important; border-color: #243044 !important; }
+            .title     { color: #f8fafc !important; }
+            .text      { color: #cbd5e1 !important; }
+            .muted     { color: #94a3b8 !important; }
+            .panel     { background-color: #16223c !important; border-color: #243044 !important; }
+            .footer    { background-color: #0b1120 !important; border-top-color: #243044 !important; }
+            .divider   { border-top-color: #243044 !important; }
+            .rowline   { border-top-color: #243044 !important; }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .pad     { padding-left: 24px !important; padding-right: 24px !important; }
+            .h1      { font-size: 24px !important; }
+        }
+    </style>
+</head>
+<body class="bg" style="margin:0; padding:0; width:100%; background-color:#f1f5f9; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+
+<div style="display:none; max-height:0; overflow:hidden; mso-hide:all; font-size:1px; line-height:1px; color:#f1f5f9; opacity:0;">
+    {{CustomerName}} cancelled {{ServiceName}} on {{Date}} at {{StartTime}} UTC — the slot is free again.
+</div>
+
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" class="bg" style="background-color:#f1f5f9;">
+    <tr>
+        <td align="center" style="padding:40px 16px;">
+
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" class="card" style="max-width:560px; background-color:#ffffff; border-radius:14px; border:1px solid #e2e8f0; overflow:hidden;">
+
+                <tr><td bgcolor="#d97706" style="height:4px; line-height:4px; font-size:0;">&nbsp;</td></tr>
+
+                <tr>
+                    <td bgcolor="#1e1b4b" class="pad" style="background-color:#1e1b4b; padding:28px 32px;">
+                        <span style="color:#ffffff; font-size:19px; font-weight:700; letter-spacing:-0.4px;">book1fy</span><span style="color:#818cf8; font-size:19px; font-weight:700;">.</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="pad" style="padding:36px 32px 32px 32px;">
+
+                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 18px 0;">
+                            <tr>
+                                <td bgcolor="#fffbeb" style="background-color:#fffbeb; border:1px solid #fde68a; border-radius:100px; padding:6px 14px; font-size:12px; font-weight:700; color:#b45309; letter-spacing:0.5px; text-transform:uppercase;">
+                                    Slot released
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h1 class="title h1" style="margin:0 0 14px 0; color:#0f172a; font-size:26px; line-height:1.25; font-weight:700; letter-spacing:-0.6px;">
+                            A booking was cancelled
+                        </h1>
+
+                        <p class="text" style="margin:0 0 28px 0; font-size:16px; line-height:1.65; color:#475569;">
+                            Heads up, {{Name}} — <strong style="color:#0f172a; font-weight:600;">{{CustomerName}}</strong> cancelled a reservation. The time slot is open again and available to book.
+                        </p>
+
+                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" class="panel" style="background-color:#f8fafc; border:1px solid #e2e8f0; border-radius:10px;">
+                            <tr>
+                                <td style="padding:8px 24px 18px 24px;">
+
+                                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                        <tr>
+                                            <td class="muted" style="padding:14px 0 4px 0; font-size:12px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.7px;">Customer</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="title" style="padding:0 0 6px 0; font-size:17px; font-weight:600; color:#0f172a; line-height:1.4;">{{CustomerName}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="rowline muted" style="padding:16px 0 4px 0; border-top:1px solid #e2e8f0; font-size:12px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.7px;">Service</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="title" style="padding:0 0 6px 0; font-size:17px; font-weight:600; color:#0f172a; line-height:1.4;">{{ServiceName}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="rowline muted" style="padding:16px 0 4px 0; border-top:1px solid #e2e8f0; font-size:12px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.7px;">Freed slot</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="title" style="padding:0 0 2px 0; font-size:17px; font-weight:600; color:#0f172a; line-height:1.4;">{{Date}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text" style="padding:0 0 6px 0; font-size:15px; color:#475569; line-height:1.5;">
+                                                {{StartTime}} &ndash; {{EndTime}} UTC <span class="muted" style="color:#94a3b8;">&middot; {{Duration}}</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="rowline" style="padding:16px 0 0 0; border-top:1px solid #e2e8f0;">
+                                                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                    <tr>
+                                                        <td class="muted" style="font-size:12px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.7px;">Booking value</td>
+                                                        <td align="right" class="title" style="font-size:20px; font-weight:700; color:#0f172a; letter-spacing:-0.3px;">{{Price}}</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p class="muted" style="margin:24px 0 0 0; font-size:14px; line-height:1.65; color:#64748b;">
+                            No action required — this is an automatic notice so your calendar stays accurate. Times are shown in UTC.
+                        </p>
+
+                        <hr class="divider" style="border:none; border-top:1px solid #f1f5f9; margin:28px 0 22px 0;" />
+
+                        <p class="title" style="margin:0; font-size:15px; font-weight:600; color:#0f172a; line-height:1.6;">
+                            The Book1fy team
+                        </p>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="footer pad" bgcolor="#f8fafc" style="background-color:#f8fafc; padding:22px 32px; text-align:center; border-top:1px solid #f1f5f9;">
+                        <p class="muted" style="margin:0; font-size:12px; line-height:1.6; color:#94a3b8;">
+                            Sent to <strong style="font-weight:600;">{{Email}}</strong> because it's the contact address for {{CompanyName}}.
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

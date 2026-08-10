@@ -43,8 +43,18 @@ public class Company:AggregateRoot
         var emailResult = Email.Create(email);
         if (emailResult.IsFailure) return emailResult.Error;
 
-        return new Company(Guid.NewGuid(), name.Trim(),
+        var company = new Company(Guid.NewGuid(), name.Trim(),
             description?.Trim() ?? string.Empty, emailResult.Value, ownerId);
+
+        var companyEvent = new CompanyCreatedDomainEvent(
+            Guid.NewGuid(),
+            company.Id,
+            company.Name,
+            company.Email.Value,
+            company.OwnerId);
+
+        company.RaiseDomainEvent(companyEvent);
+        return company;
     }
     
     public Result<Service> AddService( string name,
@@ -74,10 +84,23 @@ public class Company:AggregateRoot
 
         if (result.IsFailure) return result.Error;
 
-        var ticketEvent= new TicketCreatedDomainEvent(Guid.NewGuid(),
-            result.Value.Id);
+        var ticket = result.Value;
+
+        var ticketEvent= new TicketCreatedDomainEvent(
+            Guid.NewGuid(),
+            ticket.Id,
+            this.Id,
+            this.Name,
+            this.Email.Value,
+            service.Id,
+            service.Name,
+            ticket.UserId,
+            ticket.StartTimeUtc,
+            ticket.EndTimeUtc,
+            ticket.Price);
+
         RaiseDomainEvent(ticketEvent);
-        return result.Value;
+        return ticket;
     }
 
     public Result CancelTicket(Guid serviceId, Guid ticketId)
@@ -88,34 +111,29 @@ public class Company:AggregateRoot
             return Result.Failure(ServiceErrors.NotFound);
         }
         var result = service.CancelTicket(ticketId);
-        
-        if (result.IsFailure)
-        {
-            return result.Error;
-        }
-        var TicketEvent= new TicketCancelledDomainEvent(
-            Guid.NewGuid(), ticketId);
-        RaiseDomainEvent(TicketEvent);
-        return Result.Success();
-    }
-    public Result SellTicket(Guid serviceId, Guid ticketId)
-    {
-        var service = _services.FirstOrDefault(s => s.Id == serviceId);
-        if (service == null)
-        {
-            return Result.Failure(ServiceErrors.NotFound);
-        }
-        var result = service.SellTicket(ticketId);
 
         if (result.IsFailure)
         {
             return result.Error;
         }
 
-        var ticketEvent = new TicketSoldDomainEvent(
-            Guid.NewGuid(), ticketId);
-        
+        var ticket = result.Value;
+
+        var ticketEvent= new TicketCancelledDomainEvent(
+            Guid.NewGuid(),
+            ticket.Id,
+            this.Id,
+            this.Name,
+            this.Email.Value,
+            service.Id,
+            service.Name,
+            ticket.UserId,
+            ticket.StartTimeUtc,
+            ticket.EndTimeUtc,
+            ticket.Price);
+
         RaiseDomainEvent(ticketEvent);
         return Result.Success();
     }
+
 }

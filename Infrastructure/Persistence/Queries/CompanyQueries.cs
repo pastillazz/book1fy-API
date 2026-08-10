@@ -13,7 +13,7 @@ public class CompanyQueries(AppDbContext context):ICompanyQueries
             .AsNoTracking()
             .Where(c => c.Id == id)
             .Select(c => new CompanyResponse
-                (c.Id, c.Name, c.Description, c.Status.ToString(), 
+                (c.Id, c.Name, c.Description, c.Status,
                     c.Email.Value,
                     c.CreatedAt,
                     c.Services.Select(s => 
@@ -59,7 +59,7 @@ public class CompanyQueries(AppDbContext context):ICompanyQueries
                 t.Id,
                 t.ServiceId,
                 t.UserId,
-                t.Status.ToString(),
+                t.Status,
                 t.StartTimeUtc,
                 t.EndTimeUtc,
                 t.Price))

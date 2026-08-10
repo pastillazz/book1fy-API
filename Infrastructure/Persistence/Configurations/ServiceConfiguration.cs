@@ -21,7 +21,7 @@ internal sealed class ServiceConfiguration:IEntityTypeConfiguration<Service>
         builder.Property(s => s.Name)
             .HasColumnName("name")
             .IsRequired()
-            .HasMaxLength(150);
+            .HasMaxLength(100);
 
         builder.Property(s => s.Description)
             .HasColumnName("description")

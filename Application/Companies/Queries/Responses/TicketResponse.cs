@@ -1,10 +1,12 @@
+using Domain.Enums;
+
 namespace Application.Companies.Queries.Responses;
 
 public record TicketResponse(
     Guid Id,
     Guid ServiceId,
     Guid UserId,
-    string Status,
+    TicketStatus Status,
     DateTime StartTimeUtc,
     DateTime EndTimeUtc,
     decimal Price);

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Api.Authentication;
 using Api.Extensions;
 using Api.Middleware;
@@ -6,7 +7,13 @@ using Application.Common.Abstractions.Authentication;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
+
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.Converters
+            .Add(new JsonStringEnumConverter()));
+
 builder.Services
     .AddJwtAuthentication(builder.Configuration)
     .AddApplication()

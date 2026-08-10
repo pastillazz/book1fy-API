@@ -30,13 +30,13 @@ public static class DependencyInjection
         services.AddQuartz(configure =>
             {
                 var jobKey=new JobKey(nameof(ProcessOutboxMessagesJob));
-                
+
                 configure
                     .AddJob<ProcessOutboxMessagesJob>(jobKey)
                     .AddTrigger(
                         trigger => trigger.ForJob(jobKey)
                                 .WithSimpleSchedule(
-                                    schedule => 
+                                    schedule =>
                                         schedule.WithIntervalInSeconds(10)
                                             .RepeatForever())); });
         
@@ -45,14 +45,25 @@ public static class DependencyInjection
             options.WaitForJobsToComplete = true;
         });
         //Db Configuration
+        var connectionString = configuration
+            .GetConnectionString("DefaultConnection");
+
+       
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            throw new InvalidOperationException(
+                "Connection string 'DefaultConnection' is not configured. " +
+                "Set it with: dotnet user-secrets set " +
+                "\"ConnectionStrings:DefaultConnection\" \"<value>\"");
+        }
+
         services.AddDbContext<AppDbContext>((serviceProvider, options) =>
-        {   
+        {
             var interceptor = serviceProvider
                 .GetRequiredService
                     <ConvertDomainEventsToOutboxMessagesInterceptor>();
             options
-                .UseNpgsql(configuration
-                    .GetConnectionString("DefaultConnection"))
+                .UseNpgsql(connectionString)
                 .AddInterceptors(interceptor);
         });
         

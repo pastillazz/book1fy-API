@@ -96,14 +96,20 @@ public sealed class Service : Entity
     private Result IsTicketValid(
         DateTime startTimeUtc, DateTime endTimeUtc)
     {
-        if (endTimeUtc <= startTimeUtc) 
+        if (endTimeUtc <= startTimeUtc)
             return TicketErrors.InvalidTimes;
-        
-        if (!WorkDays.Contains(startTimeUtc.DayOfWeek)) 
+
+        if (startTimeUtc <= DateTime.UtcNow)
+            return TicketErrors.StartTimeInThePast;
+
+        if (!WorkDays.Contains(startTimeUtc.DayOfWeek))
             return TicketErrors.InvalidDay;
         
+        if (startTimeUtc.Date != endTimeUtc.Date)
+            return TicketErrors.InvalidTimes;
+
         if (startTimeUtc.TimeOfDay < OpeningTime ||
-            endTimeUtc.TimeOfDay > ClosingTime) 
+            endTimeUtc.TimeOfDay > ClosingTime)
             return TicketErrors.InvalidTimes;
         
 

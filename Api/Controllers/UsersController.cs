@@ -9,9 +9,11 @@ using Application.Users.Queries.GetUserById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Api.Controllers;
 
+[EnableRateLimiting("sliding")]
 public class UsersController(ISender sender) : ApiController(sender)
 {
     [HttpPost("register")]
@@ -50,6 +52,7 @@ public class UsersController(ISender sender) : ApiController(sender)
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [EnableRateLimiting("token")]
     public async Task<IActionResult> GetUserById(Guid id, CancellationToken cancellationToken)
     {
         var query = new GetUserByIdQuery(id);
@@ -62,6 +65,7 @@ public class UsersController(ISender sender) : ApiController(sender)
     [HttpGet("email/{email}")]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [EnableRateLimiting("token")]
     public async Task<IActionResult> GetUserByEmail(string email, CancellationToken cancellationToken)
     {
         var query=new GetUserByEmailQuery(email);

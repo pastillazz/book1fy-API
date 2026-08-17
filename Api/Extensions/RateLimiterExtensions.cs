@@ -50,7 +50,7 @@ public static class RateLimiterExtensions
                     partitionKey: ipAddress,
                     factory: _ => new SlidingWindowRateLimiterOptions
                     {
-                        PermitLimit = 5,
+                        PermitLimit = 10,
                         Window = TimeSpan.FromMinutes(1),
                         SegmentsPerWindow = 3
                     });
@@ -67,11 +67,24 @@ public static class RateLimiterExtensions
                     partitionKey: userId,
                     factory: _ => new TokenBucketRateLimiterOptions
                     {
-                        TokenLimit = 100,
-                        ReplenishmentPeriod = TimeSpan.FromSeconds(10),
-                        TokensPerPeriod = 10
+                        TokenLimit = 30,
+                        ReplenishmentPeriod = TimeSpan.FromSeconds(5),
+                        TokensPerPeriod = 5, 
+                        QueueLimit = 2,
+                        QueueProcessingOrder = QueueProcessingOrder.OldestFirst
                     });
             });
+            
+            options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(
+                    _=>
+                    RateLimitPartition.GetConcurrencyLimiter(
+                        partitionKey: "global_concurrency",
+                        factory: _ => new ConcurrencyLimiterOptions
+                        {
+                            PermitLimit = 50,  
+                            QueueLimit = 20,
+                            QueueProcessingOrder = QueueProcessingOrder.OldestFirst
+                        }));
         });
         return services;
     }

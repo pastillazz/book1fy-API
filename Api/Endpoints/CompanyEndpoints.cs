@@ -10,6 +10,7 @@ using Application.Companies.Queries.GetCompanyById;
 using Application.Companies.Queries.GetServiceById;
 using Application.Companies.Queries.GetTicketById;
 using Application.Companies.Queries.Responses;
+using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -20,7 +21,7 @@ public static class CompanyEndpoints
 
     public static void MapCompanyEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("api/companies")
+        var group = app.MapGroup("companies")
             .WithTags("Companies")
             .RequireAuthorization()
             .RequireRateLimiting("token");

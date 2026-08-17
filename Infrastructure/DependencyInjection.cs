@@ -8,6 +8,7 @@ using Domain.Repositories;
 using Infrastructure.Authentication;
 using Infrastructure.BackgroundJobs;
 using Infrastructure.Email;
+using Infrastructure.Health;
 using Infrastructure.Messaging;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Interceptors;
@@ -16,13 +17,15 @@ using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Quartz;
 
 namespace Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection
+        services, IConfiguration configuration)
     {   
         //Outbox Configuration
         services
@@ -87,6 +90,13 @@ public static class DependencyInjection
         
         services.AddTransient<IEmailService, SmtpEmailService>();
         
+        //HealthChecks Configuration
+        services.AddHealthChecks()
+            .AddCheck<DatabaseHealthCheck>
+                ("PostgreSQL Custom Database Health Check",
+                    HealthStatus.Unhealthy)
+            .AddNpgSql(connectionString)
+            .AddDbContextCheck<AppDbContext>();
         return services;
     }
 }

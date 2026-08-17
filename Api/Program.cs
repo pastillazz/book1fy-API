@@ -5,7 +5,10 @@ using Api.Extensions;
 using Api.Middleware;
 using Application;
 using Application.Common.Abstractions.Authentication;
+using Asp.Versioning;
+using HealthChecks.UI.Client;
 using Infrastructure;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,9 +34,30 @@ builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddCustomRateLimiter();
+
+//Api-Versioning
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+})
+    .AddMvc()
+    .AddApiExplorer(options =>
+    {
+        options.GroupNameFormat="'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    }).AddOpenApi();
+
+
+
 var app = builder.Build();
 
 app.UseExceptionHandler();
+
+app.UseConfiguredOpenApi();
 
 app.UseHttpsRedirection();
 
@@ -43,9 +67,23 @@ app.UseAuthorization();
 app.UseRateLimiter();
 
 app.MapControllers();
-app.MapCompanyEndpoints();
 
+var apiVersionSet = app.NewApiVersionSet()
+    .HasApiVersion(new ApiVersion(1))
+    .ReportApiVersions()
+    .Build();
 
+var versionedGroup = app
+    .MapGroup("api/v{version:apiVersion}")
+    .WithApiVersionSet(apiVersionSet);
+
+versionedGroup.MapCompanyEndpoints();
+
+app.MapHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    }).AllowAnonymous().DisableRateLimiting();
 
 app.Run();
 

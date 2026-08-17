@@ -6,6 +6,7 @@ using Application.Users.Commands.Register;
 using Application.Users.Queries;
 using Application.Users.Queries.GetUserByEmail;
 using Application.Users.Queries.GetUserById;
+using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,9 @@ using Microsoft.AspNetCore.RateLimiting;
 
 namespace Api.Controllers;
 
+
 [EnableRateLimiting("sliding")]
+[ApiVersion(1)]
 public class UsersController(ISender sender) : ApiController(sender)
 {
     [HttpPost("register")]
@@ -32,7 +35,7 @@ public class UsersController(ISender sender) : ApiController(sender)
 
         return Ok(result.Value);
     }
-
+    
     [HttpPost("login")]
     [AllowAnonymous]
     [ProducesResponseType(typeof(AuthResult), StatusCodes.Status200OK)]
@@ -61,7 +64,7 @@ public class UsersController(ISender sender) : ApiController(sender)
 
         return Ok(result.Value);
     }
-
+    
     [HttpGet("email/{email}")]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -73,5 +76,5 @@ public class UsersController(ISender sender) : ApiController(sender)
         if (result.IsFailure) return HandleFailure(result);
         return Ok(result.Value);
     }
-
+    
 }

@@ -5,6 +5,7 @@ using Infrastructure.Persistence.Outbox;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Quartz;
 
 namespace Infrastructure.BackgroundJobs;
@@ -13,10 +14,10 @@ namespace Infrastructure.BackgroundJobs;
 public class ProcessOutboxMessagesJob
     (AppDbContext dbContext,
     IPublisher publisher,
-    ILogger<ProcessOutboxMessagesJob> logger) : IJob
+    ILogger<ProcessOutboxMessagesJob> logger,
+    IOptions<OutboxSettings> options) : IJob
 {
-    private const int BatchSize = 20;
-    private const int MaxRetries = 3;
+    private readonly OutboxSettings _settings=options.Value;
 
     public async Task Execute(IJobExecutionContext context)
     {
@@ -24,7 +25,7 @@ public class ProcessOutboxMessagesJob
             .Set<OutboxMessage>()
             .Where(m => m.ProcessedOnUtc == null)
             .OrderBy(m => m.OccurredOnUtc)
-            .Take(BatchSize)
+            .Take(_settings.BatchSize)
             .ToListAsync(context.CancellationToken);
 
         foreach (var outboxMessage in messages)
@@ -41,7 +42,7 @@ public class ProcessOutboxMessagesJob
                 outboxMessage.RetryCount++;
                 outboxMessage.Error = ex.ToString();
 
-                if (outboxMessage.RetryCount >= MaxRetries)
+                if (outboxMessage.RetryCount >= _settings.MaxRetries)
                 {
                     outboxMessage.ProcessedOnUtc = DateTime.UtcNow;
 

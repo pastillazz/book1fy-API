@@ -12,6 +12,7 @@ using Infrastructure.Health;
 using Infrastructure.Messaging;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Interceptors;
+using Infrastructure.Persistence.Outbox;
 using Infrastructure.Persistence.Queries;
 using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,16 @@ public static class DependencyInjection
         //Outbox Configuration
         services
             .AddSingleton<ConvertDomainEventsToOutboxMessagesInterceptor>();
+        
+        services.AddOptions<OutboxSettings>()
+            .Bind(configuration.GetSection(OutboxSettings.SectionName))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+        
+        var outboxSettings = configuration
+            .GetSection(OutboxSettings.SectionName)
+            .Get<OutboxSettings>()!;
+        
         services.AddQuartz(configure =>
             {
                 var jobKey=new JobKey(nameof(ProcessOutboxMessagesJob));
@@ -40,7 +51,10 @@ public static class DependencyInjection
                         trigger => trigger.ForJob(jobKey)
                                 .WithSimpleSchedule(
                                     schedule =>
-                                        schedule.WithIntervalInSeconds(10)
+                                        schedule
+                                            .WithIntervalInSeconds
+                                                (outboxSettings
+                                                    .IntervalInSeconds)
                                             .RepeatForever())); });
         
         services.AddQuartzHostedService(options =>
@@ -71,8 +85,10 @@ public static class DependencyInjection
         });
         
         //Jwt Configuration
-        services.Configure<JwtSettings>
-            (configuration.GetSection(JwtSettings.SectionName));
+        services.AddOptions<JwtSettings>()
+            .Bind(configuration.GetSection(JwtSettings.SectionName))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
         
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         
@@ -85,8 +101,22 @@ public static class DependencyInjection
         services.AddScoped<ICompanyQueries, CompanyQueries>();
         
         //Smtp Configuration
-        services.Configure<SmtpSettings>(
-            configuration.GetSection(SmtpSettings.SectionName));
+        services.AddOptions<SmtpSettings>()
+            .Bind(configuration.GetSection(SmtpSettings.SectionName))
+            .ValidateDataAnnotations()
+            .Validate(settings => 
+            {
+                
+                if (settings.Host.Contains("gmail.com", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (settings.Port != 587 && settings.Port != 465)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            })
+            .ValidateOnStart();
         
         services.AddTransient<IEmailService, SmtpEmailService>();
         

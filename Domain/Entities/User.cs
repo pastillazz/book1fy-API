@@ -1,6 +1,7 @@
 using Domain.Abstractions;
 using Domain.Repositories;
 using Domain.DomainEvents;
+using Domain.Errors;
 using Domain.Primitives;
 using Domain.Shared;
 using Domain.ValueObjects;
@@ -9,6 +10,7 @@ namespace Domain.Entities;
 
 public sealed class User:AggregateRoot
 {   
+    private static readonly List<UserRole> _roles=new();
     private User(Guid id, FullName fullName, string username,
         Email email, Password password, string phoneNumber):base(id)
     {
@@ -34,7 +36,7 @@ public sealed class User:AggregateRoot
     public Password Password { get; private set; }
     public string PhoneNumber { get; private set; }
     public Email Email { get; private set; }
-    
+    public IReadOnlyCollection<UserRole> Roles => _roles;
     public static Result<User> Create( string firstName,
         string lastName, string username, 
         string email, string password, string phoneNumber,
@@ -54,6 +56,10 @@ public sealed class User:AggregateRoot
             username, emailResult.Value,
             passwordResult.Value, phoneNumber);
         
+        
+        var role= UserRole.Create(user.Id, Role.UserId);
+        AssignRole(role);
+        
         var userEvent= new UserCreatedDomainEvent(
             Guid.NewGuid(),
             user.Id,
@@ -62,6 +68,15 @@ public sealed class User:AggregateRoot
         
         user.RaiseDomainEvent(userEvent);
         return user;
+    }
+    
+    private static Result AssignRole(UserRole role)
+    {
+        if (_roles.Any(r => r.RoleId == role.RoleId))
+            return UserErrors.UserRoleExists;
+        
+        _roles.Add(role);
+        return Result.Success();
     }
     
     public bool HasPassword(string plainPassword, 

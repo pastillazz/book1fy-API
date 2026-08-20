@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text;
 using Application.Common.Abstractions.Authentication;
 using Domain.Entities;
@@ -20,6 +21,11 @@ public class JwtTokenGenerator
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
             SecurityAlgorithms.HmacSha256);
         
+        var roles=user.Roles
+            .Select(r=>Role.GetNameById(r.RoleId))
+            .Where(name => !string.IsNullOrEmpty(name))
+            .ToArray();
+        
         var descriptor = new SecurityTokenDescriptor
         {
             Issuer = _jwtSettings.Issuer,
@@ -31,11 +37,14 @@ public class JwtTokenGenerator
             {
                 [JwtRegisteredClaimNames.Sub] = user.Id.ToString(),
                 [JwtRegisteredClaimNames.Email]=user.Email.Value,
-                [JwtRegisteredClaimNames.Jti]=Guid.NewGuid().ToString()
+                [JwtRegisteredClaimNames.Jti]=Guid.NewGuid().ToString(),
+                [ClaimTypes.Role]=roles
             },
             SigningCredentials = signingCredentials
         };
         
         return new JsonWebTokenHandler().CreateToken(descriptor);
     }
+    
+    
 }

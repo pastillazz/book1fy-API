@@ -29,13 +29,15 @@ public static class CompanyEndpoints
         group.MapPost("",CreateCompany);
         
         group.MapGet("{id:guid}", GetCompanyById)
-            .WithName(nameof(GetCompanyById));
+            .WithName(nameof(GetCompanyById))
+            .RequireAuthorization("AdminPolicy");
 
         group.MapPost("{companyId:guid}/services", AddService);
         
         group.MapGet("{companyId:guid}/services/{serviceId:guid}", 
                 GetServiceById)
-            .WithName(nameof(GetServiceById));
+            .WithName(nameof(GetServiceById))
+            .RequireAuthorization("UserPolicy");
 
         group.MapPost("{companyId:guid}/services" +
                       "/{serviceId:guid}/tickets",

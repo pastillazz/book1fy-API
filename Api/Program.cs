@@ -21,6 +21,7 @@ builder.Services
 
 builder.Services
     .AddJwtAuthentication(builder.Configuration)
+    .AddAuthorizationPolicies()
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
 
@@ -34,19 +35,7 @@ builder.Services.AddScoped<IUserContext, UserContext>();
 //Admin Seeding Configuration
 builder.Services.AddOptions<AdminSeedSettings>()
     .Bind(builder.Configuration.GetSection(AdminSeedSettings.SectionName))
-    .Validate(settings =>
-    {
-    
-        if (!settings.Enabled) return true;
-
-        return !string.IsNullOrWhiteSpace(settings.FirstName)
-               && !string.IsNullOrWhiteSpace(settings.LastName)
-               && !string.IsNullOrWhiteSpace(settings.UserName)
-               && !string.IsNullOrWhiteSpace(settings.Email)
-               && !string.IsNullOrWhiteSpace(settings.Password)
-               && !string.IsNullOrWhiteSpace(settings.PhoneNumber);
-    }, "AdminSeed is enabled but incomplete. Set the missing values with: " +
-       "dotnet user-secrets set \"AdminSeed:<key>\" \"<value>\" --project Api")
+    .ValidateDataAnnotations()
     .ValidateOnStart();
 
 builder.Services.AddHostedService<AdminSeederHostedService>();

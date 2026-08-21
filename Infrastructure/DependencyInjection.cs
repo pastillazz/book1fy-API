@@ -1,6 +1,5 @@
 ﻿using Application.Common.Abstractions.Authentication;
 using Application.Common.Abstractions.Email;
-using Application.Companies.Queries;
 using Application.Companies.Queries.Interfaces;
 using Application.Users.Queries;
 using Domain.Abstractions;

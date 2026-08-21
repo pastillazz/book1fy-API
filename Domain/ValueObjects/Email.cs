@@ -16,7 +16,9 @@ public sealed record Email
         if (!value.Contains("@") || !value.Contains("."))
             return EmailErrors.Invalid;
 
-        return new Email(value);
+        var lowerEmail = value.Trim().ToLowerInvariant();
+
+        return new Email(lowerEmail);
     }
 
 };

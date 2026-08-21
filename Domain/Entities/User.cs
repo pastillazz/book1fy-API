@@ -1,5 +1,4 @@
 using Domain.Abstractions;
-using Domain.Repositories;
 using Domain.DomainEvents;
 using Domain.Errors;
 using Domain.Primitives;
@@ -10,7 +9,7 @@ namespace Domain.Entities;
 
 public sealed class User:AggregateRoot
 {   
-    private static readonly List<UserRole> _roles=new();
+    private readonly List<UserRole> _roles=new();
     private User(Guid id, FullName fullName, string username,
         Email email, Password password, string phoneNumber):base(id)
     {
@@ -38,16 +37,51 @@ public sealed class User:AggregateRoot
     public Email Email { get; private set; }
     public IReadOnlyCollection<UserRole> Roles => _roles;
     public static Result<User> Create( string firstName,
-        string lastName, string username, 
+        string lastName, string username,
         string email, string password, string phoneNumber,
         IPasswordHasher passwordHasher)
-    {   
-        var fullNameResult = FullName.Create(firstName, lastName);  
+    {
+        var userResult = Build(firstName, lastName, username,
+            email, password, phoneNumber, passwordHasher, Role.UserId);
+
+        if (userResult.IsFailure) return userResult.Error;
+
+        var user = userResult.Value;
+
+        var userEvent= new UserCreatedDomainEvent(
+            Guid.NewGuid(),
+            user.Id,
+            user.Email.Value,
+            user.Username);
+
+        user.RaiseDomainEvent(userEvent);
+        return user;
+    }
+    
+    public static Result<User> CreateAdmin( string firstName,
+        string lastName, string username,
+        string email, string password, string phoneNumber,
+        IPasswordHasher passwordHasher) =>
+        Build(firstName, lastName, username,
+            email, password, phoneNumber, passwordHasher, Role.AdminId);
+
+    public Result GrantAdminRole() =>
+        AssignRole(UserRole.Create(Id, Role.AdminId));
+
+    public bool IsAdmin =>
+        _roles.Any(r => r.RoleId == Role.AdminId);
+
+    private static Result<User> Build( string firstName,
+        string lastName, string username,
+        string email, string password, string phoneNumber,
+        IPasswordHasher passwordHasher, int roleId)
+    {
+        var fullNameResult = FullName.Create(firstName, lastName);
         if (fullNameResult.IsFailure) return fullNameResult.Error;
-        
+
         var emailResult = Email.Create(email);
         if (emailResult.IsFailure) return emailResult.Error;
-        
+
         var passwordResult = Password.Create(password, passwordHasher);
         if (passwordResult.IsFailure) return passwordResult.Error;
 
@@ -55,22 +89,14 @@ public sealed class User:AggregateRoot
             fullNameResult.Value,
             username, emailResult.Value,
             passwordResult.Value, phoneNumber);
-        
-        
-        var role= UserRole.Create(user.Id, Role.UserId);
-        AssignRole(role);
-        
-        var userEvent= new UserCreatedDomainEvent(
-            Guid.NewGuid(),
-            user.Id,
-            user.Email.Value,
-            user.Username);
-        
-        user.RaiseDomainEvent(userEvent);
+
+        var roleResult = user.AssignRole(UserRole.Create(user.Id, roleId));
+        if (roleResult.IsFailure) return roleResult.Error;
+
         return user;
     }
-    
-    private static Result AssignRole(UserRole role)
+
+    private Result AssignRole(UserRole role)
     {
         if (_roles.Any(r => r.RoleId == role.RoleId))
             return UserErrors.UserRoleExists;

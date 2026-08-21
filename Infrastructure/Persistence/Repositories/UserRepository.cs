@@ -9,12 +9,14 @@ public class UserRepository(AppDbContext context):IUserRepository
     public Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
        return context.Users
+            .Include(u => u.Roles)
             .FirstOrDefaultAsync(u=> u.Id == id, cancellationToken);
     }
-    
+
     public Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
     {
         return context.Users
+            .Include(u => u.Roles)
             .FirstOrDefaultAsync(u=> u.Email.Value == email, cancellationToken);
     }
 

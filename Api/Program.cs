@@ -3,6 +3,7 @@ using Api.Authentication;
 using Api.Endpoints;
 using Api.Extensions;
 using Api.Middleware;
+using Api.Seeding;
 using Application;
 using Application.Common.Abstractions.Authentication;
 using Asp.Versioning;
@@ -29,6 +30,26 @@ builder.Services.ConfigureHttpJsonOptions(
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserContext, UserContext>();
+
+//Admin Seeding Configuration
+builder.Services.AddOptions<AdminSeedSettings>()
+    .Bind(builder.Configuration.GetSection(AdminSeedSettings.SectionName))
+    .Validate(settings =>
+    {
+    
+        if (!settings.Enabled) return true;
+
+        return !string.IsNullOrWhiteSpace(settings.FirstName)
+               && !string.IsNullOrWhiteSpace(settings.LastName)
+               && !string.IsNullOrWhiteSpace(settings.UserName)
+               && !string.IsNullOrWhiteSpace(settings.Email)
+               && !string.IsNullOrWhiteSpace(settings.Password)
+               && !string.IsNullOrWhiteSpace(settings.PhoneNumber);
+    }, "AdminSeed is enabled but incomplete. Set the missing values with: " +
+       "dotnet user-secrets set \"AdminSeed:<key>\" \"<value>\" --project Api")
+    .ValidateOnStart();
+
+builder.Services.AddHostedService<AdminSeederHostedService>();
 
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();

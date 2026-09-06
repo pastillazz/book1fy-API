@@ -2,7 +2,7 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.Configurations;
+namespace Infrastructure.Persistence.Configurations.Write;
 
 internal sealed class UserRoleConfiguration:IEntityTypeConfiguration<UserRole>
 {

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(AppWriteDbContext))]
     [Migration("20260805024636_zz-Migration-1")]
     partial class zzMigration1
     {

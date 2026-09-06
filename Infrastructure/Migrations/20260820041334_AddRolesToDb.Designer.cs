@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(AppWriteDbContext))]
     [Migration("20260820041334_AddRolesToDb")]
     partial class AddRolesToDb
     {

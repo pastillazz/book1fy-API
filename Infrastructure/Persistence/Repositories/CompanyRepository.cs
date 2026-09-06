@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories;
 
-public class CompanyRepository(AppDbContext context):ICompanyRepository
+public class CompanyRepository(AppWriteDbContext context):ICompanyRepository
 {
     
     public async Task<Company?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)

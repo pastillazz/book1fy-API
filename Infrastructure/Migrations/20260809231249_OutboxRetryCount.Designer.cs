@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(AppWriteDbContext))]
     [Migration("20260809231249_OutboxRetryCount")]
     partial class OutboxRetryCount
     {

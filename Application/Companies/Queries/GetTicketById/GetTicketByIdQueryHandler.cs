@@ -13,7 +13,7 @@ public class GetTicketByIdQueryHandler(ICompanyQueries companyQueries)
         GetTicketByIdQuery request, CancellationToken cancellationToken)
     {
         var ticket = await companyQueries.GetTicketByIdAsync(
-            request.CompanyId, request.ServiceId, request.TicketId,
+            request.CompanyId, request.ServiceId, request.TicketId, 
             cancellationToken);
 
         if (ticket is null) return TicketErrors.NotFound;

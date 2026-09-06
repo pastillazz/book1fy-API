@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence;
 
-public class AppDbContext(DbContextOptions options):DbContext(options)
+public class AppWriteDbContext(DbContextOptions options):DbContext(options)
 {
     public DbSet<User> Users => Set<User>();
     public DbSet<Company> Companies => Set<Company>();
@@ -13,7 +13,15 @@ public class AppDbContext(DbContextOptions options):DbContext(options)
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Ignore<IDomainEvent>();
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        modelBuilder
+            .ApplyConfigurationsFromAssembly(
+                typeof(AppWriteDbContext).Assembly,
+                WriteConfigurationFilter);
+    }
+    
+    private static bool WriteConfigurationFilter(Type type)
+    {
+        return type.Namespace?.Contains("Configurations.Write") ?? false;
     }
     
 }

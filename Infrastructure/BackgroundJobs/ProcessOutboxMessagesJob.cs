@@ -12,7 +12,7 @@ namespace Infrastructure.BackgroundJobs;
 
 [DisallowConcurrentExecution]
 public class ProcessOutboxMessagesJob
-    (AppDbContext dbContext,
+    (AppWriteDbContext writeDbContext,
     IPublisher publisher,
     ILogger<ProcessOutboxMessagesJob> logger,
     IOptions<OutboxSettings> options) : IJob
@@ -21,7 +21,7 @@ public class ProcessOutboxMessagesJob
 
     public async Task Execute(IJobExecutionContext context)
     {
-        List<OutboxMessage> messages = await dbContext
+        List<OutboxMessage> messages = await writeDbContext
             .Set<OutboxMessage>()
             .Where(m => m.ProcessedOnUtc == null)
             .OrderBy(m => m.OccurredOnUtc)
@@ -62,7 +62,7 @@ public class ProcessOutboxMessagesJob
                 }
             }
             
-            await dbContext.SaveChangesAsync(context.CancellationToken);
+            await writeDbContext.SaveChangesAsync(context.CancellationToken);
         }
     }
 

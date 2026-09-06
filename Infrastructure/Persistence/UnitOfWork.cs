@@ -2,10 +2,10 @@
 
 namespace Infrastructure.Persistence;
 
-internal sealed class UnitOfWork(AppDbContext dbContext) : IUnitOfWork
+internal sealed class UnitOfWork(AppWriteDbContext writeDbContext) : IUnitOfWork
 {
     public Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return dbContext.SaveChangesAsync(cancellationToken);
+        return writeDbContext.SaveChangesAsync(cancellationToken);
     }
 }

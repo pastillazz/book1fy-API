@@ -72,8 +72,9 @@ public static class DependencyInjection
                 "Set it with: dotnet user-secrets set " +
                 "\"ConnectionStrings:DefaultConnection\" \"<value>\"");
         }
-
-        services.AddDbContext<AppDbContext>((serviceProvider, options) =>
+        
+        //Write DbContext Configuration
+        services.AddDbContext<AppWriteDbContext>((serviceProvider, options) =>
         {
             var interceptor = serviceProvider
                 .GetRequiredService
@@ -83,6 +84,13 @@ public static class DependencyInjection
                 .AddInterceptors(interceptor);
         });
         
+        //Read DbContext Configuration
+        services.AddDbContext<AppReadDbContext>(options =>
+        {
+            options.UseNpgsql(connectionString)
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        });
+
         //Jwt Configuration
         services.AddOptions<JwtSettings>()
             .Bind(configuration.GetSection(JwtSettings.SectionName))
@@ -125,7 +133,7 @@ public static class DependencyInjection
                 ("PostgreSQL Custom Database Health Check",
                     HealthStatus.Unhealthy)
             .AddNpgSql(connectionString)
-            .AddDbContextCheck<AppDbContext>();
+            .AddDbContextCheck<AppWriteDbContext>();
         return services;
     }
 }

@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Persistence.Configurations;
+namespace Infrastructure.Persistence.Configurations.Write;
 
-internal class TicketConfiguration:IEntityTypeConfiguration<Ticket>
+internal sealed class TicketConfiguration:IEntityTypeConfiguration<Ticket>
 {
     public void Configure(EntityTypeBuilder<Ticket> builder)
     {

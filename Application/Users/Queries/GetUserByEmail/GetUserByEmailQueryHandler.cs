@@ -10,7 +10,8 @@ public class GetUserByEmailQueryHandler(IUserQueries userQueries) :
 
     public async Task<Result<UserResponse>> Handle(GetUserByEmailQuery request, CancellationToken cancellationToken)
     {
-        var user= await userQueries.GetUserByEmailAsync(request.Email,cancellationToken);
+        var email = request.Email.Trim().ToLowerInvariant();
+        var user= await userQueries.GetUserByEmailAsync(email,cancellationToken);
 
         if (user is null) return UserErrors.UserNotFound;
 

@@ -6,7 +6,8 @@ using Domain.Shared;
 namespace Domain.Entities;
 
 public sealed class Service : Entity
-{   private readonly List<DayOfWeek> _workDays=new();
+{  
+    private readonly List<DayOfWeek> _workDays=new();
     private readonly List<Ticket> _tickets=new();
     
     private Service(Guid id, Guid companyId, string name, 

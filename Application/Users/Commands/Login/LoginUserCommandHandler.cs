@@ -14,9 +14,10 @@ public class LoginUserCommandHandler(IUserRepository userRepository,
 {
     public async Task<Result<AuthResult>> Handle(LoginUserCommand request,
         CancellationToken cancellationToken)
-    {
-       var user=await userRepository
-           .GetByEmailAsync(request.Email, cancellationToken);
+    { 
+        var email = request.Email.Trim().ToLowerInvariant();
+        var user=await userRepository
+           .GetByEmailAsync(email, cancellationToken);
 
        if (user is null) return UserErrors.InvalidCredentials;
        

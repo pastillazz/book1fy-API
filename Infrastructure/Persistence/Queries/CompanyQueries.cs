@@ -82,6 +82,7 @@ public class CompanyQueries(AppReadDbContext context):ICompanyQueries
         
         if (!string.IsNullOrWhiteSpace(searchTerm))
         {
+            searchTerm=searchTerm.ToLower();
             servicesQuery=servicesQuery
                 .Where(s=>s.Name
                               .Contains(searchTerm) ||

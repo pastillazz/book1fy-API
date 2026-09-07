@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence;
 
-public class AppReadDbContext(DbContextOptions options):DbContext(options)
+public class AppReadDbContext(DbContextOptions<AppReadDbContext> options):
+    DbContext(options)
 {
     public DbSet<UserReadModel> Users => Set<UserReadModel>();
     public DbSet<CompanyReadModel> Companies => Set<CompanyReadModel>();

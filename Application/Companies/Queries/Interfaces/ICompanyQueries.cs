@@ -1,3 +1,4 @@
+using Application.Companies.Queries.GetServices;
 using Application.Companies.Queries.Responses;
 
 namespace Application.Companies.Queries.Interfaces;
@@ -10,4 +11,9 @@ public interface ICompanyQueries
         ( Guid companyId, Guid serviceId, CancellationToken cancellationToken);
     Task<TicketResponse?> GetTicketByIdAsync
         ( Guid companyId, Guid serviceId, Guid ticketId, CancellationToken cancellationToken);
+    Task<PagedList<ServiceResponse>?> GetAllServicesAsync(string? searchTerm, 
+        string? sortColumn, string? sortOrder,
+        int page, int pageSize,
+        CancellationToken cancellationToken);
+   
 }

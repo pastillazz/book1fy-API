@@ -88,6 +88,7 @@ var versionedGroup = app
     .WithApiVersionSet(apiVersionSet);
 
 versionedGroup.MapCompanyEndpoints();
+versionedGroup.MapServiceEndpoints();
 
 app.MapHealthChecks("/health",
     new HealthCheckOptions

@@ -12,7 +12,6 @@ public class CompanyQueries(AppReadDbContext context):ICompanyQueries
     public async Task<CompanyResponse?> GetCompanyByIdAsync(Guid id, 
         CancellationToken cancellationToken)
     {
-        
        return await context.Companies
             .Where(c => c.Id == id)
             .Select(c => new CompanyResponse
@@ -84,10 +83,8 @@ public class CompanyQueries(AppReadDbContext context):ICompanyQueries
         {
             searchTerm=searchTerm.ToLower();
             servicesQuery=servicesQuery
-                .Where(s=>s.Name
-                              .Contains(searchTerm) ||
-                                                 s.Description
-                                                     .Contains(searchTerm));
+                .Where(s=>s.Name.ToLower().Contains(searchTerm) || 
+                          s.Description.ToLower().Contains(searchTerm));
         }
         
         if(sortOrder?.ToLower()=="desc")

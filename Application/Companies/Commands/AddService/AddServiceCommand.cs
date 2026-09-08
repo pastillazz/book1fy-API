@@ -10,3 +10,4 @@ public record AddServiceCommand(
     TimeSpan ClosingTime,
     List<DayOfWeek> WorkDays,
     decimal Price):ICommand<Guid>;
+

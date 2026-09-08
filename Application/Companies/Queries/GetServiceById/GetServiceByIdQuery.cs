@@ -1,4 +1,5 @@
 using Application.Common.Abstractions.Interfaces;
+
 using Application.Companies.Queries.Responses;
 
 namespace Application.Companies.Queries.GetServiceById;

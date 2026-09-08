@@ -32,7 +32,8 @@ public static class CompanyEndpoints
             .WithName(nameof(GetCompanyById))
             .RequireAuthorization("AdminPolicy");
 
-        group.MapPost("{companyId:guid}/services", AddService);
+        group.MapPost("{companyId:guid}/services", AddService)
+            .WithName(nameof(AddService));
         
         group.MapGet("{companyId:guid}/services/{serviceId:guid}", 
                 GetServiceById)

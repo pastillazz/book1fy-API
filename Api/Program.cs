@@ -4,8 +4,10 @@ using Api.Endpoints;
 using Api.Extensions;
 using Api.Middleware;
 using Api.Seeding;
+using Api.Services;
 using Application;
 using Application.Common.Abstractions.Authentication;
+using Application.Common.Abstractions.Link;
 using Asp.Versioning;
 using HealthChecks.UI.Client;
 using Infrastructure;
@@ -31,6 +33,7 @@ builder.Services.ConfigureHttpJsonOptions(
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserContext, UserContext>();
+builder.Services.AddScoped<ILinkService, LinkService>();
 
 //Admin Seeding Configuration
 builder.Services.AddOptions<AdminSeedSettings>()
@@ -89,6 +92,7 @@ var versionedGroup = app
 
 versionedGroup.MapCompanyEndpoints();
 versionedGroup.MapServiceEndpoints();
+
 
 app.MapHealthChecks("/health",
     new HealthCheckOptions

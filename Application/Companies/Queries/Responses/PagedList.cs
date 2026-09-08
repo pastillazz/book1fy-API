@@ -1,4 +1,6 @@
-namespace Application.Companies.Queries.GetServices;
+using Application.Common.Abstractions.Link;
+
+namespace Application.Companies.Queries.Responses;
 
 public class PagedList<T>
 {
@@ -15,6 +17,8 @@ public class PagedList<T>
     public int PageSize { get; }
     public bool HasNextPage=> Page* PageSize < TotalCount;
     public bool HasPreviousPage=> Page > 1;
+    
+    public List<Link> Links { get; set; } = new List<Link>();
     
     public static PagedList<T> Create
         (List<T> items, int totalCount, int page, int pageSize)

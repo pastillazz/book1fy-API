@@ -35,5 +35,14 @@
         <None Update="Email\*.html">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Remove="obj\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Remove="obj\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <EmbeddedResource Remove="obj\**" />
     </ItemGroup>
 </Project>

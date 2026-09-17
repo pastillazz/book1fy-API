@@ -91,7 +91,8 @@ public class CompanyQueries(AppReadDbContext context) : ICompanyQueries
         CancellationToken cancellationToken
     )
     {
-        var servicesQuery = context.Services.AsQueryable();
+        var servicesQuery = context
+            .Services.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(searchTerm))
         {
@@ -126,9 +127,7 @@ public class CompanyQueries(AppReadDbContext context) : ICompanyQueries
                 s.Price
             ))
             .ToListAsync(cancellationToken);
-
-        return PagedList<ServiceResponse>.Create(items, totalCount, page, pageSize);
-    }
+        return PagedList<ServiceResponse>.Create(items, totalCount, page, pageSize); }
 
     private static Expression<Func<ServiceReadModel, object>> GetSortProperty(string? sortColumn)
     {

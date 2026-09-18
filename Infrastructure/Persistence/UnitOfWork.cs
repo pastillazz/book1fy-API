@@ -1,4 +1,6 @@
-﻿using Domain.Repositories;
+﻿
+using Domain.Repositories;
+
 
 namespace Infrastructure.Persistence;
 
@@ -8,4 +10,6 @@ internal sealed class UnitOfWork(AppWriteDbContext writeDbContext) : IUnitOfWork
     {
         return writeDbContext.SaveChangesAsync(cancellationToken);
     }
+
+   
 }

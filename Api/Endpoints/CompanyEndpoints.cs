@@ -18,7 +18,7 @@ namespace Api.Endpoints;
 
 public static class CompanyEndpoints
 {
-
+    
     public static void MapCompanyEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("companies")
@@ -27,6 +27,7 @@ public static class CompanyEndpoints
             .RequireRateLimiting("token");
         
         group.MapPost("",CreateCompany);
+        
         
         group.MapGet("{id:guid}", GetCompanyById)
             .WithName(nameof(GetCompanyById))
@@ -46,7 +47,7 @@ public static class CompanyEndpoints
         
         group.MapGet("{companyId:guid}/services" +
                      "/{serviceId:guid}/tickets/{ticketId:guid}",
-            GetTicketById)
+                GetTicketById)
             .WithName(nameof(GetTicketById));
         
         group.MapDelete("{companyId:guid}/services" +
@@ -61,8 +62,8 @@ public static class CompanyEndpoints
             CancellationToken cancellationToken)
     {
         var command = new CreateCompanyCommand(
-                request.Name, request.Description,
-                request.Email);
+            request.Name, request.Description,
+            request.Email);
 
         var result = await sender.Send(command, cancellationToken);
         
@@ -92,12 +93,12 @@ public static class CompanyEndpoints
     }
     
     private static async Task<Results<CreatedAtRoute<Guid>,
-            ProblemHttpResult>> AddService(Guid companyId,
+        ProblemHttpResult>> AddService(Guid companyId,
         CreateServiceRequest request,
         ISender sender, CancellationToken cancellationToken)
     {
         var command = new AddServiceCommand(
-             companyId, request.Name, request.Description,
+            companyId, request.Name, request.Description,
             request.OpeningTime, request.ClosingTime,
             request.WorkDays, request.Price);
 
@@ -129,7 +130,7 @@ public static class CompanyEndpoints
     
     private static async Task<Results<CreatedAtRoute<Guid>,
         ProblemHttpResult>> AddTicket(Guid companyId, Guid serviceId,
-         CreateTicketRequest request, ISender sender,
+        CreateTicketRequest request, ISender sender,
         CancellationToken cancellationToken)
     {
 
@@ -148,8 +149,8 @@ public static class CompanyEndpoints
     
     private static async Task<Results<Ok<TicketResponse>, ProblemHttpResult>> 
         GetTicketById(
-        Guid companyId, Guid serviceId, Guid ticketId,
-        ISender sender, CancellationToken cancellationToken)
+            Guid companyId, Guid serviceId, Guid ticketId,
+            ISender sender, CancellationToken cancellationToken)
     {
         var query = new GetTicketByIdQuery(companyId, serviceId, ticketId);
         var result = await sender.Send(query, cancellationToken);
@@ -160,7 +161,7 @@ public static class CompanyEndpoints
     
     private static async Task<Results<NoContent, ProblemHttpResult>> 
         CancelTicket(Guid companyId, Guid serviceId,
-        Guid ticketId,ISender sender, CancellationToken cancellationToken)
+            Guid ticketId,ISender sender, CancellationToken cancellationToken)
     {
         var command = new CancelTicketCommand(companyId, serviceId, ticketId);
 

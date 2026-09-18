@@ -21,7 +21,6 @@ public class LoginUserCommandHandler(IUserRepository userRepository,
 
        if (user is null) return UserErrors.InvalidCredentials;
        
-
        if (!user.HasPassword(request.Password, passwordHasher))
            return UserErrors.InvalidCredentials;
        

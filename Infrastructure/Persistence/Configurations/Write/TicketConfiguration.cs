@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,6 +14,8 @@ internal sealed class TicketConfiguration:IEntityTypeConfiguration<Ticket>
 
         builder.Property(s => s.Id)
             .ValueGeneratedNever();
+        
+        builder.HasQueryFilter(t=>t.Status != TicketStatus.Cancelled);
 
         builder.Property(s => s.ServiceId)
             .HasColumnName("service_id")
@@ -26,7 +29,7 @@ internal sealed class TicketConfiguration:IEntityTypeConfiguration<Ticket>
             .HasColumnName("status")
             .HasConversion<string>()
             .IsRequired();
-        
+
         builder.Property(s=>s.Price)
             .HasColumnName("price")
             .HasColumnType("decimal(18,2)")

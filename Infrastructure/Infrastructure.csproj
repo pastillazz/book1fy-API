@@ -10,7 +10,13 @@
     <ItemGroup>
       <ProjectReference Include="..\Application\Application.csproj" />
     </ItemGroup>
-
+ 
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>Infrastructure</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+    
     <ItemGroup>
       <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="9.0.0" />
       <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
@@ -35,5 +41,14 @@
         <None Update="Email\*.html">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Remove="obj\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Remove="obj\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <EmbeddedResource Remove="obj\**" />
     </ItemGroup>
 </Project>

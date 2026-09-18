@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -39,13 +40,14 @@ internal sealed class CompanyConfiguration:IEntityTypeConfiguration<Company>
 
         builder.HasIndex(c => c.OwnerId);
         
-        builder.ComplexProperty(c => c.Email, emailBuilder =>
-        {
-            emailBuilder.Property(c => c.Value)
-                .HasColumnName("email")
-                .IsRequired()
-                .HasMaxLength(255);
-        });
+        builder.Property(u=>u.Email)
+            .HasConversion(
+                email => email.Value,
+                value => Email.Reconstruct(value)
+                )
+            .HasColumnName("email")
+            .IsRequired()
+            .HasMaxLength(255);
         
         builder.HasMany(c=>c.Services)
             .WithOne()

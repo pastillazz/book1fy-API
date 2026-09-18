@@ -9,4 +9,5 @@ public class EmailErrors
     
     public static readonly Error Invalid = new("Email.Invalid", 
         "Email format is invalid.");
+    
 }

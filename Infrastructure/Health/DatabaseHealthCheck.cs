@@ -1,14 +1,17 @@
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Options;
 
 namespace Infrastructure.Health;
 
-public class DatabaseHealthCheck(IConfiguration configuration):IHealthCheck
+public class DatabaseHealthCheck:IHealthCheck
 {
-    private readonly string _connectionString =
-        configuration
-            .GetConnectionString("DefaultConnection")
-        ?? throw new InvalidOperationException();
+   private readonly DatabaseOptions _databaseOptions;
+
+   public DatabaseHealthCheck(IOptions<DatabaseOptions> databaseOptions)
+    {
+        _databaseOptions = databaseOptions.Value; 
+    }
+   
     
     public async Task<HealthCheckResult> 
         CheckHealthAsync(HealthCheckContext context,
@@ -16,7 +19,8 @@ public class DatabaseHealthCheck(IConfiguration configuration):IHealthCheck
     {
         try
         {
-            using var connection=new Npgsql.NpgsqlConnection(_connectionString);
+            using var connection=new Npgsql.NpgsqlConnection(_databaseOptions
+                .ConnectionString);
             await connection.OpenAsync(cancellationToken);
             
             using var command = connection.CreateCommand();

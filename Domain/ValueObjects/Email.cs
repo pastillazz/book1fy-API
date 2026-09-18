@@ -7,7 +7,7 @@ public sealed record Email
 {   
     private Email(string value) => Value = value;
     public string Value { get; private init; }
-
+    
     public static Result<Email> Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -20,5 +20,6 @@ public sealed record Email
 
         return new Email(lowerEmail);
     }
-
+    
+    internal static Email Reconstruct(string value) => new(value);
 };

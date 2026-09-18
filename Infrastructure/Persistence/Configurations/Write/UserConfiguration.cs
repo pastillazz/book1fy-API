@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -23,22 +24,27 @@ internal sealed class UserConfiguration:IEntityTypeConfiguration<User>
             .HasColumnName("phone_number")
             .IsRequired()
             .HasMaxLength(20);
+
+        builder.Property(u => u.Email)
+            .HasConversion(
+                email => email.Value,
+                value => Email.Reconstruct(value))
+            .IsRequired()
+            .HasColumnName("email")
+            .HasMaxLength(255);
+
+        builder.HasIndex(u => u.Email)
+            .IsUnique()
+            .HasDatabaseName("ix_users_email");
         
-        builder.ComplexProperty(u => u.Email, emailBuilder =>
-        {
-            emailBuilder.Property(e => e.Value)
-                .HasColumnName("email")
-                .IsRequired()
-                .HasMaxLength(255);
-        });
-        
-        builder.ComplexProperty(u => u.Password, passwordBuilder =>
-        {
-            passwordBuilder.Property(p=> p.Hash)
-                .HasColumnName("password_hash")
-                .IsRequired()
-                .HasMaxLength(255);
-        });
+        builder.Property(u=> u.Password)
+          .HasConversion(
+                password => password.Hash,
+                value => Password.Reconstruct(value))
+            .IsRequired()
+            .HasColumnName("password")
+            .HasMaxLength(255);
+
         builder.ComplexProperty(u => u.FullName, fullNameBuilder =>
         {
             fullNameBuilder.Property(f => f.FirstName)

@@ -11,7 +11,9 @@ using Application.Common.Abstractions.Link;
 using Asp.Versioning;
 using HealthChecks.UI.Client;
 using Infrastructure;
+using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -92,7 +94,6 @@ var versionedGroup = app
 
 versionedGroup.MapCompanyEndpoints();
 versionedGroup.MapServiceEndpoints();
-
 
 app.MapHealthChecks("/health",
     new HealthCheckOptions

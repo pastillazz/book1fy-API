@@ -24,14 +24,14 @@ public class GetServicesQueryHandler:
             .GetAllServicesAsync(request.SearchTerm, request.SortColumn,
                 request.SortOrder, request.Page, request.PageSize,
                 cancellationToken);
-        
+
         if (services?.Items is null || !services.Items.Any())
         {
             return PagedList<ServiceResponse>
-                .Create(new List<ServiceResponse>(), 0, 
+                .Create(new List<ServiceResponse>(), 0,
                     request.Page, request.PageSize);
         }
-        
+
         AddLinks(services, request);
         return services;
     }
@@ -50,7 +50,7 @@ public class GetServicesQueryHandler:
             "self",
             "GET"
         ));
-        
+
         if (services.HasNextPage)
         {
             services.Links.Add(_linkService.Generate("GetServices",

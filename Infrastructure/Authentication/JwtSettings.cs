@@ -5,6 +5,7 @@ namespace Infrastructure.Authentication;
 public class JwtSettings
 {
     public const string SectionName = "JwtSettings";
+
     [Required(ErrorMessage = "Secret is required.")]
     [MinLength(32, ErrorMessage = "Secret must be at least 32 characters.")]
     public string Secret { get; init; } = string.Empty;
@@ -15,4 +16,5 @@ public class JwtSettings
     [Required]
     [Range(1,1440, ErrorMessage = "ExpiryMinutes must be between 1 and 1440.")]
     public int ExpiryMinutes { get; init; }
+
 }

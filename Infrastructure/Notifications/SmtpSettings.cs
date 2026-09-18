@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Infrastructure.Messaging;
+namespace Infrastructure.Notifications;
 
 public class SmtpSettings
 {

@@ -22,6 +22,8 @@ public sealed record Password
         return new Password(hash);
     }
     
+    internal static Password Reconstruct(string hash) => new(hash);
+    
     public bool Verify(string plainPassword,
         IPasswordHasher passwordHasher) =>
         passwordHasher.Verify(plainPassword, Hash);

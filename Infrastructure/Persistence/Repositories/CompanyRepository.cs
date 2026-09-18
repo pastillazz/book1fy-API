@@ -14,7 +14,6 @@ public class CompanyRepository(AppWriteDbContext context):ICompanyRepository
             .FirstOrDefaultAsync(cancellationToken);
     }
 
-
     public void Add(Company company)=> context.Companies.Add(company);
     
     

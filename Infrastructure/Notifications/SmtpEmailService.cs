@@ -1,13 +1,12 @@
 using System.Globalization;
 using System.Net;
 using Application.Common.Abstractions.Email;
-using Infrastructure.Messaging;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
-namespace Infrastructure.Email;
+namespace Infrastructure.Notifications;
 
 public class SmtpEmailService(IOptions<SmtpSettings> settings) : IEmailService
 {

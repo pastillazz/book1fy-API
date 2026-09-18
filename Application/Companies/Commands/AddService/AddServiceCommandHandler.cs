@@ -1,5 +1,6 @@
 using Application.Common.Abstractions.Authentication;
 using Application.Common.Abstractions.Interfaces;
+using Domain.Entities;
 using Domain.Errors;
 using Domain.Repositories;
 using Domain.Shared;
@@ -17,7 +18,7 @@ public class AddServiceCommandHandler(
             .GetByIdAsync(request.CompanyId, cancellationToken);
 
         if (company is  null) return CompanyErrors.CompanyNotFound;
-
+        
         if (company.OwnerId != userContext.UserId)
             return CompanyErrors.NotOwner;
 

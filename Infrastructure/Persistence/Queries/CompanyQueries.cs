@@ -1,5 +1,4 @@
 using System.Linq.Expressions;
-using Application.Companies.Queries.GetServices;
 using Application.Companies.Queries.Interfaces;
 using Application.Companies.Queries.Responses;
 using Infrastructure.Persistence.Models;
@@ -127,7 +126,9 @@ public class CompanyQueries(AppReadDbContext context) : ICompanyQueries
                 s.Price
             ))
             .ToListAsync(cancellationToken);
-        return PagedList<ServiceResponse>.Create(items, totalCount, page, pageSize); }
+
+        return PagedList<ServiceResponse>.Create(items, totalCount, page, pageSize);
+    }
 
     private static Expression<Func<ServiceReadModel, object>> GetSortProperty(string? sortColumn)
     {

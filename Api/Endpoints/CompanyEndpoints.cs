@@ -10,7 +10,6 @@ using Application.Companies.Queries.GetCompanyById;
 using Application.Companies.Queries.GetServiceById;
 using Application.Companies.Queries.GetTicketById;
 using Application.Companies.Queries.Responses;
-using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -25,6 +24,7 @@ public static class CompanyEndpoints
             .WithTags("Companies")
             .RequireAuthorization()
             .RequireRateLimiting("token");
+        
         
         group.MapPost("",CreateCompany);
         

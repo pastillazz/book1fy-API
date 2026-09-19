@@ -43,7 +43,7 @@ public static class DependencyInjection
         .GetSection(OutboxSettings.SectionName)
         .Get<OutboxSettings>()!;
     
-    services.AddQuartz(configure =>
+   services.AddQuartz(configure =>
       {
         var jobKey=new JobKey(nameof(ProcessOutboxMessagesJob));
 
@@ -77,8 +77,8 @@ public static class DependencyInjection
         {  
           var databaseOptions=serviceProvider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
 
-          var interceptor =
-                  serviceProvider.GetRequiredService<ConvertDomainEventsToOutboxMessagesInterceptor>();
+         var interceptor = serviceProvider
+             .GetRequiredService<ConvertDomainEventsToOutboxMessagesInterceptor>();
           options.UseNpgsql(databaseOptions.ConnectionString, npgsql=> {
 
               npgsql.EnableRetryOnFailure(databaseOptions.MaxRetryCount);
@@ -145,7 +145,7 @@ public static class DependencyInjection
 
     services.AddTransient<IEmailService, SmtpEmailService>();
 
-    //HealthChecks Configuration
+    //Health checks Configuration
 
     services
         .AddHealthChecks()

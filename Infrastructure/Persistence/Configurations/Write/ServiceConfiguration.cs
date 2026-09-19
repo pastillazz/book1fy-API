@@ -45,7 +45,14 @@ internal sealed class ServiceConfiguration:IEntityTypeConfiguration<Service>
             .HasColumnName("work_days")
             .ElementType()
             .HasConversion<string>();
-       
+        
+        builder.Property<uint>("Version")
+            .IsRowVersion();
+
+        builder.Property(s => s.serviceVersion)
+            .IsRequired()
+            .HasColumnName("service_version");
+        
         builder.HasMany(s => s.Tickets)
             .WithOne()
             .HasForeignKey(t => t.ServiceId)

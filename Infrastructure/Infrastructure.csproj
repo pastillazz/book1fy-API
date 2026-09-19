@@ -10,12 +10,6 @@
     <ItemGroup>
       <ProjectReference Include="..\Application\Application.csproj" />
     </ItemGroup>
- 
-    <ItemGroup>
-        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-            <_Parameter1>Infrastructure</_Parameter1>
-        </AssemblyAttribute>
-    </ItemGroup>
     
     <ItemGroup>
       <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="9.0.0" />
@@ -36,9 +30,9 @@
       <PackageReference Include="Quartz" Version="3.19.1" />
       <PackageReference Include="Quartz.Extensions.Hosting" Version="3.19.1" />
     </ItemGroup>
-    
+
     <ItemGroup>
-        <None Update="Email\*.html">
+        <None Update="Notifications\*.html">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Remove="obj\**" />

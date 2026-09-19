@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Application.Common.Abstractions.Authentication;
 using Microsoft.IdentityModel.JsonWebTokens;
 
@@ -15,7 +16,7 @@ public sealed class UserContext(IHttpContextAccessor httpContextAccessor) : IUse
         userId = Guid.Empty;
 
         var subject = httpContextAccessor.HttpContext?.User
-            .FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+            .FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         return subject is not null && Guid.TryParse(subject, out userId);
     }

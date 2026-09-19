@@ -22,6 +22,7 @@ public sealed class Service : Entity
         ClosingTime = closingTime;
         _workDays = workDays.ToList();
         Price = price;
+        serviceVersion = 1;
     }
 
     private Service()
@@ -29,6 +30,7 @@ public sealed class Service : Entity
         Name = null!;
         Description = null!;
     }
+    public int serviceVersion {get; set;}
     public Guid CompanyId { get; private set; }
     public string Name { get; private set; }
     public string Description { get; private set; }
@@ -91,6 +93,7 @@ public sealed class Service : Entity
         var ticket = Ticket.Create(Id, userId,
             startTimeUtc, endTimeUtc, Price);
         _tickets.Add(ticket);
+        serviceVersion++;
         return ticket;
     }
 

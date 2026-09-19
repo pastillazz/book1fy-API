@@ -151,7 +151,7 @@ public class SmtpEmailService(IOptions<SmtpSettings> settings) : IEmailService
         CancellationToken cancellationToken)
     {
         var templatePath = Path.Combine(AppContext.BaseDirectory,
-            "Email", template);
+            "Notifications", template);
 
         if (!File.Exists(templatePath))
         {

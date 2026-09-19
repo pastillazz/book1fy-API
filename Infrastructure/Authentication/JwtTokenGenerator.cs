@@ -26,6 +26,18 @@ public class JwtTokenGenerator
             .Where(name => !string.IsNullOrEmpty(name))
             .ToArray();
         
+        var claims = new List<Claim>
+        {
+            new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new(JwtRegisteredClaimNames.Email, user.Email.Value),
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+        
+        foreach (var role in roles)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
+        
         var descriptor = new SecurityTokenDescriptor
         {
             Issuer = _jwtSettings.Issuer,
@@ -33,13 +45,7 @@ public class JwtTokenGenerator
             IssuedAt = now,
             NotBefore = now,
             Expires = now.AddMinutes(_jwtSettings.ExpiryMinutes),
-            Claims = new Dictionary<string, object>
-            {
-                [JwtRegisteredClaimNames.Sub] = user.Id.ToString(),
-                [JwtRegisteredClaimNames.Email]=user.Email.Value,
-                [JwtRegisteredClaimNames.Jti]=Guid.NewGuid().ToString(),
-                [ClaimTypes.Role]=roles
-            },
+            Subject = new ClaimsIdentity(claims),
             SigningCredentials = signingCredentials
         };
         

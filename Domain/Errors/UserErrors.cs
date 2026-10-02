@@ -15,8 +15,12 @@ public class UserErrors
     
     public static readonly Error InvalidCredentials = new("User.InvalidCredentials",
         "Invalid password.", HttpStatusCode.Unauthorized);
-    
+
     public static readonly Error UserRoleExists = new("User.RoleExists",
         "User already has the specified role.",
         HttpStatusCode.Conflict);
+        
+    public static readonly Error RefreshTokenNotFound = new("User.RefreshTokenNotFound",
+        "Refresh token not found.",
+        HttpStatusCode.NotFound);    
 }

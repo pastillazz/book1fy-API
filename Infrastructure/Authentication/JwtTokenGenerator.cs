@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Application.Common.Abstractions.Authentication;
 using Domain.Entities;
@@ -51,6 +52,7 @@ public class JwtTokenGenerator
         
         return new JsonWebTokenHandler().CreateToken(descriptor);
     }
-    
-    
+
+    public string GenerateRefreshToken() => Convert
+    .ToBase64String(RandomNumberGenerator.GetBytes(32)); 
 }

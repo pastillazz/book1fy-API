@@ -9,6 +9,10 @@ public interface IUserRepository
     Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
     
     void Add(User user);
-    
+
     void Remove(User user);
+
+    void Add(RefreshToken refreshToken);
+
+    Task<RefreshToken?> GetRefreshTokenAsync(string token, CancellationToken cancellationToken = default);
 }

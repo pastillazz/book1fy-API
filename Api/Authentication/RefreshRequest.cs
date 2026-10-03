@@ -1,4 +1,4 @@
 namespace Api.Authentication;
 
-public sealed record RefreshRequest(string Token)<>;
+public sealed record RefreshRequest(string Token);
 

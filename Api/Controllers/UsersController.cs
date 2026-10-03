@@ -4,6 +4,7 @@ using Application.Users.Commands;
 using Application.Users.Commands.Login;
 using Application.Users.Commands.LoginWithRefreshToken;
 using Application.Users.Commands.Register;
+using Application.Users.Commands.RevokeRefreshTokens;
 using Application.Users.Queries;
 using Application.Users.Queries.GetUserByEmail;
 using Application.Users.Queries.GetUserById;
@@ -90,5 +91,14 @@ public class UsersController(ISender sender) : ApiController(sender)
         if (result.IsFailure) return HandleFailure(result);
         return Ok(result.Value);
 
+    }
+    
+    [HttpDelete("revoke-refresh-tokens")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> RevokeRefreshTokens(CancellationToken cancellationToken)
+    {
+        var command = new RevokeRefreshTokensCommand();
+        await Sender.Send(command, cancellationToken);
+        return NoContent();
     }
 }

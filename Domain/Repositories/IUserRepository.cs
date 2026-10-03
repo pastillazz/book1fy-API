@@ -15,4 +15,6 @@ public interface IUserRepository
     void Add(RefreshToken refreshToken);
 
     Task<RefreshToken?> GetRefreshTokenAsync(string token, CancellationToken cancellationToken = default);
+    
+    Task<bool> DeleteRefreshTokensByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
 }

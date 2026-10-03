@@ -36,13 +36,19 @@ public class UserRepository(AppWriteDbContext context):IUserRepository
     {
         context.Set<RefreshToken>().Add(refreshToken);
     }
-
-  
-    public async Task<RefreshToken?> GetUserByRefreshTokenAsync(string token, CancellationToken cancellationToken = default)
+     public async Task<RefreshToken?> GetRefreshTokenAsync(string token, CancellationToken cancellationToken = default)
     {
         return await context
-        .Set<RefreshToken>()
-        .Include(rt => rt.User)
-        .FirstOrDefaultAsync(cancellationToken);
+      .Set<RefreshToken>()
+      .Include(rt => rt.User)
+      .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task<bool> DeleteRefreshTokensByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        await context.Set<RefreshToken>()
+            .ExecuteDeleteAsync( cancellationToken);
+        
+        return true;
     }
 }

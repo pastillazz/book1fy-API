@@ -40,6 +40,7 @@ public class UserRepository(AppWriteDbContext context):IUserRepository
     {
         return await context
       .Set<RefreshToken>()
+      .Where(rt => rt.Token == token)
       .Include(rt => rt.User)
       .FirstOrDefaultAsync(cancellationToken);
     }

@@ -35,7 +35,8 @@ public class UsersController(ISender sender) : ApiController(sender)
         var result = await Sender.Send(command, cancellationToken);
         if (result.IsFailure) return HandleFailure(result);
 
-        return Ok(result.Value);
+        SetAuthCookies(result.Value.Token, result.Value.RefreshToken); 
+        return Ok(new AuthResponse(result.Value.Id, result.Value.Username, result.Value.Email));
     }
     
     [HttpPost("login")]
@@ -50,8 +51,9 @@ public class UsersController(ISender sender) : ApiController(sender)
 
         var result = await Sender.Send(command, cancellationToken);
         if (result.IsFailure) return HandleFailure(result);
-
-        return Ok(result.Value);
+        
+        SetAuthCookies(result.Value.Token, result.Value.RefreshToken);
+        return Ok(new AuthResponse(result.Value.Id, result.Value.Username, result.Value.Email));
     }
     
     [HttpGet("{id:guid}")]
@@ -83,14 +85,21 @@ public class UsersController(ISender sender) : ApiController(sender)
     [AllowAnonymous]
     [ProducesResponseType(typeof(AuthResult), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> LoginUserWithRefreshToken(RefreshRequest request, CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> LoginUserWithRefreshToken(CancellationToken cancellationToken)
     {
-        var command = new LoginUserWithRefreshTokenCommand(request.Token);
+        var refreshToken = Request.Cookies["refreshToken"];
+        if (string.IsNullOrEmpty(refreshToken))
+        {
+            return Unauthorized(new { message = "Refresh token is missing." });
+        }
+        var command = new LoginUserWithRefreshTokenCommand(refreshToken);
         var result = await Sender.Send(command, cancellationToken);
 
         if (result.IsFailure) return HandleFailure(result);
-        return Ok(result.Value);
-
+        
+        SetAuthCookies(result.Value.Token, result.Value.RefreshToken);
+        return Ok(new AuthResponse(result.Value.Id, result.Value.Username, result.Value.Email));
     }
     
     [HttpDelete("revoke-refresh-tokens")]
@@ -99,6 +108,35 @@ public class UsersController(ISender sender) : ApiController(sender)
     {
         var command = new RevokeRefreshTokensCommand();
         await Sender.Send(command, cancellationToken);
+        
+        ClearAuthCookies();
         return NoContent();
+    }
+
+    private void SetAuthCookies(string accessToken, string refreshToken)
+    {
+        Response.Cookies.Append("accessToken", accessToken, new CookieOptions {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddMinutes(15)
+        });
+        
+        Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Path = "/api/v1/users",
+            Expires = DateTime.UtcNow.AddDays(7)
+        });
+        
+    }
+    private void ClearAuthCookies()
+    {
+        Response.Cookies.Delete("accessToken");
+        Response.Cookies.Delete("refreshToken", new CookieOptions
+        {
+            Path = "/api/v1/users"
+        });
     }
 }

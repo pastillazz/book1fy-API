@@ -2,7 +2,9 @@ using Api.Abstractions;
 using Api.Authentication;
 using Application.Users.Commands;
 using Application.Users.Commands.Login;
+using Application.Users.Commands.LoginWithRefreshToken;
 using Application.Users.Commands.Register;
+using Application.Users.Commands.RevokeRefreshTokens;
 using Application.Users.Queries;
 using Application.Users.Queries.GetUserByEmail;
 using Application.Users.Queries.GetUserById;
@@ -64,17 +66,39 @@ public class UsersController(ISender sender) : ApiController(sender)
 
         return Ok(result.Value);
     }
-    
+
     [HttpGet("email/{email}")]
     [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [EnableRateLimiting("token")]
     public async Task<IActionResult> GetUserByEmail(string email, CancellationToken cancellationToken)
     {
-        var query=new GetUserByEmailQuery(email);
+        var query = new GetUserByEmailQuery(email);
         var result = await Sender.Send(query, cancellationToken);
         if (result.IsFailure) return HandleFailure(result);
         return Ok(result.Value);
     }
+
+    [HttpPost("refresh")]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(AuthResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> LoginUserWithRefreshToken(RefreshRequest request, CancellationToken cancellationToken)
+    {
+        var command = new LoginUserWithRefreshTokenCommand(request.Token);
+        var result = await Sender.Send(command, cancellationToken);
+
+        if (result.IsFailure) return HandleFailure(result);
+        return Ok(result.Value);
+
+    }
     
+    [HttpDelete("revoke-refresh-tokens")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> RevokeRefreshTokens(CancellationToken cancellationToken)
+    {
+        var command = new RevokeRefreshTokensCommand();
+        await Sender.Send(command, cancellationToken);
+        return NoContent();
+    }
 }

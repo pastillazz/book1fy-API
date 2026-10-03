@@ -29,14 +29,26 @@ public class RegisterUserCommandHandler(
         var user = userCreated.Value;
         
         userRepository.Add(user);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+       
         var token = jwtTokenGenerator.Generate(user);
+
+        var refreshToken = new RefreshToken
+        {
+            Id = Guid.NewGuid(),
+            UserId = user.Id,
+            Token = jwtTokenGenerator.GenerateRefreshToken(),
+            ExpiresOnUtc = DateTime.UtcNow.AddDays(7)
+        };
         
+        userRepository.Add(refreshToken);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         return new AuthResult(
             user.Id,
             user.Username,
-            user.Email.Value, 
-            token);
+            user.Email.Value,
+            token,
+            refreshToken.Token);
     }
 }
 

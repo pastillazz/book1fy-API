@@ -22,7 +22,7 @@ internal sealed class UserConfiguration:IEntityTypeConfiguration<User>
         
         builder.Property(u => u.PhoneNumber)
             .HasColumnName("phone_number")
-            .IsRequired()
+            .IsRequired(false)
             .HasMaxLength(20);
 
         builder.Property(u => u.Email)
@@ -41,10 +41,14 @@ internal sealed class UserConfiguration:IEntityTypeConfiguration<User>
           .HasConversion(
                 password => password.Hash,
                 value => Password.Reconstruct(value))
-            .IsRequired()
+            .IsRequired(false)
             .HasColumnName("password")
             .HasMaxLength(255);
-
+        
+        builder.Property(u => u.GoogleId)
+            .HasColumnName("google_id")
+            .HasMaxLength(255);
+        
         builder.ComplexProperty(u => u.FullName, fullNameBuilder =>
         {
             fullNameBuilder.Property(f => f.FirstName)

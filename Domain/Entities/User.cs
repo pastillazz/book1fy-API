@@ -20,7 +20,16 @@ public sealed class User:AggregateRoot
         Password = password;
         PhoneNumber = phoneNumber;
     }
-
+    private User(Guid id, FullName fullName, string username, 
+        Email email,string googleId):base(id)
+    {
+        FullName = fullName;
+        Username = username;
+        Email = email;
+        GoogleId = googleId;
+      
+    }
+    
     private User()
     {
         FullName=null!;
@@ -32,8 +41,9 @@ public sealed class User:AggregateRoot
     
     public FullName FullName { get; private set; }
     public string Username { get; private set; }
-    public Password Password { get; private set; }
-    public string PhoneNumber { get; private set; }
+    public Password? Password { get; private set; }
+    public string? PhoneNumber { get; private set; }
+    public string GoogleId { get; set; }
     public Email Email { get; private set; }
     public IReadOnlyCollection<UserRole> Roles => _roles;
     public static Result<User> Create( string firstName,
@@ -95,7 +105,31 @@ public sealed class User:AggregateRoot
 
         return user;
     }
+    public static Result<User> CreateWithGoogle(string? firstName,
+        string? lastName, string email, string googleId)
+    {
+        var emailResult = Email.Create(email);
+        if (emailResult.IsFailure) return emailResult.Error;
+        
+        firstName = string.IsNullOrWhiteSpace(firstName) ? "Unknown" : firstName.Trim();
+        lastName = string.IsNullOrWhiteSpace(lastName) ? "Unknown" : lastName.Trim();
+        
+        var fullNameResult = FullName.Create(firstName, lastName);
+        if (fullNameResult.IsFailure) return fullNameResult.Error;
+        
+        var username=email.Split('@')[0];
+        
+        var user = new User(
+            Guid.NewGuid(), 
+            fullNameResult.Value, 
+            username,
+            emailResult.Value, googleId);
 
+        var roleResult = user.AssignRole(UserRole.Create(user.Id, Role.UserId));
+        if (roleResult.IsFailure) return roleResult.Error;
+
+        return user;
+    }
     private Result AssignRole(UserRole role)
     {
         if (_roles.Any(r => r.RoleId == role.RoleId))
@@ -107,7 +141,7 @@ public sealed class User:AggregateRoot
     
     public bool HasPassword(string plainPassword, 
         IPasswordHasher passwordHasher) =>
-        Password.Verify(plainPassword, passwordHasher);
+        Password!.Verify(plainPassword, passwordHasher);
     
 }
 

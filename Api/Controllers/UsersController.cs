@@ -2,6 +2,7 @@ using Api.Abstractions;
 using Api.Authentication;
 using Application.Users.Commands;
 using Application.Users.Commands.Login;
+using Application.Users.Commands.LoginWithGoogle;
 using Application.Users.Commands.LoginWithRefreshToken;
 using Application.Users.Commands.Register;
 using Application.Users.Commands.RevokeRefreshTokens;
@@ -102,6 +103,21 @@ public class UsersController(ISender sender) : ApiController(sender)
         return Ok(new AuthResponse(result.Value.Id, result.Value.Username, result.Value.Email));
     }
     
+    [HttpPost("google-login")]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(AuthResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> LoginWithGoogle(GoogleLoginRequest request, CancellationToken cancellationToken)
+    {
+         var command = new LoginWithGoogleCommand(request.IdToken);
+         var result = await Sender.Send(command, cancellationToken);
+        
+        if (result.IsFailure) return HandleFailure(result);
+        
+        SetAuthCookies(result.Value.Token, result.Value.RefreshToken);
+        return Ok(new AuthResponse(result.Value.Id, result.Value.Username, result.Value.Email));
+    }
+    
     [HttpDelete("revoke-refresh-tokens")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> RevokeRefreshTokens(CancellationToken cancellationToken)
@@ -118,14 +134,14 @@ public class UsersController(ISender sender) : ApiController(sender)
         Response.Cookies.Append("accessToken", accessToken, new CookieOptions {
             HttpOnly = true,
             Secure = true,
-            SameSite = SameSiteMode.Strict,
+            SameSite = SameSiteMode.None,
             Expires = DateTime.UtcNow.AddMinutes(15)
         });
         
         Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions {
             HttpOnly = true,
             Secure = true,
-            SameSite = SameSiteMode.Strict,
+            SameSite = SameSiteMode.None,
             Path = "/api/v1/users",
             Expires = DateTime.UtcNow.AddDays(7)
         });

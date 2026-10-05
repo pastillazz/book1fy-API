@@ -22,7 +22,16 @@ builder.Services
     .AddJsonOptions(options =>
         options.JsonSerializerOptions.Converters
             .Add(new JsonStringEnumConverter()));
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Frontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+            .AllowCredentials()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 builder.Services
     .AddJwtAuthentication(builder.Configuration)
     .AddAuthorizationPolicies()
@@ -75,7 +84,7 @@ app.UseExceptionHandler();
 app.UseConfiguredOpenApi();
 
 app.UseHttpsRedirection();
-
+app.UseCors("Frontend");   
 app.UseAuthentication();
 app.UseAuthorization();
 

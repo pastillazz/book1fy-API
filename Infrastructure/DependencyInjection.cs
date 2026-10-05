@@ -1,11 +1,13 @@
 ﻿using Application.Common.Abstractions.Authentication;
 using Application.Common.Abstractions.Email;
+using Application.Common.Google;
 using Application.Companies.Queries.Interfaces;
 using Application.Users.Queries;
 using Domain.Abstractions;
 using Domain.Repositories;
 using Infrastructure.Authentication;
 using Infrastructure.BackgroundJobs;
+using Infrastructure.Google;
 using Infrastructure.Health;
 using Infrastructure.Notifications;
 using Infrastructure.Persistence;
@@ -117,6 +119,16 @@ public static class DependencyInjection
 
     services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
+    //Google Configuration
+    
+    services.AddOptions<GoogleAuthOptions>()
+        .Bind(configuration.GetSection(GoogleAuthOptions.Section))
+        .Validate(o => o.ClientIds.Count > 0,
+            "At least one Google Client ID must be provided.")
+        .ValidateOnStart();
+    
+    services.AddSingleton<IGoogleTokenValidator, GoogleTokenValidator>();
+    
     //DI Configuration
     services.AddScoped<IUnitOfWork, UnitOfWork>();
     services.AddScoped<IUserRepository, UserRepository>();
